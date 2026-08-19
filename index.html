@@ -1,0 +1,1806 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Don Pufo — Gestión estratégica de marrones</title>
+<meta name="description" content="Problemas incómodos. Soluciones impecables.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,500&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   TOKENS
+   ============================================================ */
+:root{
+  --ink:#06080D;
+  --ink-2:#0A0E17;
+  --panel:#101725;
+  --panel-2:#161F31;
+  --line:rgba(201,162,75,.22);
+  --line-soft:rgba(255,255,255,.08);
+  --gold:#C9A24B;
+  --gold-hi:#F2D79A;
+  --gold-dim:rgba(201,162,75,.55);
+  --paper:#EDE6D6;
+  --text:#DCE2ED;
+  --muted:#8A94A9;
+  --danger:#C0453A;
+  --ok:#5AA588;
+  --warn:#D08A32;
+  --serif:'Playfair Display', 'Iowan Old Style', Georgia, serif;
+  --mono:'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
+  --sans:'Inter', -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --r:14px;
+  --maxw:1180px;
+}
+
+*{box-sizing:border-box}
+/* Fondo decorativo permanente: la web nunca se ve plana aunque falle el WebGL */
+html{
+  scroll-behavior:smooth;
+  background:
+    radial-gradient(72% 55% at 80% 16%, rgba(201,162,75,.17), transparent 62%),
+    radial-gradient(64% 52% at 8%  80%, rgba(62,116,216,.13), transparent 62%),
+    radial-gradient(90% 70% at 50% 50%, rgba(20,28,44,.55), transparent 70%),
+    var(--ink);
+  background-attachment:fixed;
+}
+body{
+  margin:0; background:transparent; color:var(--text);
+  font-family:var(--sans); font-size:16px; line-height:1.62;
+  -webkit-font-smoothing:antialiased; overflow-x:hidden;
+}
+body::before{
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:3; opacity:.5;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.32'/%3E%3C/svg%3E");
+  mix-blend-mode:overlay;
+}
+body::after{
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:2;
+  background:radial-gradient(120% 90% at 50% 0%, transparent 40%, rgba(0,0,0,.65) 100%);
+}
+#scene{position:fixed; inset:0; z-index:0; pointer-events:none}
+#app{position:relative; z-index:4}
+::selection{background:var(--gold); color:#0A0E17}
+
+a{color:inherit; text-decoration:none}
+h1,h2,h3,h4{font-family:var(--serif); font-weight:700; line-height:1.08; margin:0; letter-spacing:-.015em}
+p{margin:0 0 1em}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 26px}
+
+/* ============================================================
+   MICROTIPOGRAFÍA
+   ============================================================ */
+.kicker{
+  font-family:var(--mono); font-size:11px; letter-spacing:.28em; text-transform:uppercase;
+  color:var(--gold); display:flex; align-items:center; gap:12px; margin-bottom:20px;
+}
+.kicker::before{content:''; width:36px; height:1px; background:var(--gold); opacity:.6}
+.lead{font-size:19px; color:#B9C2D3; max-width:62ch}
+.muted{color:var(--muted)}
+.mono{font-family:var(--mono)}
+.gold{color:var(--gold)}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+header.nav{
+  position:fixed; top:0; left:0; right:0; z-index:60;
+  backdrop-filter:blur(14px); background:linear-gradient(180deg, rgba(6,8,13,.92), rgba(6,8,13,.55));
+  border-bottom:1px solid var(--line-soft); transition:padding .3s ease;
+}
+.nav-in{max-width:var(--maxw); margin:0 auto; padding:14px 26px; display:flex; align-items:center; gap:26px}
+.brand{display:flex; align-items:center; gap:12px; cursor:pointer}
+.seal{
+  width:40px; height:40px; border-radius:50%; display:grid; place-items:center; flex:0 0 auto;
+  border:1px solid var(--gold); box-shadow:inset 0 0 0 3px rgba(201,162,75,.16), 0 0 22px rgba(201,162,75,.16);
+  font-family:var(--serif); font-weight:900; font-size:15px; color:var(--gold); letter-spacing:.02em;
+  background:radial-gradient(circle at 30% 25%, rgba(201,162,75,.22), transparent 65%);
+  transition:transform .5s cubic-bezier(.2,.9,.2,1);
+}
+.brand:hover .seal{transform:rotate(360deg)}
+.brand-txt{display:flex; flex-direction:column; line-height:1}
+.brand-name{font-family:var(--serif); font-size:20px; font-weight:700; color:var(--paper)}
+.brand-sub{font-family:var(--mono); font-size:9px; letter-spacing:.24em; color:var(--muted); text-transform:uppercase; margin-top:4px}
+nav.links{margin-left:auto; display:flex; gap:4px; align-items:center}
+nav.links a{
+  font-size:13px; padding:9px 13px; border-radius:8px; color:#A9B3C6; letter-spacing:.01em;
+  transition:.2s; position:relative; white-space:nowrap;
+}
+nav.links a:hover{color:var(--paper); background:rgba(255,255,255,.05)}
+nav.links a.on{color:var(--gold)}
+nav.links a.on::after{content:''; position:absolute; left:13px; right:13px; bottom:3px; height:1px; background:var(--gold)}
+.burger{display:none; margin-left:auto; background:none; border:1px solid var(--line-soft); color:var(--paper); border-radius:8px; padding:8px 11px; cursor:pointer; font-size:16px}
+
+/* ============================================================
+   BOTONES
+   ============================================================ */
+.btn{
+  display:inline-flex; align-items:center; gap:10px; cursor:pointer; border:none;
+  font-family:var(--mono); font-size:12px; letter-spacing:.16em; text-transform:uppercase;
+  padding:15px 26px; border-radius:10px; transition:.25s cubic-bezier(.2,.9,.2,1); position:relative; overflow:hidden;
+}
+.btn-primary{background:linear-gradient(135deg, var(--gold-hi), var(--gold)); color:#0A0E17; font-weight:600}
+.btn-primary:hover{transform:translateY(-2px); box-shadow:0 14px 34px rgba(201,162,75,.3)}
+.btn-ghost{background:transparent; color:var(--paper); border:1px solid var(--line)}
+.btn-ghost:hover{border-color:var(--gold); color:var(--gold); background:rgba(201,162,75,.06)}
+.btn-sm{padding:10px 16px; font-size:11px}
+.btn:disabled{opacity:.35; cursor:not-allowed; transform:none!important; box-shadow:none!important}
+
+/* ============================================================
+   SECCIONES / TARJETAS
+   ============================================================ */
+section{padding:104px 0; position:relative}
+section.tight{padding:64px 0}
+.title{font-size:clamp(30px,4.4vw,52px); margin-bottom:18px}
+.grid{display:grid; gap:20px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+
+.card{
+  background:linear-gradient(160deg, rgba(22,31,49,.82), rgba(10,14,23,.78));
+  border:1px solid var(--line-soft); border-radius:var(--r); padding:28px;
+  transition:.35s cubic-bezier(.2,.9,.2,1); position:relative; overflow:hidden;
+}
+.card::before{
+  content:''; position:absolute; inset:0; opacity:0; transition:.35s;
+  background:radial-gradient(400px 200px at var(--mx,50%) var(--my,0%), rgba(201,162,75,.13), transparent 70%);
+}
+.card:hover{border-color:var(--line); transform:translateY(-4px)}
+.card:hover::before{opacity:1}
+.card h3{font-size:22px; margin-bottom:10px}
+.card .idx{font-family:var(--mono); font-size:11px; color:var(--gold); letter-spacing:.2em; margin-bottom:16px; display:block}
+.card p{color:#9FA9BC; font-size:14.5px; margin:0}
+.card ul{margin:14px 0 0; padding-left:0; list-style:none}
+.card ul li{font-size:13.5px; color:#94A0B4; padding:5px 0 5px 20px; position:relative}
+.card ul li::before{content:'▸'; position:absolute; left:0; color:var(--gold-dim)}
+
+.rule{height:1px; background:linear-gradient(90deg, transparent, var(--line), transparent); margin:0}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{min-height:100svh; display:flex; align-items:center; padding:120px 0 70px; position:relative}
+.hero h1{font-size:clamp(46px,8.4vw,104px); letter-spacing:-.035em}
+.hero h1 em{font-style:italic; color:var(--gold); display:block}
+.hero .lead{margin:26px 0 36px; font-size:20px; max-width:50ch}
+.hero-actions{display:flex; gap:14px; flex-wrap:wrap}
+.ticker{
+  margin-top:60px; border-top:1px solid var(--line-soft); border-bottom:1px solid var(--line-soft);
+  overflow:hidden; padding:13px 0; font-family:var(--mono); font-size:11px; letter-spacing:.2em;
+  color:var(--muted); text-transform:uppercase; -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+}
+.ticker div{display:inline-flex; gap:52px; white-space:nowrap; animation:slide 46s linear infinite}
+.ticker b{color:var(--gold); font-weight:500}
+@keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ============================================================
+   EXPEDIENTE / DOSSIER
+   ============================================================ */
+.dossier{
+  background:linear-gradient(150deg, #141C2C, #0B111C);
+  border:1px solid var(--line); border-radius:16px; overflow:hidden; position:relative;
+  box-shadow:0 40px 90px rgba(0,0,0,.6);
+}
+.dossier::after{
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:repeating-linear-gradient(0deg, rgba(255,255,255,.014) 0 2px, transparent 2px 4px);
+}
+.dossier-head{
+  padding:22px 28px; border-bottom:1px solid var(--line); display:flex; gap:18px; align-items:center; flex-wrap:wrap;
+  background:linear-gradient(90deg, rgba(201,162,75,.09), transparent);
+}
+.dossier-code{font-family:var(--mono); font-size:12px; letter-spacing:.24em; color:var(--gold)}
+.dossier-op{font-family:var(--serif); font-size:clamp(22px,3.2vw,34px); color:var(--paper); flex:1 1 260px; margin:0}
+.dossier-body{padding:28px}
+.field{padding:20px 0; border-bottom:1px dashed rgba(255,255,255,.08)}
+.field:last-child{border-bottom:none}
+.field h4{font-family:var(--mono); font-size:10.5px; letter-spacing:.26em; text-transform:uppercase; color:var(--gold); margin-bottom:11px; font-weight:500}
+.field p, .field li{font-size:15px; color:#C3CBDA}
+.field ol, .field ul{margin:0; padding-left:20px}
+.field li{margin-bottom:8px}
+.qa{border-left:2px solid var(--line); padding-left:16px; margin-bottom:14px}
+.qa b{display:block; color:var(--paper); font-size:14.5px; margin-bottom:3px}
+.qa span{font-size:14px; color:#9FA9BC}
+
+.stamp{
+  font-family:var(--mono); font-size:10px; letter-spacing:.24em; text-transform:uppercase;
+  border:1px solid currentColor; padding:5px 11px; border-radius:5px; display:inline-block;
+}
+.st-ok{color:var(--ok)} .st-warn{color:var(--warn)} .st-danger{color:var(--danger)} .st-gold{color:var(--gold)}
+
+.metrics{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line-soft); border-top:1px solid var(--line); border-bottom:1px solid var(--line)}
+.metric{background:#0C1220; padding:22px; text-align:center}
+.metric .v{font-family:var(--serif); font-size:38px; color:var(--gold); line-height:1}
+.metric .k{font-family:var(--mono); font-size:9.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); margin-top:9px}
+.bar{height:4px; background:rgba(255,255,255,.08); border-radius:99px; overflow:hidden; margin-top:12px}
+.bar i{display:block; height:100%; background:linear-gradient(90deg, var(--gold), var(--gold-hi)); border-radius:99px; width:0; transition:width 1.4s cubic-bezier(.2,.9,.2,1)}
+
+/* ============================================================
+   LAB
+   ============================================================ */
+.lab{max-width:820px; margin:0 auto}
+.lab-shell{
+  background:linear-gradient(155deg, rgba(20,28,44,.9), rgba(8,12,20,.9));
+  border:1px solid var(--line); border-radius:18px; padding:34px; min-height:440px;
+  display:flex; flex-direction:column; box-shadow:0 40px 90px rgba(0,0,0,.55); position:relative; overflow:hidden;
+}
+.lab-progress{height:2px; background:rgba(255,255,255,.07); border-radius:99px; margin-bottom:28px; overflow:hidden}
+.lab-progress i{display:block; height:100%; background:var(--gold); width:0; transition:width .6s cubic-bezier(.2,.9,.2,1)}
+.speech{display:flex; gap:16px; margin-bottom:26px; align-items:flex-start}
+.avatar{
+  width:46px; height:46px; flex:0 0 auto; border-radius:50%; border:1px solid var(--gold);
+  display:grid; place-items:center; background:radial-gradient(circle at 32% 26%, rgba(201,162,75,.3), transparent 68%);
+  font-family:var(--serif); color:var(--gold); font-weight:900; font-size:16px;
+}
+.speech-body{flex:1}
+.speech-name{font-family:var(--mono); font-size:10px; letter-spacing:.24em; text-transform:uppercase; color:var(--gold); margin-bottom:7px}
+.speech-txt{font-family:var(--serif); font-size:clamp(20px,2.6vw,27px); color:var(--paper); line-height:1.32}
+.speech-note{font-size:14px; color:var(--muted); margin-top:10px; font-style:italic}
+.chips{display:flex; flex-wrap:wrap; gap:10px; margin-top:auto; padding-top:22px}
+.chip{
+  border:1px solid var(--line-soft); background:rgba(255,255,255,.03); color:var(--text);
+  padding:12px 17px; border-radius:10px; cursor:pointer; font-size:14px; transition:.2s; text-align:left;
+  font-family:var(--sans);
+}
+.chip:hover{border-color:var(--gold); color:var(--gold); background:rgba(201,162,75,.08); transform:translateY(-2px)}
+.chip.sel{border-color:var(--gold); background:rgba(201,162,75,.14); color:var(--gold-hi)}
+.lab-input{
+  width:100%; background:rgba(0,0,0,.3); border:1px solid var(--line-soft); border-radius:11px;
+  padding:16px 18px; color:var(--paper); font-family:var(--sans); font-size:16px; resize:vertical; min-height:58px;
+}
+.lab-input:focus{outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(201,162,75,.12)}
+.lab-foot{display:flex; gap:12px; align-items:center; margin-top:20px; flex-wrap:wrap}
+.lab-step{font-family:var(--mono); font-size:10.5px; letter-spacing:.2em; color:var(--muted); margin-left:auto}
+.thinking{display:flex; gap:6px; align-items:center; font-family:var(--mono); font-size:12px; letter-spacing:.2em; color:var(--gold)}
+.thinking i{width:6px; height:6px; border-radius:50%; background:var(--gold); animation:blip 1.1s infinite}
+.thinking i:nth-child(2){animation-delay:.16s} .thinking i:nth-child(3){animation-delay:.32s}
+@keyframes blip{0%,100%{opacity:.2; transform:scale(.7)}50%{opacity:1; transform:scale(1)}}
+
+/* ============================================================
+   MISC
+   ============================================================ */
+.quote{border-left:2px solid var(--gold); padding:6px 0 6px 22px; font-family:var(--serif); font-style:italic; font-size:19px; color:var(--paper)}
+.quote cite{display:block; font-family:var(--mono); font-style:normal; font-size:10.5px; letter-spacing:.2em; color:var(--muted); margin-top:12px; text-transform:uppercase}
+.faq-item{border-bottom:1px solid var(--line-soft); padding:22px 0; cursor:pointer}
+.faq-item h4{font-size:20px; display:flex; justify-content:space-between; gap:18px; align-items:baseline}
+.faq-item h4 span{color:var(--gold); font-family:var(--mono); font-size:18px; transition:.3s}
+.faq-item.open h4 span{transform:rotate(45deg)}
+.faq-a{max-height:0; overflow:hidden; transition:max-height .45s cubic-bezier(.2,.9,.2,1)}
+.faq-a p{padding-top:12px; color:#9FA9BC; margin:0}
+.price{border:1px solid var(--line-soft); border-radius:var(--r); padding:30px; background:rgba(12,18,30,.7); display:flex; flex-direction:column; transition:.3s}
+.price:hover{border-color:var(--line); transform:translateY(-4px)}
+.price.feat{border-color:var(--gold); box-shadow:0 0 50px rgba(201,162,75,.12)}
+.price .amt{font-family:var(--serif); font-size:40px; color:var(--gold); margin:14px 0 4px}
+.price .amt small{font-size:14px; color:var(--muted); font-family:var(--mono)}
+.price ul{list-style:none; padding:0; margin:20px 0 26px; flex:1}
+.price li{font-size:14px; color:#9FA9BC; padding:7px 0 7px 22px; position:relative; border-bottom:1px dashed rgba(255,255,255,.05)}
+.price li::before{content:'✓'; position:absolute; left:0; color:var(--gold)}
+.tag{font-family:var(--mono); font-size:9.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); border:1px solid var(--line); padding:4px 9px; border-radius:99px; display:inline-block}
+.reveal{opacity:0; transform:translateY(26px); transition:opacity .8s cubic-bezier(.2,.9,.2,1), transform .8s cubic-bezier(.2,.9,.2,1)}
+.reveal.in{opacity:1; transform:none}
+footer{border-top:1px solid var(--line-soft); padding:52px 0 40px; margin-top:40px}
+.foot-grid{display:flex; gap:40px; flex-wrap:wrap; align-items:flex-start}
+.disclaimer{font-size:12.5px; color:#6C7689; max-width:60ch; line-height:1.7}
+.toast{
+  position:fixed; left:50%; bottom:30px; transform:translate(-50%,120%); z-index:90;
+  background:var(--panel-2); border:1px solid var(--gold); color:var(--paper); padding:14px 22px; border-radius:11px;
+  font-family:var(--mono); font-size:12px; letter-spacing:.1em; transition:transform .5s cubic-bezier(.2,.9,.2,1);
+}
+.toast.on{transform:translate(-50%,0)}
+
+@media(max-width:940px){
+  .g3,.g4{grid-template-columns:repeat(2,1fr)}
+  .metrics{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:760px){
+  nav.links{
+    position:fixed; top:70px; left:14px; right:14px; flex-direction:column; align-items:stretch; gap:2px;
+    background:rgba(10,14,23,.98); border:1px solid var(--line-soft); border-radius:14px; padding:10px;
+    display:none;
+  }
+  nav.links.open{display:flex}
+  .burger{display:block}
+  .g2,.g3,.g4{grid-template-columns:1fr}
+  section{padding:72px 0}
+  .lab-shell{padding:24px}
+  .dossier-body,.dossier-head{padding:20px}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important; transition-duration:.01ms!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<canvas id="scene"></canvas>
+
+<header class="nav">
+  <div class="nav-in">
+    <div class="brand" data-go="home">
+      <div class="seal" id="seal">DP</div>
+      <div class="brand-txt">
+        <span class="brand-name" id="brandName">Don Pufo</span>
+        <span class="brand-sub" id="brandSub">Gestión de marrones</span>
+      </div>
+    </div>
+    <button class="burger" id="burger">☰</button>
+    <nav class="links" id="navLinks"></nav>
+  </div>
+</header>
+
+<div id="app"></div>
+<div class="toast" id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+/* ════════════════════════════════════════════════════════════════════════
+   ①  CONFIGURACIÓN DE MARCA
+   ────────────────────────────────────────────────────────────────────────
+   Para renombrar TODA la web basta con editar este objeto.
+   Cambia `name` y `root` y el resto se recalcula solo (logo, PufoLab,
+   PufoScore, clasificación PUFO I–V, códigos de expediente, textos...).
+
+   Ejemplo:   name:'Don Pufo'  root:'Pufo'   →  PufoLab · PufoScore · DP-2026-0047
+              name:'Mr. Fixit' root:'Fixit'  →  FixitLab · FixitScore · MF-2026-0047
+
+   Los campos marcados como "auto" pueden dejarse en null: se derivan de
+   name/root. Si quieres controlarlos a mano, escribe el valor.
+   ══════════════════════════════════════════════════════════════════════ */
+const BRAND = {
+  name      : 'Don Pufo',                       // Nombre completo de la marca
+  root      : 'Pufo',                           // Raíz para productos derivados
+  monogram  : null,                             // auto → 'DP'  (iniciales)
+  filePrefix: null,                             // auto → 'DP'  (códigos DP-2026-0047)
+  lab       : null,                             // auto → 'PufoLab'
+  score     : null,                             // auto → 'PufoScore'
+  tier      : null,                             // auto → 'PUFO' (clasificación PUFO I–V)
+  founder   : null,                             // auto → 'Don Pufo' (el personaje)
+  tagline   : 'Gestión estratégica de marrones.',
+  claim     : 'Problemas incómodos. Soluciones impecables.',
+  navSub    : 'Gestión de marrones',
+  problem   : 'marrón',                         // el sustantivo del problema
+  problems  : 'marrones',                       // plural
+  year      : new Date().getFullYear(),
+  email     : 'expedientes@donpufo.example',
+  city      : 'Departamento de Operaciones Delicadas'
+};
+
+/* Derivados automáticos ------------------------------------------------- */
+const initialsOf = s => s.split(/\s+/).filter(Boolean).map(w => w[0]).join('').slice(0,3).toUpperCase();
+BRAND.monogram   = BRAND.monogram   || initialsOf(BRAND.name);
+BRAND.filePrefix = BRAND.filePrefix || BRAND.monogram;
+BRAND.lab        = BRAND.lab        || BRAND.root + 'Lab';
+BRAND.score      = BRAND.score      || BRAND.root + 'Score';
+BRAND.tier       = BRAND.tier       || BRAND.root.toUpperCase();
+BRAND.founder    = BRAND.founder    || BRAND.name;
+
+/* ────────────────────────────────────────────────────────────────────────
+   Motor de plantillas: TODO el contenido usa marcadores {{...}}.
+   Nunca se escribe "Don Pufo" a pelo en el contenido.
+   ──────────────────────────────────────────────────────────────────────── */
+const TOKENS = {
+  brand:   BRAND.name,
+  founder: BRAND.founder,
+  root:    BRAND.root,
+  ROOT:    BRAND.root.toUpperCase(),
+  mono:    BRAND.monogram,
+  lab:     BRAND.lab,
+  score:   BRAND.score,
+  tier:    BRAND.tier,
+  prefix:  BRAND.filePrefix,
+  tagline: BRAND.tagline,
+  claim:   BRAND.claim,
+  problem: BRAND.problem,
+  problems:BRAND.problems,
+  year:    BRAND.year,
+  email:   BRAND.email,
+  city:    BRAND.city
+};
+const T = s => String(s).replace(/\{\{(\w+)\}\}/g, (m,k) => (k in TOKENS ? TOKENS[k] : m));
+
+/* Aplicación global de la marca al chrome de la página */
+document.title = T('{{brand}} — {{tagline}}');
+document.getElementById('brandName').textContent = BRAND.name;
+document.getElementById('brandSub').textContent  = BRAND.navSub;
+document.getElementById('seal').textContent      = BRAND.monogram;
+</script>
+<script>
+/* ════════════════════════════════════════════════════════════════════════
+   ②  CONTENIDO
+   Todo el copy vive aquí. Usa {{brand}}, {{lab}}, {{score}}, {{tier}}…
+   Añadir una división nueva = añadir un objeto a SERVICES.
+   ══════════════════════════════════════════════════════════════════════ */
+
+const NAV = [
+  {id:'home',      label:'Inicio'},
+  {id:'servicios', label:'Divisiones'},
+  {id:'lab',       label:'{{lab}}'},
+  {id:'casos',     label:'Casos'},
+  {id:'personaje', label:'{{brand}}'},
+  {id:'tarifas',   label:'Tarifas'},
+  {id:'faq',       label:'FAQ'},
+  {id:'archivo',   label:'Mis expedientes'}
+];
+
+const SERVICES = [
+  {
+    id:'becas', code:'D-01', name:'Becas {{brand}}™',
+    claim:'Programa de Inmersión Profesional Vacacional.',
+    desc:'Su hijo dispone de nueve semanas de vacaciones y un plan operativo que consiste en el sofá. Diseñamos un programa de formación paródico —con horario, mentor, objetivos y ceremonia de clausura— que convierte el verano en un currículum ficticio y en tres semanas reales de actividad productiva.',
+    bullets:['Onboarding y carta de admisión','Horario y plan de objetivos','Mentor designado (usted)','Informe final y diploma humorístico'],
+    risk:2
+  },
+  {
+    id:'excusas', code:'D-02', name:'Excusas {{brand}}™',
+    claim:'Estrategias de desvinculación social con mínimo impacto reputacional.',
+    desc:'Una boda a 640 kilómetros. Una cena que no le apetece. Una reunión que no debería existir. Analizamos vínculo, antelación, exposición posterior y probabilidad de interrogatorio, y devolvemos la salida más sencilla y defendible. Nunca la más ingeniosa: la más sostenible.',
+    bullets:['Nivel 1 — Salida elegante','Nivel 2 — Excusa consistente','Nivel 3 — Alta exposición','Nivel 4 — Operación delicada'],
+    risk:2
+  },
+  {
+    id:'persuasion', code:'D-03', name:'Persuasión {{brand}}™',
+    claim:'Cuando cinco personas tienen que decir que sí y dos ya han dicho que no.',
+    desc:'Vallas, derramas, obras comunes, repartos de gasto, decisiones de grupo. Levantamos el mapa de actores, identificamos al bloqueador estructural, ordenamos las conversaciones y entregamos un argumentario con contramedidas para cada objeción previsible.',
+    bullets:['Mapa de actores e intereses','Orden recomendado de conversaciones','Argumentario y contramedidas','Frase de cierre'],
+    risk:3
+  },
+  {
+    id:'negocia', code:'D-04', name:'{{brand}} Negocia',
+    claim:'Negociaciones cotidianas tratadas como operaciones corporativas.',
+    desc:'Quién friega, quién conduce, quién paga la cena, quién se queda el trastero. Aplicamos marco de negociación integrativa a disputas de importancia estrictamente doméstica, porque el tamaño del asunto nunca ha sido proporcional al tamaño del conflicto.',
+    bullets:['Definición de ZOPA doméstica','Concesiones planificadas','Alternativa si no hay acuerdo','Acta final (opcional pero recomendable)'],
+    risk:2
+  },
+  {
+    id:'media', code:'D-05', name:'{{brand}} Media',
+    claim:'Mediación entre personas que ya no se hablan por un asunto que ninguna recuerda bien.',
+    desc:'Intervenimos cuando el conflicto ha superado su causa original. Reconstruimos los hechos, separamos el agravio real del acumulado y proponemos una vía de salida que permita a ambas partes conservar la dignidad, que es lo único que se negocia en realidad.',
+    bullets:['Cronología objetiva del conflicto','Separación de agravio real y acumulado','Guion de reconciliación','Protocolo de reincidencia'],
+    risk:4
+  },
+  {
+    id:'express', code:'D-06', name:'{{brand}} Express',
+    claim:'El evento es hoy. Lo entendemos.',
+    desc:'Servicio de urgencia para situaciones cuya ventana de maniobra se mide en horas. Reducimos el análisis al mínimo imprescindible y priorizamos soluciones ejecutables de inmediato. Recargo por precipitación incluido en tarifa.',
+    bullets:['Análisis en tiempo comprimido','Una sola línea de acción','Sin plan B (no hay tiempo)','Postmortem posterior gratuito'],
+    risk:4
+  },
+  {
+    id:'crisis', code:'D-07', name:'{{brand}} Crisis',
+    claim:'Usted ya improvisó. Ahora hablamos nosotros.',
+    desc:'Para expedientes que llegan con daños previos: una versión que se contradijo, un mensaje enviado al grupo equivocado, una promesa hecha en una comida. Contención primero, reconstrucción después. No juzgamos. Facturamos, pero no juzgamos.',
+    bullets:['Contención inmediata del relato','Inventario de contradicciones','Estrategia de reconstrucción','Gestión de daños colaterales'],
+    risk:5
+  }
+];
+
+/* ── Casos ficticios ──────────────────────────────────────────────────── */
+const CASES = [
+  {
+    code:'{{prefix}}-2025-0114', op:'OPERACIÓN AGOSTO PRODUCTIVO', div:'becas',
+    problem:'Adolescente con nueve semanas de vacaciones y una agenda consistente en dormir, pantalla y nevera.',
+    goal:'Obtener tres semanas de actividad productiva sin declaración formal de guerra.',
+    strategy:'Se presenta el programa como una beca competitiva con plazas limitadas. El sujeto es informado de que ha sido preseleccionado. Nunca se menciona la palabra "obligación".',
+    result:'21 días productivos. El becario incluyó la experiencia en su perfil.',
+    score:74, risk:2, prob:88, status:'Resuelto'
+  },
+  {
+    code:'{{prefix}}-2025-0207', op:'OPERACIÓN VALLA COMÚN', div:'persuasion',
+    problem:'Cinco vecinos deben aprobar una valla. Dos se oponen. Uno se opone por motivos que no ha explicado.',
+    goal:'Aprobación colectiva sin ruptura de la comunidad.',
+    strategy:'Se presenta el coste individual frente al coste de mantener el problema abierto tres años más. Se habla primero con el vecino influyente, nunca con el bloqueador.',
+    result:'Cuatro votos a favor. Carlos sigue enfadado. La valla está puesta.',
+    score:81, risk:3, prob:76, status:'Resuelto'
+  },
+  {
+    code:'{{prefix}}-2025-0338', op:'OPERACIÓN BODA LEJANA', div:'excusas',
+    problem:'Invitación a boda con 640 km de desplazamiento y dos noches de hotel.',
+    goal:'Declinar sin deteriorar una relación de veinte años.',
+    strategy:'Aviso temprano, motivo verificable, regalo por encima de la media y llamada telefónica en lugar de mensaje. La antelación es la excusa.',
+    result:'Ausencia aceptada. Relación intacta. El cliente sigue recibiendo felicitaciones por haber avisado con tiempo.',
+    score:52, risk:1, prob:94, status:'Resuelto'
+  },
+  {
+    code:'{{prefix}}-2026-0012', op:'OPERACIÓN DOMINGO SIN SUEGROS', div:'negocia',
+    problem:'Comida familiar semanal instaurada por costumbre y sostenida por inercia desde 2019.',
+    goal:'Reducir la frecuencia a quincenal sin que nadie lo interprete como un mensaje.',
+    strategy:'No se solicita una reducción. Se introduce una actividad alterna incompatible y se deja que el calendario haga el trabajo.',
+    result:'En ejecución. Dos domingos recuperados. Ninguna conversación incómoda registrada.',
+    score:67, risk:3, prob:81, status:'Operación en curso'
+  }
+];
+
+const TESTIMONIALS = [
+  {q:'Mi hijo sigue pensando que aquello contaba para el currículum.', a:'Cliente {{prefix}}-0041'},
+  {q:'La valla está puesta. Carlos no me habla, pero la valla está puesta.', a:'Comunidad de propietarios'},
+  {q:'No fui a la boda y todavía me felicitan por haber avisado con tiempo.', a:'Cliente Premium'},
+  {q:'Nos dijeron que el problema no era el dinero. Era el orden de las llamadas. Tenían razón.', a:'Expediente {{prefix}}-1180'},
+  {q:'Pagué por un argumentario de once folios para no fregar los sábados. Volvería a hacerlo.', a:'Cliente {{prefix}}-0903'},
+  {q:'{{founder}} me escuchó doce minutos y dijo: "esto no es un {{problem}}, es una mudanza". Colgué y me mudé.', a:'Cliente anónimo'}
+];
+
+const PLANS = [
+  {name:'{{root}} Básico', price:'0 €', per:'expediente', feat:false,
+   items:['Un expediente activo','Diagnóstico y {{score}}','Estrategia en tres pasos','Sin cobertura los domingos']},
+  {name:'{{root}} Profesional', price:'49 €', per:'trimestre', feat:false,
+   items:['Expedientes ilimitados','Argumentario completo','Contramedidas por objeción','Plan B documentado','Nombre de operación reservado']},
+  {name:'{{root}} Premium', price:'149 €', per:'trimestre', feat:true,
+   items:['Todo lo anterior','Mapa de actores ampliado','Orden de conversaciones optimizado','Simulación de objeciones','Segunda opinión de {{founder}}','Discreción reforzada']},
+  {name:'{{root}} Irrefutable', price:'A convenir', per:'por operación', feat:false,
+   items:['Operaciones de riesgo elevado','Gestión de crisis abierta','Contención de relato','Acompañamiento hasta el cierre','{{founder}} atiende personalmente','No se factura por escrito']}
+];
+
+const FAQ = [
+  {q:'¿{{founder}} miente?', a:'{{founder}} prefiere hablar de arquitectura narrativa. Toda comunicación humana implica selección de información; nosotros simplemente la ordenamos con criterio profesional y la documentamos.'},
+  {q:'¿Garantizan resultados?', a:'Garantizamos análisis. Los resultados dependen del cuñado, y el cuñado es una variable que ninguna consultora seria ha conseguido modelizar.'},
+  {q:'¿Pueden llamar ustedes?', a:'Solo dentro del universo ficticio de {{brand}}. En el mundo real la llamada la hace usted; nosotros le decimos exactamente qué decir y, sobre todo, en qué orden.'},
+  {q:'¿Trabajan con comunidades de vecinos?', a:'Con frecuencia y contra nuestro criterio. Representan el 34 % de nuestros expedientes y el 91 % de nuestro desgaste emocional.'},
+  {q:'¿Hay algún caso demasiado complicado?', a:'Sí. Normalmente empieza con «es una historia un poco larga…». Cuando escuchamos esa frase, elevamos automáticamente la clasificación del expediente.'},
+  {q:'¿Esto es real?', a:'No. {{brand}} es una empresa ficticia y una parodia. No existe ningún servicio contratable, ninguna factura y ningún despacho. Lo que sí es real es que ordenar un problema antes de abordarlo funciona sorprendentemente bien.'},
+  {q:'¿Qué no van a hacer nunca?', a:'Documentos oficiales, certificados destinados a terceros, suplantaciones, bajas médicas, fraudes de cualquier tipo o declaraciones ante autoridades. En ese punto el expediente se cierra y {{founder}} recomienda una estrategia alternativa: normalmente, la verdad.'}
+];
+
+const TICKER = [
+  '{{prefix}}-2026-0047 · Operación Valla Común · <b>Resuelta</b>',
+  '{{prefix}}-2026-0051 · Operación Cuñado · <b>Analizando {{problem}}</b>',
+  '{{prefix}}-2026-0052 · Operación Derrama · <b>Argumentario listo</b>',
+  '{{prefix}}-2026-0055 · Operación Domingo Libre · <b>En ejecución</b>',
+  '{{prefix}}-2026-0058 · Operación Comunión · <b>Riesgo elevado</b>',
+  '{{prefix}}-2026-0061 · Operación Cena Cancelada · <b>Resuelta</b>',
+  '{{prefix}}-2026-0064 · Operación Trastero · <b>{{root}} fallido</b>'
+];
+
+/* ── Escalas ──────────────────────────────────────────────────────────── */
+const RISK = [
+  {n:1, label:'Bajo',              cls:'st-ok'},
+  {n:2, label:'Moderado',          cls:'st-ok'},
+  {n:3, label:'Delicado',          cls:'st-warn'},
+  {n:4, label:'{{root}} considerable', cls:'st-warn'},
+  {n:5, label:'{{root}} crítico',      cls:'st-danger'}
+];
+const TIERS = [
+  {n:1, name:'{{tier}} I',   desc:'Trivial. Se resuelve con una frase y algo de aplomo.'},
+  {n:2, name:'{{tier}} II',  desc:'Necesita preparación. No improvise.'},
+  {n:3, name:'{{tier}} III', desc:'Requiere estrategia y un orden concreto de conversaciones.'},
+  {n:4, name:'{{tier}} IV',  desc:'Puede complicarse. Habrá interacción posterior.'},
+  {n:5, name:'{{tier}} V',   desc:'{{founder}} recomienda sentarse antes de continuar.'}
+];
+const STATUSES = ['Recibido','Analizando {{problem}}','Diseñando estrategia','Preparando argumentario','Listo para ejecución','Operación en curso','Resuelto','{{root}} fallido'];
+</script>
+<script>
+/* ════════════════════════════════════════════════════════════════════════
+   ③  MOTOR — preguntas adaptativas, generación de expediente, límites
+   ══════════════════════════════════════════════════════════════════════ */
+
+const rnd  = a => a[Math.floor(Math.random()*a.length)];
+const clamp= (v,a,b) => Math.max(a, Math.min(b, v));
+const esc  = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ── Banco de preguntas ───────────────────────────────────────────────── */
+const QUESTIONS = [
+  {
+    id:'division', type:'choice',
+    q:'Siéntese. ¿En qué división abrimos el expediente?',
+    note:'Si duda, elija la que más se parezca. Ya lo reclasificaremos nosotros.',
+    options: () => SERVICES.map(s => ({v:s.id, label:T(s.name), hint:s.claim}))
+                   .concat([{v:'otro', label:'No lo tengo claro', hint:'Perfectamente normal.'}]),
+    react: v => v==='crisis' ? 'Entiendo. Empezamos tarde, entonces.'
+              : v==='express' ? 'Urgente. Reduzco el protocolo al mínimo.'
+              : v==='otro'    ? 'Bien. Lo clasificamos nosotros. Suele ser mejor.'
+              : 'Anotado. Abrimos expediente.'
+  },
+  {
+    id:'objetivo', type:'text', required:true,
+    q:'¿Qué necesita conseguir exactamente?',
+    note:'Sin adornos. Una frase. Los adornos los ponemos después nosotros.',
+    ph:'Ej.: que mi hijo haga algo útil este verano / no ir a una boda en agosto / que los vecinos aprueben la valla…',
+    react: v => v.length < 25 ? 'Escueto. Me gusta. Continúe.'
+              : v.length > 180 ? 'Es una historia un poco larga. Elevamos la clasificación preventivamente.'
+              : 'Comprendido. Ya veo por dónde va esto.'
+  },
+  {
+    id:'quien', type:'choice',
+    q:'¿A quién hay que convencer?',
+    options: () => [
+      {v:'adolescente', label:'Un adolescente'},
+      {v:'pareja',      label:'Mi pareja'},
+      {v:'familia',     label:'Familia directa'},
+      {v:'politica',    label:'Familia política'},
+      {v:'vecinos',     label:'Vecinos o comunidad'},
+      {v:'amigos',      label:'Amigos'},
+      {v:'trabajo',     label:'Compañeros de trabajo'},
+      {v:'grupo',       label:'Un grupo sin líder claro'}
+    ],
+    react: v => ({
+      adolescente:'Un adolescente. La negociación más asimétrica que existe.',
+      pareja:'Delicado. Aquí no basta con tener razón.',
+      familia:'La familia directa. Todo queda registrado para siempre.',
+      politica:'Familia política. Elevamos automáticamente el nivel de riesgo.',
+      vecinos:'Vecinos. Trabajamos con ellos con frecuencia y contra nuestro criterio.',
+      amigos:'Amigos. Suelen ceder. Pero se acuerdan.',
+      trabajo:'Entorno profesional. Todo lo que diga podrá ser usado en una evaluación.',
+      grupo:'Un grupo sin líder. Es decir: siete líderes.'
+    }[v])
+  },
+  {
+    id:'cuantos', type:'choice',
+    q:'¿Cuántas personas están implicadas?',
+    options: () => [
+      {v:1, label:'Una'}, {v:2, label:'Dos'}, {v:4, label:'Tres o cuatro'},
+      {v:6, label:'Entre cinco y ocho'}, {v:10, label:'Más de ocho'}
+    ],
+    react: v => v>=10 ? 'Más de ocho. Eso ya no es una conversación, es una asamblea.'
+              : v>=6  ? 'Seis. Mala cifra. Continúe.'
+              : v===1 ? 'Una sola persona. Excelente. La mitad del trabajo es no ampliar el círculo.'
+              : 'Manejable. De momento.'
+  },
+  {
+    id:'relacion', type:'choice',
+    q:'¿Cómo describiría la relación actual?',
+    options: () => [
+      {v:'excelente', label:'Excelente'},
+      {v:'correcta',  label:'Correcta'},
+      {v:'tensa',     label:'Tensa'},
+      {v:'rota',      label:'Ya venía complicada de antes'}
+    ],
+    react: v => ({
+      excelente:'Entonces el activo principal es la relación. No la gastaremos entera.',
+      correcta:'Correcta. Es decir, funcional pero no gratuita.',
+      tensa:'Tensa. Trabajaremos con margen reducido.',
+      rota:'Ya venía complicada. Esto no es una petición: es una segunda oportunidad.'
+    }[v])
+  },
+  {
+    id:'historial', type:'choice',
+    when: a => a.relacion==='tensa' || a.relacion==='rota',
+    q:'¿Se ha intentado algo parecido antes?',
+    options: () => [
+      {v:'no',      label:'No, es la primera vez'},
+      {v:'si_mal',  label:'Sí, y salió mal'},
+      {v:'si_nada', label:'Sí, y no pasó nada'}
+    ],
+    react: v => v==='si_mal' ? 'Entonces existe un precedente. Los precedentes pesan más que los argumentos.' : 'Bien. Partimos casi de cero.'
+  },
+  {
+    id:'tiempo', type:'choice',
+    q:'¿Cuánto tiempo tenemos?',
+    options: () => [
+      {v:'horas',   label:'Horas'},
+      {v:'dias',    label:'Unos días'},
+      {v:'semanas', label:'Una o dos semanas'},
+      {v:'mes',     label:'Más de un mes'}
+    ],
+    react: v => v==='horas' ? 'Horas. Descartamos elegancia y priorizamos ejecución.'
+              : v==='mes'   ? 'Tiempo suficiente. El tiempo es la excusa más barata que existe.'
+              : 'Aceptable. Trabajaremos con eso.'
+  },
+  {
+    id:'saben', type:'choice',
+    q:'¿Qué sabe actualmente la otra parte?',
+    options: () => [
+      {v:'nada',     label:'Nada en absoluto'},
+      {v:'sospecha', label:'Algo sospecha'},
+      {v:'todo',     label:'Lo sabe todo'}
+    ],
+    react: v => ({
+      nada:'Ventaja informativa. Es el único lujo real de este despacho.',
+      sospecha:'Sospecha. Peor que saber: sospechar activa la imaginación.',
+      todo:'Lo sabe todo. Entonces no vendemos sorpresa: vendemos motivo.'
+    }[v])
+  },
+  {
+    id:'dinero', type:'choice',
+    when: a => ['persuasion','negocia','crisis','otro'].includes(a.division) || a.cuantos>=4,
+    q:'¿Hay dinero de por medio?',
+    options: () => [
+      {v:'no',      label:'No'},
+      {v:'poco',    label:'Poco, es simbólico'},
+      {v:'reparto', label:'Sí, y hay que repartirlo'},
+      {v:'mucho',   label:'Sí, y es una cantidad seria'}
+    ],
+    react: v => v==='reparto' ? 'Reparto. Nunca discuten por la cantidad: discuten por la proporción.'
+              : v==='mucho'   ? 'Cantidad seria. A partir de aquí todo el mundo se vuelve muy preciso.'
+              : 'Bien. Un frente menos.'
+  },
+  {
+    id:'fracaso', type:'choice',
+    q:'¿Qué ocurre si el plan fracasa?',
+    options: () => [
+      {v:'nada',     label:'Nada relevante'},
+      {v:'incomodo', label:'Una situación incómoda'},
+      {v:'discusion',label:'Una discusión seria'},
+      {v:'conflicto',label:'Un conflicto que durará años'}
+    ],
+    react: v => v==='conflicto' ? 'Años. Entonces el objetivo real no es ganar: es no romper nada.'
+              : v==='nada' ? 'Excelente. Podemos permitirnos ser ambiciosos.'
+              : 'Asumible. Lo tendremos en cuenta en el plan B.'
+  },
+  {
+    id:'extra', type:'text', required:false,
+    q:'Última pregunta. ¿Hay algo que deba saber y que no le haya preguntado?',
+    note:'Es opcional. Pero es donde suele estar el problema de verdad.',
+    ph:'Opcional. Puede dejarlo en blanco y pulsar continuar.',
+    react: () => 'Anotado. Cierro el interrogatorio.'
+  }
+];
+
+/* ── Límites: qué no hace la marca ────────────────────────────────────── */
+const LIMITS = [
+  /falsific|falsear|falso[s]? (document|certificad|justificant|informe|contrat|t[ií]tul)/i,
+  /suplant|hacerme pasar por|hacerse pasar por|usar (el|la) (dni|nombre|identidad|firma)|firmar por (él|ella|otro)/i,
+  /(baja|justificante|informe|parte|certificado|receta) m[ée]dic/i,
+  /(hacienda|agencia tributaria|seguridad social|inspecci[óo]n de trabajo|juzgado|polic[ií]a|guardia civil|notar[ií]|ayuntamiento oficial)/i,
+  /(dni|nie|pasaporte|carn[ée] de conducir|n[óo]mina|contrato laboral) (fals|trucad|manipul)/i,
+  /(estafa|timar|blanque|defraud|robar (dinero|la)|hackear|contrase[ñn]a de|acceder a la cuenta de)/i,
+  /(t[ií]tulo|expediente|nota[s]?|examen) (universitari|acad[ée]mic|oficial)|copiar en (el|un) examen/i,
+  /denuncia falsa|declarar en falso|perjur/i
+];
+const hitsLimit = txt => LIMITS.some(r => r.test(txt||''));
+
+/* ── Generador de nombres de operación ────────────────────────────────── */
+const NAME_MAP = [
+  [/valla|verja|cerca|muro|seto/i,'VALLA COMÚN'], [/derrama|comunidad|junta|propietari|ascensor|fachada|portal/i,'DERRAMA'],
+  [/boda|casamiento|enlace/i,'BODA LEJANA'],      [/comuni[óo]n|bautizo|confirmaci[óo]n/i,'CEREMONIA MENOR'],
+  [/cena|comida|almuerzo|barbacoa/i,'CENA CANCELADA'], [/suegr/i,'DOMINGO LIBRE'],
+  [/cu[ñn]ad/i,'CUÑADO'],                          [/navidad|nochebuena|reyes|nochevieja/i,'DICIEMBRE CONTROLADO'],
+  [/vacacion|verano|agosto|julio/i,'AGOSTO PRODUCTIVO'], [/hijo|hija|adolescen|ni[ñn]o|cr[ií]o/i,'RELEVO GENERACIONAL'],
+  [/mudan|piso|casa|alquiler|hipoteca/i,'CAMBIO DE DOMICILIO'], [/coche|garaje|plaza|aparcamiento/i,'PLAZA ASIGNADA'],
+  [/perro|gato|mascota|animal/i,'CONVIVENCIA ANIMAL'], [/ruido|m[úu]sica|fiesta|vecino de arriba/i,'SILENCIO RAZONABLE'],
+  [/trabajo|jefe|oficina|reuni[óo]n|proyecto/i,'ASUNTO PROFESIONAL'], [/dinero|pagar|pago|gasto|factura|reparto|cuenta/i,'REPARTO EQUITATIVO'],
+  [/viaje|vuelo|tren|escapada/i,'DESPLAZAMIENTO EVITADO'], [/regalo|cumplea[ñn]os|aniversario/i,'OBSEQUIO CALCULADO'],
+  [/grupo|whatsapp|chat/i,'CANAL COMÚN'],          [/limpiar|fregar|basura|tareas|casa/i,'REPARTO DOMÉSTICO'],
+  [/obra|reforma|arreglo|goter/i,'OBRA NECESARIA'],[/trastero|garaje|desv[áa]n/i,'ESPACIO DISPUTADO']
+];
+const STOP = new Set('para que como con una unos unas los las del por sin sobre este esta esto mio mia sus algo poder hacer tener quiero necesito conseguir gustaria puedo debo tengo evitar decir mucho poco todo nada ellos ellas nosotros donde cuando porque pero muy más mas ser estar hay les nos him'.split(/\s+/));
+function operationName(a){
+  const txt = (a.objetivo||'') + ' ' + (a.extra||'');
+  for (const [re, name] of NAME_MAP) if (re.test(txt)) return 'OPERACIÓN ' + name;
+  const w = txt.toLowerCase().replace(/[^a-záéíóúñü\s]/g,' ').split(/\s+/)
+            .filter(x => x.length>4 && !STOP.has(x)).sort((x,y)=>y.length-x.length)[0];
+  return 'OPERACIÓN ' + (w ? w.toUpperCase() : rnd(['ASUNTO PENDIENTE','SITUACIÓN DELICADA','FRENTE ABIERTO','MARGEN ESTRECHO']));
+}
+function fileCode(){
+  const n = String(Math.floor(Math.random()*8900)+100).padStart(4,'0');
+  return `${BRAND.filePrefix}-${BRAND.year}-${n}`;
+}
+
+/* ── Puntuación ───────────────────────────────────────────────────────── */
+function scoreOf(a){
+  let s = 8;
+  s += ({1:0, 2:4, 4:8, 6:13, 10:18})[a.cuantos] ?? 6;
+  s += ({excelente:0, correcta:4, tensa:9, rota:14})[a.relacion] ?? 5;
+  s += ({horas:12, dias:7, semanas:3, mes:0})[a.tiempo] ?? 5;
+  s += ({nada:0, sospecha:6, todo:9})[a.saben] ?? 3;
+  s += ({nada:0, incomodo:4, discusion:8, conflicto:13})[a.fracaso] ?? 4;
+  s += ({no:0, poco:2, reparto:7, mucho:10})[a.dinero] ?? 0;
+  s += ({politica:6, grupo:5, vecinos:4, adolescente:4, pareja:3, familia:2, trabajo:2, amigos:1})[a.quien] ?? 2;
+  s += a.historial==='si_mal' ? 6 : 0;
+  s += (a.objetivo||'').length > 180 ? 3 : 0;
+  return clamp(Math.round(s), 18, 99);
+}
+const riskOf  = s => s<30 ? 1 : s<48 ? 2 : s<64 ? 3 : s<80 ? 4 : 5;
+const probOf  = (s,a) => clamp(Math.round(101 - s*0.72 + (a.tiempo==='mes'?9:0) + (a.relacion==='excelente'?8:0) - (a.historial==='si_mal'?7:0)), 21, 97);
+
+/* ── Bloques narrativos ───────────────────────────────────────────────── */
+const OPENERS = {
+  becas:'El sujeto dispone de una cantidad de tiempo libre estructuralmente incompatible con cualquier expectativa parental razonable.',
+  excusas:'El cliente ha sido incluido en un compromiso social al que no desea asistir y del que, sin embargo, no puede desaparecer sin dejar rastro.',
+  persuasion:'Existe una decisión colectiva pendiente y al menos un participante cuya oposición no es económica, sino posicional.',
+  negocia:'Nos encontramos ante una negociación de importancia objetivamente menor y de carga emocional objetivamente desproporcionada.',
+  media:'El conflicto ha superado hace tiempo su causa original y se sostiene ya por inercia y por orgullo, que es el combustible más eficiente que existe.',
+  express:'La ventana de maniobra es mínima. El análisis se reduce a lo imprescindible y se prioriza la ejecución sobre la elegancia.',
+  crisis:'El expediente llega con daños previos. Antes de avanzar, contenemos.',
+  otro:'El expediente no encaja limpiamente en ninguna división, lo cual, en nuestra experiencia, suele indicar que encaja en varias.'
+};
+const CLOSERS = [
+  'No hace falta que salga bien a la primera. Hace falta que no salga mal del todo.',
+  'Ejecute en el orden indicado. El orden es la estrategia; el resto es conversación.',
+  'Si algo se tuerce, no improvise: reabra el expediente.',
+  'Diga menos de lo que sabe. Siempre funciona.',
+  'Y sobre todo: no lo explique dos veces. Explicarlo dos veces es confesar.'
+];
+
+function strategyFor(a){
+  const S = [];
+  S.push({
+    becas:'Presentar el programa como una oportunidad selectiva, nunca como una imposición. El sujeto debe sentir que ha sido admitido, no asignado.',
+    excusas:'Fijar el mensaje una sola vez, por escrito y con antelación. La antelación es, en sí misma, la mitad de la excusa.',
+    persuasion:'No convocar todavía. Antes de cualquier reunión conjunta, cerrar apoyos por separado.',
+    negocia:'Definir de antemano qué está dispuesto a ceder. Una concesión planificada vale el doble que una concesión arrancada.',
+    media:'Reconstruir los hechos por escrito antes de hablar con nadie. Se sorprenderá de lo poco que queda del agravio original.',
+    express:'Elegir una sola línea de acción y ejecutarla sin consultar. No hay tiempo para consenso.',
+    crisis:'Detener toda comunicación nueva durante 24 horas. Lo primero no es arreglarlo: es dejar de empeorarlo.',
+    otro:'Reducir el asunto a una única frase. Si no cabe en una frase, hay dos problemas y no uno.'
+  }[a.division] || 'Reducir el asunto a una única frase.');
+
+  if (a.cuantos >= 6) S.push('Identificar a la persona con más influencia informal del grupo y hablar con ella primero, en privado y sin plantearlo como una petición.');
+  else if (a.cuantos >= 2) S.push('Hablar por separado antes que en conjunto. Las decisiones colectivas se toman antes de la reunión, no durante.');
+
+  if (a.saben === 'nada') S.push('Introducir el asunto usted mismo. Que la información llegue por otra vía multiplica el coste de la conversación.');
+  if (a.saben === 'sospecha') S.push('Confirmar lo que ya se sospecha de forma tranquila y anticipada. Una sospecha confirmada se desactiva; una sospecha negada se refuerza.');
+  if (a.saben === 'todo') S.push('Olvidar el efecto sorpresa y trabajar exclusivamente el motivo. Cuando todos saben qué quiere usted, lo único negociable es por qué.');
+
+  if (a.dinero === 'reparto') S.push('Presentar la cifra por persona y por mes, nunca la cifra total. El total asusta; la cuota se discute.');
+  if (a.dinero === 'mucho')   S.push('Poner las cifras por escrito antes de la conversación. Todo importe mencionado de memoria se recuerda al alza.');
+
+  if (a.relacion === 'tensa' || a.relacion === 'rota')
+    S.push('Abrir reconociendo la posición contraria en voz alta antes de exponer la suya. Cuesta once segundos y desarma la mitad del guion del otro.');
+  if (a.historial === 'si_mal')
+    S.push('Mencionar el intento anterior usted mismo y en primer lugar. Si no lo hace usted, lo hará el otro, y en peor momento.');
+
+  if (a.tiempo === 'horas') S.push('Ejecutar hoy. Una solución mediocre a tiempo supera sistemáticamente a una solución impecable tardía.');
+  else S.push('Dejar un intervalo de reflexión entre la propuesta y la respuesta. Nadie cambia de opinión delante de testigos.');
+
+  if (a.fracaso === 'conflicto')
+    S.push('Renunciar explícitamente a tener razón. El objetivo del expediente deja de ser ganar y pasa a ser no romper nada irreversible.');
+
+  S.push('Cerrar con una frase corta y un siguiente paso concreto. Las conversaciones que terminan sin fecha no han terminado.');
+  return S;
+}
+
+function argumentsFor(a){
+  const base = [
+    'El coste de mantener la situación abierta es superior al coste de resolverla ahora, aunque se pague de golpe.',
+    'La propuesta no exige que nadie reconozca que estaba equivocado. Ese es su principal valor.',
+    'Existe una fecha. Sin fecha, esto vuelve a plantearse dentro de seis meses en peores condiciones.'
+  ];
+  if (a.dinero === 'reparto' || a.dinero === 'mucho')
+    base.push('Repartido entre los implicados y prorrateado, el importe deja de ser una cifra y pasa a ser una molestia menor.');
+  if (a.quien === 'adolescente')
+    base.push('La propuesta amplía sus opciones futuras sin reducir ninguna de las actuales. Formalmente, no pierde nada.');
+  if (a.quien === 'vecinos' || a.quien === 'grupo')
+    base.push('La decisión ya se ha retrasado lo suficiente como para que no decidir sea, en la práctica, una decisión.');
+  if (a.quien === 'politica' || a.quien === 'familia')
+    base.push('El asunto se plantea como una preferencia personal, no como una valoración sobre nadie. Esa distinción lo es todo.');
+  if (a.relacion === 'excelente')
+    base.push('La relación es lo bastante sólida como para sostener esta conversación. Precisamente por eso conviene tenerla ahora.');
+  return base.slice(0,5);
+}
+
+function objectionsFor(a){
+  const pool = [
+    {o:'«Siempre lo hemos hecho así.»',                 r:'Cierto. Y ha funcionado hasta que ha dejado de funcionar. La costumbre no es un argumento: es un historial.'},
+    {o:'«¿Y por qué ahora?»',                            r:'Porque es el primer momento en que se puede hacer sin prisa. Dentro de dos meses habría que hacerlo con prisa.'},
+    {o:'«Me lo tengo que pensar.»',                      r:'Perfectamente razonable. Le propongo una fecha concreta para retomarlo: así nadie tiene que acordarse.'},
+    {o:'«No me parece justo.»',                          r:'Escuchemos qué parte concreta no lo es. Casi siempre es una sola y casi siempre es negociable.'},
+    {o:'«Habrá que consultarlo con los demás.»',         r:'Por supuesto. De hecho, ya he hablado con dos de ellos y no ven inconveniente.'},
+    {o:'«Es mucho dinero.»',                             r:'Lo es en total. Por persona y por mes es menos de lo que cuesta seguir discutiéndolo.'},
+    {o:'«Yo no tengo tiempo para esto.»',                r:'Precisamente por eso conviene resolverlo de una vez: lo que consume tiempo es tenerlo abierto.'},
+    {o:'«¿Esto lo has decidido tú solo?»',               r:'He preparado una propuesta. Decidirla es exactamente lo que estamos haciendo ahora.'},
+    {o:'«La última vez tampoco salió bien.»',            r:'Correcto, y por eso el planteamiento es distinto. Le señalo las tres diferencias.'},
+    {o:'Silencio. Ninguna objeción explícita.',          r:'La más peligrosa. Pregunte directamente qué le parece y espere. No rellene el silencio.'}
+  ];
+  const out = [];
+  if (a.dinero === 'reparto' || a.dinero === 'mucho') out.push(pool[5]);
+  if (a.historial === 'si_mal') out.push(pool[8]);
+  if (a.cuantos >= 6) out.push(pool[4]);
+  if (a.relacion === 'tensa' || a.relacion === 'rota') out.push(pool[7]);
+  for (const p of [pool[0],pool[1],pool[2],pool[3],pool[9]]) if (out.length<5 && !out.includes(p)) out.push(p);
+  return out.slice(0,5);
+}
+
+function planBFor(a){
+  const b = ['Aplazar sin cerrar: proponer una fecha concreta de revisión. Un aplazamiento con fecha no es una derrota, es una prórroga.'];
+  if (a.cuantos >= 4) b.push('Reducir el alcance: conseguir el acuerdo de la mayoría y dejar al bloqueador fuera del acta, no fuera de la relación.');
+  else b.push('Reducir la petición a su versión mínima viable y aceptar esa versión sin renegociar.');
+  if (a.tiempo !== 'horas') b.push('Dejar pasar dos semanas y reabrir el asunto en un contexto distinto. El mismo argumento cambia de valor según la sala.');
+  b.push('Asumir el coste usted mismo y comunicarlo sin reproche. Es caro, es eficaz y cierra el expediente.');
+  return b.slice(0,4);
+}
+
+/* ── Motor local ──────────────────────────────────────────────────────── */
+function localEngine(a){
+  const score = scoreOf(a), risk = riskOf(score), prob = probOf(score,a);
+  const div   = SERVICES.find(s => s.id===a.division);
+  const who   = ({adolescente:'un adolescente',pareja:'su pareja',familia:'familia directa',politica:'familia política',
+                  vecinos:'la comunidad de vecinos',amigos:'un grupo de amigos',trabajo:'el entorno profesional',
+                  grupo:'un grupo sin liderazgo definido'})[a.quien] || 'la otra parte';
+  const time  = ({horas:'horas',dias:'unos días',semanas:'una o dos semanas',mes:'más de un mes'})[a.tiempo] || 'un plazo indeterminado';
+  const n     = a.cuantos===10 ? 'más de ocho personas' : a.cuantos===6 ? 'entre cinco y ocho personas'
+              : a.cuantos===4 ? 'tres o cuatro personas' : a.cuantos===2 ? 'dos personas' : 'una persona';
+
+  const summary = `${OPENERS[a.division] || OPENERS.otro} El cliente plantea el siguiente objetivo: «${a.objetivo.trim()}». `
+    + `El asunto implica a ${n} y se dirige principalmente a ${who}, con una relación previa calificada como ${a.relacion}. `
+    + `Disponemos de ${time}. `
+    + (a.saben==='nada' ? 'La otra parte no dispone todavía de información, lo que constituye la única ventaja real del expediente. '
+      : a.saben==='sospecha' ? 'Existen sospechas por parte del interlocutor, circunstancia que acorta los plazos disponibles. '
+      : 'La otra parte conoce la situación en su totalidad, de modo que la operación se juega enteramente en el terreno del motivo. ')
+    + (a.fracaso==='conflicto' ? 'El escenario de fracaso incluye conflicto prolongado, por lo que el criterio prioritario deja de ser la eficacia y pasa a ser la contención.' : 'El escenario de fracaso es asumible y permite cierto margen de maniobra.');
+
+  const objs = objectionsFor(a);
+  return {
+    engine:'local',
+    operation_name: operationName(a),
+    file_code: fileCode(),
+    division: div ? T(div.name) : 'Clasificación pendiente',
+    date: new Date().toLocaleDateString('es-ES', {day:'2-digit', month:'long', year:'numeric'}),
+    goal: a.objetivo.trim(),
+    summary,
+    actors: [
+      `Cliente (usted) — promotor del expediente y única persona con visión completa.`,
+      `${who.charAt(0).toUpperCase()+who.slice(1)} — destinatario principal de la operación.`,
+      a.cuantos>=4 ? 'Bloqueador estructural — se opondrá por posición, no por contenido. No intente convencerlo el primero.' : 'Observadores secundarios — sin voto, con opinión.',
+      a.dinero==='reparto'||a.dinero==='mucho' ? 'Factor económico — presente en la conversación aunque nadie lo mencione en voz alta.' : 'Factor temporal — juega a favor de quien no tiene prisa.'
+    ],
+    risk_level: risk,
+    pufo_score: score,
+    tier: TIERS[risk-1],
+    status: risk>=4 ? T(STATUSES[2]) : T(STATUSES[4]),
+    strategy: strategyFor(a),
+    arguments: argumentsFor(a),
+    expected_objections: objs.map(o=>o.o),
+    responses: objs.map(o=>o.r),
+    objection_pairs: objs,
+    plan_b: planBFor(a),
+    success_probability: prob,
+    closing: rnd(CLOSERS),
+    answers: a
+  };
+}
+
+/* ── Expediente bloqueado por límites ─────────────────────────────────── */
+function blockedFile(a){
+  return {
+    blocked:true,
+    engine:'guard',
+    file_code: fileCode(),
+    operation_name:'EXPEDIENTE NO ADMITIDO',
+    date:new Date().toLocaleDateString('es-ES',{day:'2-digit',month:'long',year:'numeric'}),
+    goal:(a.objetivo||'').trim(),
+    headline: T('{{founder}} ha revisado el expediente y considera que esto ya no es un {{problem}}. Es un delito.'),
+    body: T('Este despacho trabaja con narrativa, orden y argumentos. No trabaja con documentación falsificada, suplantaciones, justificantes médicos, comunicaciones en nombre de instituciones ni declaraciones ante autoridades. No es una cuestión de tarifa: es una cuestión de que a partir de ahí el problema deja de tener solución y pasa a tener consecuencias.'),
+    alt: [
+      'Reformule el objetivo sin ningún documento, firma ni identidad de terceros de por medio.',
+      'Plantee el mismo asunto como una conversación difícil: casi siempre existe una versión legal del mismo resultado.',
+      'Si hay un tercero afectado con capacidad de sanción, la única estrategia con probabilidad razonable de éxito es adelantarse y contarlo.'
+    ],
+    closing: T('{{founder}} le acompaña hasta la puerta. Vuelva cuando el asunto sea, simplemente, incómodo.')
+  };
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   ④  HOOK PARA LLM
+   ────────────────────────────────────────────────────────────────────────
+   Para conectar una IA real:
+     1) AI.enabled  = true
+     2) AI.endpoint = 'https://tu-backend/api/expediente'   ← proxy propio
+     3) Tu backend recibe el payload de buildPayload() y debe devolver el
+        JSON descrito en RESPONSE_SCHEMA. Si falla, cae al motor local.
+   NUNCA pongas una API key aquí: este archivo es público en el navegador.
+   ══════════════════════════════════════════════════════════════════════ */
+const RESPONSE_SCHEMA = {
+  operation_name:'string', summary:'string', risk_level:'1-5', pufo_score:'0-100',
+  strategy:['string'], arguments:['string'], expected_objections:['string'],
+  responses:['string'], plan_b:['string'], success_probability:'0-100'
+};
+
+const AI = {
+  enabled : false,
+  endpoint: '',
+  systemPrompt: T(
+    'Eres {{founder}}, fundador de {{brand}}, una consultora ficticia y humorística que resuelve {{problems}} cotidianos ' +
+    'con una seriedad empresarial completamente desproporcionada. Hablas en español de España, en tercera persona corporativa, ' +
+    'con ironía seca y sin chistes evidentes. El humor nace de tratar asuntos triviales con lenguaje de estrategia, compliance y ' +
+    'gestión de riesgos. Nunca ayudas con documentación falsa, suplantación de identidad, justificantes médicos, fraude ni ' +
+    'declaraciones ante autoridades: en esos casos respondes en personaje que el asunto ha dejado de ser un {{problem}}. ' +
+    'Devuelves EXCLUSIVAMENTE un JSON válido con el esquema indicado.'),
+  async generate(payload){
+    const res = await fetch(this.endpoint, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({system:this.systemPrompt, schema:RESPONSE_SCHEMA, input:payload})
+    });
+    if(!res.ok) throw new Error('AI endpoint ' + res.status);
+    return res.json();
+  }
+};
+
+function buildPayload(a){
+  return {
+    problem_type: a.division,
+    context: a.objetivo,
+    extra_context: a.extra || null,
+    participants: {who:a.quien, count:a.cuantos, relationship:a.relacion, prior_attempt:a.historial || null},
+    goal: a.objetivo,
+    constraints: {time:a.tiempo, they_know:a.saben, money:a.dinero || 'no'},
+    risk: {failure_impact:a.fracaso},
+    raw_answers: a,
+    schema: RESPONSE_SCHEMA
+  };
+}
+
+/* Punto de entrada único. Guardarraíles primero, IA después, local siempre. */
+async function generateExpediente(a){
+  if (hitsLimit((a.objetivo||'') + ' ' + (a.extra||''))) return blockedFile(a);
+  if (AI.enabled && AI.endpoint){
+    try {
+      const raw = await AI.generate(buildPayload(a));
+      const base = localEngine(a);
+      const pairs = (raw.expected_objections||[]).map((o,i)=>({o, r:(raw.responses||[])[i]||''}));
+      return Object.assign(base, raw, {engine:'llm', objection_pairs: pairs.length?pairs:base.objection_pairs});
+    } catch(err){ console.warn('[' + BRAND.name + '] IA no disponible, usando motor local:', err); }
+  }
+  return localEngine(a);
+}
+
+/* ── Archivo (persistencia tolerante a fallos) ────────────────────────── */
+const STORE_KEY = BRAND.filePrefix.toLowerCase() + '_expedientes_v1';
+let memoryStore = [];
+const Archive = {
+  all(){
+    try { return JSON.parse(localStorage.getItem(STORE_KEY) || '[]'); }
+    catch(e){ return memoryStore; }
+  },
+  save(f){
+    const list = this.all(); list.unshift(f);
+    memoryStore = list.slice(0,60);
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(memoryStore)); } catch(e){}
+  },
+  clear(){ memoryStore = []; try{ localStorage.removeItem(STORE_KEY); }catch(e){} }
+};
+</script>
+<script>
+/* ════════════════════════════════════════════════════════════════════════
+   ⑤  VISTAS Y ENRUTADO
+   ══════════════════════════════════════════════════════════════════════ */
+const app   = document.getElementById('app');
+const toast = document.getElementById('toast');
+const setHTML = (el, html) => { el.innerHTML = T(html); };
+let   lastFile = null;
+
+function say(msg){ toast.textContent = T(msg); toast.classList.add('on'); clearTimeout(say._t); say._t = setTimeout(()=>toast.classList.remove('on'), 2600); }
+
+/* ── Navegación ───────────────────────────────────────────────────────── */
+const navLinks = document.getElementById('navLinks');
+setHTML(navLinks, NAV.map(n => `<a href="#/${n.id}" data-nav="${n.id}">${n.label}</a>`).join(''));
+document.getElementById('burger').onclick = () => navLinks.classList.toggle('open');
+document.querySelector('.brand').onclick  = () => location.hash = '#/home';
+navLinks.onclick = e => { if(e.target.tagName==='A') navLinks.classList.remove('open'); };
+
+/* ── Piezas reutilizables ─────────────────────────────────────────────── */
+const demoNotice = () => `
+  <div class="card" style="border-color:var(--line); background:rgba(201,162,75,.05)">
+    <span class="tag">Versión de demostración</span>
+    <p style="margin-top:14px; color:#B6BFCF">
+      {{brand}} es una <b>parodia</b>: no existe la empresa, ni el servicio, ni la factura.
+      En esta versión publicada los expedientes se generan con un <b>motor local de plantillas</b> que se ejecuta en su navegador.
+      La <b>generación con IA no está operativa</b> —requiere un servidor propio— pero el código ya incluye el punto de conexión
+      <span class="mono gold">generateExpediente()</span> listo para enchufarla.
+    </p>
+  </div>`;
+
+const riskStamp = n => { const r = RISK[n-1]; return `<span class="stamp ${r.cls}">Riesgo · ${r.label}</span>`; };
+const footer = () => `
+  <footer><div class="wrap">
+    <div class="foot-grid">
+      <div style="flex:1 1 300px">
+        <div class="brand" style="margin-bottom:16px"><div class="seal">{{mono}}</div>
+          <div class="brand-txt"><span class="brand-name">{{brand}}</span><span class="brand-sub">{{city}}</span></div></div>
+        <p class="disclaimer">
+          <b>{{brand}} es una empresa ficticia.</b> Toda esta web es una parodia: los servicios, los clientes, los testimonios,
+          los expedientes y las tarifas son inventados. No se presta ningún servicio real, no se recoge ningún dato y nada de
+          lo aquí publicado debe utilizarse para engañar a instituciones, empresas ni terceros.
+        </p>
+      </div>
+      <div style="flex:0 1 220px">
+        <div class="kicker">Divisiones</div>
+        ${SERVICES.slice(0,5).map(s=>`<div style="font-size:13px;color:#8A94A9;padding:3px 0">${s.name}</div>`).join('')}
+      </div>
+      <div style="flex:0 1 220px">
+        <div class="kicker">Expedientes</div>
+        <div style="font-size:13px;color:#8A94A9;padding:3px 0">{{email}}</div>
+        <div style="font-size:13px;color:#8A94A9;padding:3px 0">Ref. {{prefix}}-{{year}}</div>
+        <div style="font-size:13px;color:#8A94A9;padding:3px 0">Discreción garantizada (ficticiamente)</div>
+      </div>
+    </div>
+    <div class="rule" style="margin:34px 0 18px"></div>
+    <div class="mono" style="font-size:10.5px;letter-spacing:.18em;color:#5C6577;text-transform:uppercase">
+      © {{year}} {{brand}} — {{claim}} · Obra de ficción
+    </div>
+  </div></footer>`;
+
+/* ── HOME ─────────────────────────────────────────────────────────────── */
+const V = {};
+V.home = () => `
+  <section class="hero"><div class="wrap">
+    <div class="kicker">Expediente abierto · {{prefix}}-{{year}}</div>
+    <h1>Problemas absurdos.<em>Soluciones impecables.</em></h1>
+    <p class="lead">
+      {{brand}} convierte discusiones de vecinos, bodas indeseadas, adolescentes en horizontal y comidas familiares
+      inevitables en <b>operaciones estratégicas</b> tratadas con una seriedad completamente desproporcionada.
+      Usted trae el {{problem}}. Nosotros traemos el procedimiento.
+    </p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#/lab">Abrir expediente</a>
+      <a class="btn btn-ghost" href="#/casos">Ver casos resueltos</a>
+    </div>
+    <div class="ticker"><div>${[...TICKER,...TICKER].map(t=>`<span>${t}</span>`).join('')}</div></div>
+  </div></section>
+
+  <section class="tight"><div class="wrap reveal">
+    <div class="grid g3">
+      <div class="card"><span class="idx">01 — Diagnóstico</span><h3>Escuchamos el {{problem}}</h3>
+        <p>Siete preguntas que reaccionan a lo que usted responde. No es un formulario: es un interrogatorio cortés.</p></div>
+      <div class="card"><span class="idx">02 — Análisis</span><h3>Clasificamos el riesgo</h3>
+        <p>Mapa de actores, objeciones previsibles, exposición posterior y un {{score}} que nadie ha auditado jamás.</p></div>
+      <div class="card"><span class="idx">03 — Ejecución</span><h3>Le decimos qué decir</h3>
+        <p>Estrategia, argumentario, contramedidas y plan B. En el orden correcto, que es lo único que importa.</p></div>
+    </div>
+  </div></section>
+
+  <section><div class="wrap reveal">
+    <div class="kicker">La diferencia</div>
+    <div class="grid g2" style="align-items:center; gap:44px">
+      <div>
+        <h2 class="title">No decimos que le ayudamos a no ir a una boda.</h2>
+        <p class="lead">Decimos que diseñamos una <b>estrategia de desvinculación social con mínimo impacto reputacional</b>.
+        Es lo mismo. Suena mejor. Y, sorprendentemente, funciona mejor: cuando un problema se ordena por escrito,
+        deja de ser un {{problem}} y pasa a ser un expediente.</p>
+        <a class="btn btn-ghost btn-sm" href="#/personaje">Conocer a {{founder}}</a>
+      </div>
+      <div class="dossier">
+        <div class="dossier-head"><span class="dossier-code">{{prefix}}-{{year}}-0047</span>
+          <span class="stamp st-gold">Ejemplo</span></div>
+        <div class="dossier-body" style="padding-top:8px">
+          <div class="field"><h4>Situación real</h4><p>«No quiero ir a la boda de mi prima.»</p></div>
+          <div class="field"><h4>Situación según {{brand}}</h4>
+            <p>Compromiso social de asistencia opcional con alta exposición familiar posterior y ventana de aviso todavía favorable.</p></div>
+          <div class="field"><h4>Recomendación</h4>
+            <p>Comunicar en las próximas 72 horas, por teléfono, con motivo verificable y obsequio por encima de la media del grupo.</p></div>
+        </div>
+        <div class="metrics">
+          <div class="metric"><div class="v">52</div><div class="k">{{score}}</div></div>
+          <div class="metric"><div class="v">94%</div><div class="k">Probabilidad</div></div>
+          <div class="metric"><div class="v">I</div><div class="k">Clasificación</div></div>
+          <div class="metric"><div class="v">Bajo</div><div class="k">Riesgo</div></div>
+        </div>
+      </div>
+    </div>
+  </div></section>
+
+  <section class="tight"><div class="wrap reveal">
+    <div class="kicker">Divisiones</div>
+    <div class="grid g3">
+      ${SERVICES.slice(0,3).map((s,i)=>`
+        <a class="card" href="#/servicios"><span class="idx">${s.code}</span><h3>${s.name}</h3><p>${s.claim}</p></a>`).join('')}
+    </div>
+    <div style="text-align:center;margin-top:28px"><a class="btn btn-ghost btn-sm" href="#/servicios">Las ${SERVICES.length} divisiones</a></div>
+  </div></section>
+
+  <section><div class="wrap reveal">
+    <div class="kicker">Clientes que existen tanto como la empresa</div>
+    <div class="grid g3">${TESTIMONIALS.slice(0,3).map(t=>`
+      <div class="card"><div class="quote">${t.q}<cite>${t.a}</cite></div></div>`).join('')}</div>
+  </div></section>
+
+  <section class="tight"><div class="wrap reveal">${demoNotice()}</div></section>
+
+  <section><div class="wrap reveal" style="text-align:center">
+    <h2 class="title">Si existe un {{problem}}, existe un procedimiento.</h2>
+    <p class="lead" style="margin:0 auto 30px">Abra su expediente. Tarda tres minutos y no requiere registro, ni datos, ni valentía.</p>
+    <a class="btn btn-primary" href="#/lab">Entrar en {{lab}}</a>
+  </div></section>`;
+
+/* ── SERVICIOS ────────────────────────────────────────────────────────── */
+V.servicios = () => `
+  <section style="padding-top:150px"><div class="wrap">
+    <div class="kicker">Estructura del despacho</div>
+    <h1 class="title">${SERVICES.length} divisiones. Un solo criterio.</h1>
+    <p class="lead">Cada división existe porque un cliente llegó con un {{problem}} que no encajaba en ninguna de las anteriores.
+      Así se ha construido este despacho: por acumulación de casos imprevistos.</p>
+    <div class="grid g2" style="margin-top:44px">
+      ${SERVICES.map(s=>`
+        <div class="card reveal">
+          <span class="idx">${s.code}</span>
+          <h3>${s.name}</h3>
+          <p style="color:var(--gold); font-family:var(--serif); font-style:italic; font-size:16px; margin-bottom:12px">${s.claim}</p>
+          <p>${s.desc}</p>
+          <ul>${s.bullets.map(b=>`<li>${b}</li>`).join('')}</ul>
+          <div style="margin-top:20px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+            ${riskStamp(s.risk)}
+            <a class="btn btn-ghost btn-sm" href="#/lab?d=${s.id}">Abrir expediente</a>
+          </div>
+        </div>`).join('')}
+    </div>
+    <div class="grid" style="margin-top:44px">${demoNotice()}</div>
+  </div></section>`;
+
+/* ── CASOS ────────────────────────────────────────────────────────────── */
+V.casos = () => `
+  <section style="padding-top:150px"><div class="wrap">
+    <div class="kicker">Archivo público</div>
+    <h1 class="title">Expedientes cerrados</h1>
+    <p class="lead">Todos los casos son ficticios. Los nombres han sido cambiados; los vecinos, no tanto.</p>
+    <div class="grid" style="margin-top:44px; gap:26px">
+      ${CASES.map(c=>`
+        <div class="dossier reveal">
+          <div class="dossier-head">
+            <span class="dossier-code">${c.code}</span>
+            <h3 class="dossier-op">${c.op}</h3>
+            <span class="stamp ${c.status==='Resuelto'?'st-ok':'st-warn'}">${c.status}</span>
+          </div>
+          <div class="dossier-body">
+            <div class="grid g2" style="gap:0 34px">
+              <div class="field"><h4>Problema</h4><p>${c.problem}</p></div>
+              <div class="field"><h4>Objetivo</h4><p>${c.goal}</p></div>
+              <div class="field"><h4>Estrategia aplicada</h4><p>${c.strategy}</p></div>
+              <div class="field"><h4>Resultado</h4><p>${c.result}</p></div>
+            </div>
+          </div>
+          <div class="metrics">
+            <div class="metric"><div class="v">${c.score}</div><div class="k">{{score}}</div></div>
+            <div class="metric"><div class="v">${c.prob}%</div><div class="k">Probabilidad</div></div>
+            <div class="metric"><div class="v">${['I','II','III','IV','V'][c.risk-1]}</div><div class="k">Clasificación</div></div>
+            <div class="metric"><div class="v" style="font-size:22px">${T(RISK[c.risk-1].label)}</div><div class="k">Riesgo</div></div>
+          </div>
+        </div>`).join('')}
+    </div>
+    <div style="text-align:center;margin-top:44px"><a class="btn btn-primary" href="#/lab">Abrir el suyo</a></div>
+  </div></section>`;
+
+/* ── PERSONAJE ────────────────────────────────────────────────────────── */
+V.personaje = () => `
+  <section style="padding-top:150px"><div class="wrap">
+    <div class="kicker">El fundador</div>
+    <div class="grid g2" style="gap:48px; align-items:start">
+      <div>
+        <h1 class="title">{{founder}}</h1>
+        <p class="lead">Nadie sabe con exactitud a qué se dedicaba antes. Se sabe que llegó con un maletín, que no ha
+          levantado la voz nunca y que en treinta años no ha perdido un expediente por precipitación.</p>
+        <p>Viste como si volviera de una reunión que terminó en 1934. Usa monóculo, aunque su vista es perfecta:
+          sostiene que obliga al interlocutor a hablar más despacio, y que la gente que habla despacio se contradice menos.</p>
+        <p>No promete resultados. Promete <b>orden</b>. Su tesis profesional cabe en una frase: la mayoría de los conflictos
+          cotidianos no se pierden por falta de razón, sino por exceso de improvisación y por hablar con la persona
+          equivocada en primer lugar.</p>
+        <p>Cuando un cliente le cuenta un asunto, no interrumpe. Cuando termina, hace tres preguntas.
+          Después dice: <i>«Bien. Esto tiene solución, pero no la que usted ha pensado.»</i></p>
+        <div class="grid g2" style="margin-top:30px">
+          ${[['Elegancia','No como estética, sino como método.'],['Discreción','Todo lo que entra en el despacho se queda dentro.'],
+             ['Pragmatismo','Prefiere una solución fea que funcione.'],['Ironía','Nunca a costa del cliente. Siempre a costa del cuñado.']]
+            .map(([t,d])=>`<div class="card"><h3 style="font-size:19px">${t}</h3><p>${d}</p></div>`).join('')}
+        </div>
+      </div>
+      <div>
+        <div class="dossier">
+          <div class="dossier-head"><span class="dossier-code">Ficha personal</span></div>
+          <div class="dossier-body">
+            <div class="field"><h4>Cargo</h4><p>Fundador y responsable último de todo expediente clasificado como {{tier}} IV o superior.</p></div>
+            <div class="field"><h4>Método</h4><p>Escuchar entero. Preguntar tres veces. No decidir el mismo día.</p></div>
+            <div class="field"><h4>Frase habitual</h4><p><i>«No me cuente lo que ocurrió. Cuénteme lo que dijo usted.»</i></p></div>
+            <div class="field"><h4>Debilidad declarada</h4><p>Las comunidades de propietarios. Acepta todos los casos y se arrepiente de todos.</p></div>
+            <div class="field"><h4>Límite absoluto</h4><p>Documentos, firmas, identidades e instituciones. Ahí cierra la carpeta y le acompaña a la puerta.</p></div>
+          </div>
+        </div>
+        <div class="card" style="margin-top:22px">
+          <div class="quote">Un {{problem}} no se resuelve con ingenio. Se resuelve con orden y con la conversación correcta en el momento correcto.<cite>{{founder}}</cite></div>
+        </div>
+      </div>
+    </div>
+  </div></section>`;
+
+/* ── TARIFAS ──────────────────────────────────────────────────────────── */
+V.tarifas = () => `
+  <section style="padding-top:150px"><div class="wrap">
+    <div class="kicker">Honorarios</div>
+    <h1 class="title">Tarifas igual de ficticias que la empresa</h1>
+    <p class="lead">Ningún plan es contratable, ningún importe es cobrable y ninguna factura existe. Los precios están aquí
+      porque una consultora sin tarifas no resulta creíble.</p>
+    <div class="grid g4" style="margin-top:44px">
+      ${PLANS.map(p=>`
+        <div class="price ${p.feat?'feat':''} reveal">
+          ${p.feat?'<span class="tag" style="align-self:flex-start;margin-bottom:8px">Más contratado</span>':''}
+          <h3 style="font-size:21px">${p.name}</h3>
+          <div class="amt">${p.price}<small> / ${p.per}</small></div>
+          <ul>${p.items.map(i=>`<li>${i}</li>`).join('')}</ul>
+          <a class="btn ${p.feat?'btn-primary':'btn-ghost'} btn-sm" href="#/lab">Abrir expediente</a>
+        </div>`).join('')}
+    </div>
+    <div class="grid" style="margin-top:44px">${demoNotice()}</div>
+  </div></section>`;
+
+/* ── FAQ ──────────────────────────────────────────────────────────────── */
+V.faq = () => `
+  <section style="padding-top:150px"><div class="wrap" style="max-width:820px">
+    <div class="kicker">Preguntas frecuentes</div>
+    <h1 class="title">Dudas razonables</h1>
+    <div style="margin-top:40px">
+      ${FAQ.map((f,i)=>`
+        <div class="faq-item" data-faq="${i}">
+          <h4>${f.q}<span>+</span></h4>
+          <div class="faq-a"><p>${f.a}</p></div>
+        </div>`).join('')}
+    </div>
+  </div></section>`;
+
+/* ── ARCHIVO ──────────────────────────────────────────────────────────── */
+V.archivo = () => {
+  const list = Archive.all();
+  return `
+  <section style="padding-top:150px"><div class="wrap">
+    <div class="kicker">Área privada</div>
+    <h1 class="title">Mis expedientes</h1>
+    <p class="lead">Guardados únicamente en este navegador. No hay servidor, no hay cuenta y no hay nadie leyéndolos.</p>
+    ${list.length ? `
+      <div class="grid g2" style="margin-top:40px">
+        ${list.map((f,i)=>`
+          <div class="card" data-open="${i}" style="cursor:pointer">
+            <span class="idx">${f.file_code} · ${f.date}</span>
+            <h3>${esc(f.operation_name)}</h3>
+            <p style="margin-bottom:14px">${esc((f.goal||'').slice(0,120))}${(f.goal||'').length>120?'…':''}</p>
+            <div style="display:flex;gap:9px;flex-wrap:wrap">
+              ${f.blocked ? '<span class="stamp st-danger">No admitido</span>'
+                : `${riskStamp(f.risk_level)}<span class="stamp st-gold">{{score}} ${f.pufo_score}</span><span class="stamp st-ok">${f.success_probability}%</span>`}
+            </div>
+          </div>`).join('')}
+      </div>
+      <div style="margin-top:30px;display:flex;gap:12px;flex-wrap:wrap">
+        <a class="btn btn-primary btn-sm" href="#/lab">Nuevo expediente</a>
+        <button class="btn btn-ghost btn-sm" id="clearArch">Vaciar archivo</button>
+      </div>`
+    : `<div class="card" style="margin-top:40px;text-align:center;padding:60px 28px">
+         <h3>El archivo está vacío</h3>
+         <p style="margin:10px auto 24px;max-width:44ch">Todavía no ha abierto ningún expediente. {{founder}} lo interpreta como una buena noticia.</p>
+         <a class="btn btn-primary btn-sm" href="#/lab">Abrir el primero</a>
+       </div>`}
+  </div></section>`;
+};
+
+/* ════════════════════════════════════════════════════════════════════════
+   LAB — flujo conversacional
+   ══════════════════════════════════════════════════════════════════════ */
+const Lab = { answers:{}, reaction:null, done:false };
+
+function nextQuestion(){
+  for (const q of QUESTIONS){
+    if (q.id in Lab.answers) continue;
+    if (q.when && !q.when(Lab.answers)) continue;
+    return q;
+  }
+  return null;
+}
+function labProgress(){
+  const total = QUESTIONS.filter(q => !q.when || q.when(Lab.answers)).length;
+  return Math.round(Object.keys(Lab.answers).length / total * 100);
+}
+
+V.lab = () => `
+  <section style="padding-top:150px"><div class="wrap">
+    <div class="lab">
+      <div style="text-align:center;margin-bottom:36px">
+        <div class="kicker" style="justify-content:center">{{lab}}</div>
+        <h1 class="title" style="font-size:clamp(28px,4vw,44px)">Abramos su expediente</h1>
+        <p class="lead" style="margin:0 auto">Siete preguntas. Reaccionan a lo que usted conteste. Sin registro y sin datos personales.</p>
+      </div>
+      <div class="lab-shell" id="labShell"></div>
+      <div style="margin-top:26px">${demoNotice()}</div>
+    </div>
+  </div></section>`;
+
+function renderLab(){
+  const shell = document.getElementById('labShell');
+  if(!shell) return;
+  const q = nextQuestion();
+
+  if(!q){ runGeneration(shell); return; }
+
+  const opts = typeof q.options === 'function' ? q.options() : null;
+  const answered = Object.keys(Lab.answers).length;
+  const total = QUESTIONS.filter(x => !x.when || x.when(Lab.answers)).length;
+
+  setHTML(shell, `
+    <div class="lab-progress"><i style="width:${labProgress()}%"></i></div>
+    <div class="speech">
+      <div class="avatar">{{mono}}</div>
+      <div class="speech-body">
+        <div class="speech-name">{{founder}}</div>
+        ${Lab.reaction ? `<div class="speech-txt" style="color:var(--gold);font-size:19px;font-style:italic;margin-bottom:12px">${esc(Lab.reaction)}</div>` : ''}
+        <div class="speech-txt">${q.q}</div>
+        ${q.note ? `<div class="speech-note">${q.note}</div>` : ''}
+      </div>
+    </div>
+    ${opts ? `<div class="chips" id="labOpts">${opts.map(o=>`
+        <button class="chip" data-v="${esc(String(o.v))}">
+          ${esc(o.label)}${o.hint ? `<br><span style="font-size:12px;color:var(--muted)">${esc(o.hint)}</span>` : ''}
+        </button>`).join('')}</div>`
+      : `<div style="margin-top:auto;padding-top:20px">
+           <textarea class="lab-input" id="labText" rows="3" placeholder="${esc(q.ph||'')}"></textarea>
+         </div>`}
+    <div class="lab-foot">
+      ${opts ? '' : `<button class="btn btn-primary btn-sm" id="labNext">Continuar</button>`}
+      ${answered ? `<button class="btn btn-ghost btn-sm" id="labBack">Atrás</button>` : ''}
+      <span class="lab-step">Pregunta ${answered+1} / ${total}</span>
+    </div>`);
+
+  const commit = val => {
+    Lab.answers[q.id] = val;
+    Lab.reaction = q.react ? q.react(val, Lab.answers) : null;
+    if (window.PufoScene) PufoScene.pulse(.5);
+    renderLab();
+  };
+
+  if(opts){
+    shell.querySelector('#labOpts').addEventListener('click', e => {
+      const b = e.target.closest('.chip'); if(!b) return;
+      b.classList.add('sel');
+      const raw = b.dataset.v;
+      setTimeout(()=>commit(/^\d+$/.test(raw) ? Number(raw) : raw), 170);
+    });
+  } else {
+    const ta = shell.querySelector('#labText');
+    ta.focus();
+    const go = () => {
+      const v = ta.value.trim();
+      if(q.required && v.length < 3){ say('{{founder}} necesita algo más concreto.'); ta.focus(); return; }
+      commit(v);
+    };
+    shell.querySelector('#labNext').onclick = go;
+    ta.addEventListener('keydown', e => { if(e.key==='Enter' && (e.metaKey||e.ctrlKey)) go(); });
+  }
+
+  const back = shell.querySelector('#labBack');
+  if(back) back.onclick = () => {
+    const keys = Object.keys(Lab.answers);
+    delete Lab.answers[keys[keys.length-1]];
+    Lab.reaction = null; renderLab();
+  };
+}
+
+const THINK = ['Registrando expediente','Clasificando el {{problem}}','Levantando mapa de actores',
+               'Calculando exposición posterior','Redactando argumentario','Sellando expediente'];
+
+async function runGeneration(shell){
+  let i = 0;
+  setHTML(shell, `
+    <div class="lab-progress"><i style="width:100%"></i></div>
+    <div class="speech"><div class="avatar">{{mono}}</div>
+      <div class="speech-body"><div class="speech-name">{{founder}}</div>
+        <div class="speech-txt">Un momento. Estoy leyendo su caso entero antes de opinar.</div>
+        <div class="speech-note" id="thinkTxt">${THINK[0]}…</div>
+      </div></div>
+    <div class="thinking" style="margin-top:auto;padding-top:24px"><i></i><i></i><i></i>&nbsp;PROCESANDO</div>`);
+  const tick = setInterval(()=>{
+    i = (i+1) % THINK.length;
+    const el = document.getElementById('thinkTxt');
+    if(el) el.textContent = T(THINK[i]) + '…';
+  }, 620);
+  if (window.PufoScene) PufoScene.pulse(1.6);
+
+  const file = await generateExpediente(Lab.answers);
+  await new Promise(r => setTimeout(r, 1500));
+  clearInterval(tick);
+  lastFile = file; Archive.save(file);
+  Lab.answers = {}; Lab.reaction = null;
+  location.hash = '#/expediente';
+}
+
+/* ── EXPEDIENTE ───────────────────────────────────────────────────────── */
+V.expediente = () => {
+  const f = lastFile || Archive.all()[0];
+  if(!f) return `
+    <section style="padding-top:170px"><div class="wrap" style="text-align:center">
+      <h1 class="title">Todavía no hay expediente</h1>
+      <p class="lead" style="margin:0 auto 26px">Pase primero por {{lab}}. {{founder}} no opina sin datos.</p>
+      <a class="btn btn-primary" href="#/lab">Abrir expediente</a>
+    </div></section>`;
+
+  if(f.blocked) return `
+    <section style="padding-top:150px"><div class="wrap" style="max-width:820px">
+      <div class="dossier" style="border-color:var(--danger)">
+        <div class="dossier-head" style="background:linear-gradient(90deg, rgba(192,69,58,.16), transparent)">
+          <span class="dossier-code" style="color:var(--danger)">${f.file_code}</span>
+          <h3 class="dossier-op">${f.operation_name}</h3>
+          <span class="stamp st-danger">No admitido</span>
+        </div>
+        <div class="dossier-body">
+          <div class="field"><h4>Dictamen</h4>
+            <p style="font-family:var(--serif);font-size:23px;color:var(--paper);line-height:1.35">${f.headline}</p></div>
+          <div class="field"><h4>Motivo</h4><p>${f.body}</p></div>
+          <div class="field"><h4>Estrategia alternativa</h4><ol>${f.alt.map(x=>`<li>${x}</li>`).join('')}</ol></div>
+          <div class="field"><h4>Cierre</h4><p style="font-style:italic">${f.closing}</p></div>
+        </div>
+      </div>
+      <div style="margin-top:26px;display:flex;gap:12px;flex-wrap:wrap">
+        <a class="btn btn-primary btn-sm" href="#/lab">Replantear el caso</a>
+        <a class="btn btn-ghost btn-sm" href="#/faq">Qué no hacemos nunca</a>
+      </div>
+    </div></section>`;
+
+  const tier = T(f.tier ? f.tier.name : '');
+  return `
+  <section style="padding-top:150px"><div class="wrap" style="max-width:940px">
+    <div class="kicker">Expediente generado</div>
+    <div class="dossier">
+      <div class="dossier-head">
+        <span class="dossier-code">${f.file_code}</span>
+        <h3 class="dossier-op">${esc(f.operation_name)}</h3>
+        <span class="stamp st-gold">${f.status}</span>
+      </div>
+      <div class="metrics">
+        <div class="metric"><div class="v" id="mScore">0</div><div class="k">{{score}}</div>
+          <div class="bar"><i data-w="${f.pufo_score}"></i></div></div>
+        <div class="metric"><div class="v" id="mProb">0%</div><div class="k">Probabilidad</div>
+          <div class="bar"><i data-w="${f.success_probability}"></i></div></div>
+        <div class="metric"><div class="v" style="font-size:30px">${tier.split(' ')[1]||'—'}</div><div class="k">Clasificación</div></div>
+        <div class="metric"><div class="v" style="font-size:21px">${T(RISK[f.risk_level-1].label)}</div><div class="k">Riesgo</div></div>
+      </div>
+      <div class="dossier-body">
+        <div class="field"><h4>División · Fecha</h4><p>${f.division} — ${f.date}</p></div>
+        <div class="field"><h4>Objetivo declarado</h4><p style="font-family:var(--serif);font-size:20px;color:var(--paper)">${esc(f.goal)}</p></div>
+        <div class="field"><h4>Situación</h4><p>${esc(f.summary)}</p></div>
+        <div class="field"><h4>Mapa de actores</h4><ul>${f.actors.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>
+        <div class="field"><h4>Clasificación</h4><p><b>${tier}</b> — ${T(f.tier?f.tier.desc:'')}</p></div>
+        <div class="field"><h4>Estrategia recomendada</h4><ol>${f.strategy.map(x=>`<li>${esc(x)}</li>`).join('')}</ol></div>
+        <div class="field"><h4>Argumentario</h4><ul>${f.arguments.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>
+        <div class="field"><h4>Objeciones previsibles y contramedidas</h4>
+          ${f.objection_pairs.map(p=>`<div class="qa"><b>${esc(p.o)}</b><span>${esc(p.r)}</span></div>`).join('')}</div>
+        <div class="field"><h4>Plan B</h4><ol>${f.plan_b.map(x=>`<li>${esc(x)}</li>`).join('')}</ol></div>
+        <div class="field"><h4>Nota final de {{founder}}</h4>
+          <p style="font-family:var(--serif);font-style:italic;font-size:20px;color:var(--gold)">${esc(f.closing)}</p></div>
+        <div class="field"><h4>Motor</h4>
+          <p class="mono" style="font-size:12.5px;color:var(--muted)">
+            ${f.engine==='llm' ? 'Generado por IA conectada.' : 'Generado por el motor local de plantillas — la generación con IA no está operativa en esta versión publicada.'}
+          </p></div>
+      </div>
+    </div>
+    <div style="margin-top:26px;display:flex;gap:12px;flex-wrap:wrap">
+      <a class="btn btn-primary btn-sm" href="#/lab">Abrir otro expediente</a>
+      <button class="btn btn-ghost btn-sm" id="copyFile">Copiar expediente</button>
+      <a class="btn btn-ghost btn-sm" href="#/archivo">Mis expedientes</a>
+    </div>
+  </div></section>`;
+};
+
+/* ════════════════════════════════════════════════════════════════════════
+   ROUTER
+   ══════════════════════════════════════════════════════════════════════ */
+function route(){
+  const raw  = (location.hash || '#/home').slice(2);
+  const [id, qs] = raw.split('?');
+  const page = V[id] ? id : 'home';
+
+  if(page==='lab' && qs){
+    const d = new URLSearchParams(qs).get('d');
+    if(d && SERVICES.some(s=>s.id===d)){ Lab.answers = {division:d}; Lab.reaction = 'Anotado. Abrimos expediente.'; }
+  }
+
+  setHTML(app, V[page]() + footer());
+  window.scrollTo({top:0, behavior:'instant'});
+  document.querySelectorAll('[data-nav]').forEach(a => a.classList.toggle('on', a.dataset.nav===page));
+  if(window.PufoScene) PufoScene.setMood(page);
+  afterRender(page);
+}
+
+function afterRender(page){
+  /* animación de aparición */
+  const io = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }}), {threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  /* brillo que sigue al cursor en las tarjetas */
+  document.querySelectorAll('.card').forEach(c => c.addEventListener('mousemove', e => {
+    const r = c.getBoundingClientRect();
+    c.style.setProperty('--mx', (e.clientX-r.left)+'px');
+    c.style.setProperty('--my', (e.clientY-r.top)+'px');
+  }));
+
+  if(page==='lab') renderLab();
+
+  if(page==='faq') document.querySelectorAll('.faq-item').forEach(it => it.onclick = () => {
+    const a = it.querySelector('.faq-a'); const open = it.classList.toggle('open');
+    a.style.maxHeight = open ? a.scrollHeight+'px' : 0;
+  });
+
+  if(page==='expediente'){
+    setTimeout(()=>{
+      document.querySelectorAll('.bar i').forEach(b => b.style.width = b.dataset.w+'%');
+      const f = lastFile || Archive.all()[0]; if(!f || f.blocked) return;
+      animateNum('mScore', f.pufo_score, ''); animateNum('mProb', f.success_probability, '%');
+    }, 220);
+    const cp = document.getElementById('copyFile');
+    if(cp) cp.onclick = () => {
+      const f = lastFile || Archive.all()[0];
+      const txt = [f.file_code, f.operation_name, '', 'OBJETIVO: '+f.goal, '', 'SITUACIÓN: '+f.summary, '',
+        'ESTRATEGIA:', ...f.strategy.map((s,i)=>` ${i+1}. ${s}`), '', 'ARGUMENTARIO:', ...f.arguments.map(s=>' · '+s), '',
+        'OBJECIONES:', ...f.objection_pairs.map(p=>` ${p.o}\n   → ${p.r}`), '', 'PLAN B:', ...f.plan_b.map(s=>' · '+s), '',
+        T('{{score}}: ')+f.pufo_score, 'PROBABILIDAD: '+f.success_probability+'%'].join('\n');
+      navigator.clipboard.writeText(txt).then(()=>say('Expediente copiado.')).catch(()=>say('No ha sido posible copiar.'));
+    };
+  }
+
+  if(page==='archivo'){
+    document.querySelectorAll('[data-open]').forEach(el => el.onclick = () => {
+      lastFile = Archive.all()[+el.dataset.open]; location.hash = '#/expediente';
+    });
+    const cl = document.getElementById('clearArch');
+    if(cl) cl.onclick = () => { Archive.clear(); lastFile=null; say('Archivo vaciado.'); route(); };
+  }
+}
+
+function animateNum(id, to, suffix){
+  const el = document.getElementById(id); if(!el) return;
+  const t0 = performance.now(), dur = 1200;
+  const step = t => {
+    const p = Math.min((t-t0)/dur, 1), e = 1-Math.pow(1-p, 3);
+    el.textContent = Math.round(to*e) + suffix;
+    if(p<1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
+window.addEventListener('hashchange', route);
+route();
+</script>
+<script>
+/* ════════════════════════════════════════════════════════════════════════
+   ⑥  ESCENA 3D — chistera, monóculo, polvo dorado y anillos orbitales
+   ══════════════════════════════════════════════════════════════════════ */
+(function(){
+  const canvas = document.getElementById('scene');
+  const fallback = m => { console.warn('[3D] ' + m + ' — la web funciona igual con el fondo estático.');
+                          document.body.classList.add('no3d'); canvas.style.display='none';
+                          window.PufoScene = {setMood(){}, pulse(){}}; };
+  if (typeof THREE === 'undefined'){ fallback('Three.js no se ha cargado'); return; }
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let renderer;
+  try { renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true, powerPreference:'high-performance'}); }
+  catch(err){ fallback('WebGL no disponible'); return; }
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 1.75));
+  renderer.setSize(innerWidth, innerHeight);
+
+  const scene  = new THREE.Scene();
+  scene.fog    = new THREE.FogExp2(0x06080D, 0.030);
+  const camera = new THREE.PerspectiveCamera(48, innerWidth/innerHeight, 0.1, 120);
+  camera.position.set(0, 0.4, 9);
+
+  /* ── Materiales ─────────────────────────────────────────────────────── */
+  const felt = new THREE.MeshStandardMaterial({color:0x0C1119, metalness:0.36, roughness:0.52});
+  const gold = new THREE.MeshStandardMaterial({color:0xC9A24B, metalness:0.98, roughness:0.24,
+                                               emissive:0x3B2E10, emissiveIntensity:0.55});
+  const glass= new THREE.MeshBasicMaterial({color:0x9FD0FF, transparent:true, opacity:0.10, side:THREE.DoubleSide});
+
+  /* ── Chistera ───────────────────────────────────────────────────────── */
+  const hat = new THREE.Group();
+  const crown = new THREE.Mesh(new THREE.CylinderGeometry(1.02, 1.14, 2.05, 64), felt);
+  crown.position.y = 1.08; hat.add(crown);
+  const top = new THREE.Mesh(new THREE.CircleGeometry(1.02, 64), felt);
+  top.rotation.x = -Math.PI/2; top.position.y = 2.105; hat.add(top);
+  const band = new THREE.Mesh(new THREE.CylinderGeometry(1.155, 1.175, 0.38, 64), gold);
+  band.position.y = 0.30; hat.add(band);
+  const brim = new THREE.Mesh(new THREE.CylinderGeometry(2.32, 2.32, 0.09, 88), felt);
+  hat.add(brim);
+  const rim = new THREE.Mesh(new THREE.TorusGeometry(2.32, 0.042, 10, 110), gold);
+  rim.rotation.x = Math.PI/2; hat.add(rim);
+  hat.rotation.set(0.12, 0, -0.11);
+  hat.position.y = -0.9;
+
+  /* ── Monóculo ───────────────────────────────────────────────────────── */
+  const mono = new THREE.Group();
+  const ring = new THREE.Mesh(new THREE.TorusGeometry(0.66, 0.048, 14, 90), gold);
+  mono.add(ring);
+  mono.add(new THREE.Mesh(new THREE.CircleGeometry(0.64, 48), glass));
+  const chainPts = [];
+  for(let i=0;i<9;i++) chainPts.push(new THREE.Vector3(0.34 + i*0.20, -0.60 - Math.sin(i*0.55)*0.34 - i*0.10, i*0.035));
+  mono.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(chainPts), 60, 0.017, 6, false), gold));
+  mono.position.set(2.55, 0.75, 1.9);
+  mono.rotation.set(0.1, -0.42, 0.16);
+
+  /* ── Anillos orbitales ──────────────────────────────────────────────── */
+  const rings = new THREE.Group();
+  [[4.6,0.010],[6.1,0.008],[7.8,0.006]].forEach(([r,t],i)=>{
+    const m = new THREE.Mesh(new THREE.TorusGeometry(r, t, 3, 200),
+              new THREE.MeshBasicMaterial({color:0xC9A24B, transparent:true, opacity:0.30 - i*0.07}));
+    m.rotation.set(Math.PI/2 + (i-1)*0.36, i*0.5, i*0.25);
+    m.userData.sp = 0.035 + i*0.022;
+    rings.add(m);
+  });
+
+  /* ── Polvo dorado ───────────────────────────────────────────────────── */
+  const COUNT = reduce ? 700 : 2600;
+  const pos = new Float32Array(COUNT*3), seed = new Float32Array(COUNT);
+  for(let i=0;i<COUNT;i++){
+    const r = 3.4 + Math.pow(Math.random(), 0.6)*12;
+    const th= Math.random()*Math.PI*2, ph = Math.acos(2*Math.random()-1);
+    pos[i*3]   = r*Math.sin(ph)*Math.cos(th);
+    pos[i*3+1] = r*Math.cos(ph)*0.62;
+    pos[i*3+2] = r*Math.sin(ph)*Math.sin(th);
+    seed[i] = Math.random()*Math.PI*2;
+  }
+  const pg = new THREE.BufferGeometry();
+  pg.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  const pmat = new THREE.PointsMaterial({
+    color:0xE6C87E, size:0.048, sizeAttenuation:true,
+    transparent:true, opacity:0.62, depthWrite:false, blending:THREE.AdditiveBlending
+  });
+  const dust = new THREE.Points(pg, pmat);
+
+  /* ── Luces ──────────────────────────────────────────────────────────── */
+  const amb  = new THREE.AmbientLight(0x1B2434, 1.15);
+  const key  = new THREE.DirectionalLight(0xF2D79A, 2.0); key.position.set(5, 8, 6);
+  const fill = new THREE.PointLight(0x3E74D8, 3.2, 40);   fill.position.set(-7, -2, 5);
+  const warm = new THREE.PointLight(0xC9A24B, 2.4, 34);   warm.position.set(5, 1.5, 6);
+  const rimL = new THREE.DirectionalLight(0x92A9FF, 1.0); rimL.position.set(-3, 2, -7);
+
+  const world = new THREE.Group();
+  world.add(hat, mono, rings, dust);
+  scene.add(world, amb, key, fill, warm, rimL);
+
+  /* ── Estados por página ─────────────────────────────────────────────── */
+  const MOODS = {
+    home:      {p:[2.9,-0.8,-0.4], s:0.98, cam:[0,0.4,9],    op:1.00},
+    servicios: {p:[-4.4,-1.4,-5], s:0.78, cam:[0,0.2,11],    op:0.55},
+    lab:       {p:[0,-3.5,-4],    s:0.90, cam:[0,0.6,10],    op:0.85},
+    expediente:{p:[4.6,-2.4,-6],  s:0.70, cam:[0,0.2,11.5],  op:0.45},
+    casos:     {p:[-4.8,-2.2,-6], s:0.72, cam:[0,0.2,11.5],  op:0.45},
+    personaje: {p:[3.6,-0.6,-2],  s:0.95, cam:[0,0.3,10],    op:0.80},
+    tarifas:   {p:[0,-5.4,-7],    s:0.85, cam:[0,0.2,12],    op:0.40},
+    faq:       {p:[4.2,-3.2,-6],  s:0.62, cam:[0,0.2,12],    op:0.40},
+    archivo:   {p:[-4.2,-3.0,-6], s:0.62, cam:[0,0.2,12],    op:0.40}
+  };
+  let mood = MOODS.home, boost = 0;
+  const tPos = new THREE.Vector3(), tCam = new THREE.Vector3();
+  let tScale = 1, tOp = 1;
+
+  window.PufoScene = {
+    setMood(page){ mood = MOODS[page] || MOODS.home; },
+    pulse(k){ boost = Math.min(boost + (k||1), 3); }
+  };
+  window.PufoScene.setMood((location.hash||'#/home').slice(2).split('?')[0]);
+
+  /* ── Interacción ────────────────────────────────────────────────────── */
+  const m = {x:0, y:0, tx:0, ty:0};
+  addEventListener('pointermove', e => { m.tx = (e.clientX/innerWidth-.5)*2; m.ty = (e.clientY/innerHeight-.5)*2; });
+  let scrollN = 0;
+  addEventListener('scroll', () => { scrollN = scrollY / Math.max(document.body.scrollHeight - innerHeight, 1); }, {passive:true});
+  addEventListener('resize', () => {
+    camera.aspect = innerWidth/innerHeight; camera.updateProjectionMatrix();
+    renderer.setSize(innerWidth, innerHeight);
+  });
+
+  /* ── Bucle ──────────────────────────────────────────────────────────── */
+  const clock = new THREE.Clock();
+  let t = 0;
+  function loop(){
+    requestAnimationFrame(loop);
+    const d = Math.min(clock.getDelta(), 0.05); t += d;
+
+    m.x += (m.tx - m.x)*0.05; m.y += (m.ty - m.y)*0.05;
+    boost *= Math.pow(0.25, d);
+
+    tPos.set(mood.p[0], mood.p[1], mood.p[2]);
+    world.position.lerp(tPos, 0.045);
+    tScale += (mood.s - tScale)*0.05;
+    world.scale.setScalar(tScale * (1 + boost*0.05));
+    tOp += (mood.op - tOp)*0.05;
+
+    hat.rotation.y  = t*0.16 + m.x*0.42;
+    hat.rotation.x  = 0.12 + m.y*0.14 + scrollN*0.5;
+    hat.position.y  = -0.9 + Math.sin(t*0.7)*0.13;
+
+    mono.rotation.z = 0.16 + Math.sin(t*0.5)*0.10;
+    mono.position.y = 0.75 + Math.sin(t*0.62 + 1)*0.18;
+    mono.rotation.y = -0.42 + m.x*0.22;
+
+    rings.rotation.y = t*0.05;
+    rings.children.forEach((r,i)=>{ r.rotation.z += r.userData.sp*d*(1+boost); });
+
+    dust.rotation.y = t*0.022;
+    dust.rotation.x = Math.sin(t*0.11)*0.10;
+    pmat.size    = 0.048 + boost*0.05;
+    pmat.opacity = Math.min(0.95, tOp*(0.62 + boost*0.25));
+    gold.emissiveIntensity = 0.55 + boost*0.7;
+    warm.intensity = 2.4 + boost*3.0;
+    rings.children.forEach((r,i)=>{ r.material.opacity = (0.30 - i*0.07) * tOp; });
+
+    tCam.set(mood.cam[0] + m.x*0.85, mood.cam[1] - m.y*0.55, mood.cam[2] + scrollN*2.4);
+    camera.position.lerp(tCam, 0.045);
+    camera.lookAt(world.position.x*0.30, world.position.y*0.25, 0);
+
+    renderer.render(scene, camera);
+  }
+  loop();
+})();
+</script>
+</body>
+</html>
