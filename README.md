@@ -41,6 +41,13 @@ También puedes fijar cualquier campo a mano (`monogram`, `lab`, `score`, `tier`
 
 1. **Configuración de marca** — el objeto `BRAND` y el motor de plantillas `T()`.
 2. **Contenido** — divisiones, casos, testimonios, tarifas, FAQ, escalas de riesgo. Añadir una división nueva es añadir un objeto a `SERVICES`.
+
+   Cada caso de `CASES` lleva dos campos ampliados:
+
+   - `docs[]` — documentación anexa de la operación. Tipos disponibles: `transcripcion` (llamadas, con notas del expediente intercaladas), `email`, `chat` y `paper` (documento sobre fondo claro, admite párrafos, listas y tablas con fila de total).
+   - `why[]` — los mecanismos de psicología social que explican por qué funcionó, más un `risknote` con el punto de rotura de la operación.
+
+   Los expedientes generados en PufoLab incluyen su propia sección **«Por qué debería funcionar»**, construida en `whyFor()` a partir de `WHY_LIB` según las respuestas del usuario.
 3. **Motor** — preguntas adaptativas, generación del expediente, PufoScore, límites éticos.
 4. **Hook para LLM** — `AI` + `buildPayload()` + `RESPONSE_SCHEMA`.
 5. **Vistas y enrutado** — SPA con hash routing.

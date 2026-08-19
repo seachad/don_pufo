@@ -262,6 +262,68 @@ section.tight{padding:64px 0}
 /* ============================================================
    MISC
    ============================================================ */
+/* ============================================================
+   DOCUMENTACIÓN ANEXA (transcripciones, correos, documentos)
+   ============================================================ */
+.artifact{border:1px solid var(--line-soft); border-radius:12px; overflow:hidden; margin-top:16px; background:rgba(5,8,13,.55)}
+.artifact-head{display:flex; gap:12px; align-items:center; flex-wrap:wrap; padding:12px 18px; border-bottom:1px solid var(--line-soft); background:rgba(255,255,255,.025)}
+.artifact-kind{font-family:var(--mono); font-size:9px; letter-spacing:.22em; text-transform:uppercase; color:var(--gold); border:1px solid var(--line); padding:3px 9px; border-radius:99px; white-space:nowrap}
+.artifact-title{font-size:14px; color:var(--paper); font-weight:500}
+.artifact-meta{margin-left:auto; font-family:var(--mono); font-size:10.5px; color:var(--muted)}
+.artifact-body{padding:20px}
+
+.tr{font-family:var(--mono); font-size:13px; line-height:1.7}
+.tr .l{display:grid; grid-template-columns:130px 1fr; gap:14px; padding:6px 0}
+.tr .l b{color:var(--gold); font-weight:500; font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; padding-top:3px}
+.tr .l span{color:#C6CEDC}
+.tr .note{color:#7E879A; font-style:italic; font-family:var(--sans); font-size:13px; padding:6px 0 10px 144px; line-height:1.55}
+.tr .note::before{content:'▸ nota del expediente — '; color:var(--gold-dim); font-style:normal; font-family:var(--mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase}
+
+.mail-head{border-bottom:1px dashed rgba(255,255,255,.12); padding-bottom:13px; margin-bottom:16px; font-family:var(--mono); font-size:12px}
+.mail-head div{display:flex; gap:10px; padding:2px 0}
+.mail-head i{color:var(--muted); font-style:normal; width:62px; flex:0 0 auto}
+.mail-head span{color:#C6CEDC}
+.mail-body p{font-size:14.5px; color:#C3CBDA; margin:0 0 .85em}
+
+.paper{background:var(--paper); color:#23262C; border-radius:8px; padding:26px 28px; line-height:1.62; font-size:14px; box-shadow:0 18px 40px rgba(0,0,0,.45)}
+.paper .ph{display:flex; justify-content:space-between; align-items:flex-end; gap:16px; border-bottom:2px solid #23262C; padding-bottom:11px; margin-bottom:18px; flex-wrap:wrap}
+.paper h5{font-family:var(--serif); font-size:20px; margin:0; color:#14161A; line-height:1.2}
+.paper .psub{font-size:12.5px; color:#5E636D; margin-top:3px}
+.paper .pmono{font-family:var(--mono); font-size:9.5px; letter-spacing:.18em; text-transform:uppercase; color:#6A6E77; text-align:right}
+.paper p{margin:0 0 .8em; color:#33373F}
+.paper h6{font-family:var(--mono); font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:#6A6E77; margin:18px 0 8px; font-weight:600}
+.paper ul,.paper ol{margin:0 0 .8em; padding-left:20px; color:#33373F}
+.paper li{margin-bottom:5px}
+.paper table{width:100%; border-collapse:collapse; margin:6px 0 14px; font-size:13.5px}
+.paper th,.paper td{text-align:left; padding:8px 10px; border-bottom:1px solid rgba(0,0,0,.13)}
+.paper th{font-family:var(--mono); font-size:9.5px; letter-spacing:.14em; text-transform:uppercase; color:#6A6E77}
+.paper td:last-child,.paper th:last-child{text-align:right; font-variant-numeric:tabular-nums}
+.paper tr.tot td{font-weight:700; border-top:2px solid #23262C; border-bottom:none}
+.paper .pfoot{margin-top:20px; padding-top:12px; border-top:1px solid rgba(0,0,0,.16); font-size:11.5px; color:#6A6E77; line-height:1.55}
+
+.chat{display:flex; flex-direction:column; gap:9px}
+.msg{max-width:80%; padding:10px 14px; border-radius:13px; font-size:13.5px; background:rgba(255,255,255,.06); color:#C6CEDC; align-self:flex-start}
+.msg.me{align-self:flex-end; background:rgba(201,162,75,.15)}
+.msg b{display:block; font-size:10px; color:var(--gold); font-family:var(--mono); letter-spacing:.12em; text-transform:uppercase; margin-bottom:4px}
+.note-foot{margin-top:18px; padding-top:12px; border-top:1px solid var(--line-soft); font-size:11.5px; color:var(--muted); line-height:1.55}
+.chat .sys{align-self:center; font-family:var(--mono); font-size:10.5px; letter-spacing:.12em; color:var(--muted); text-transform:uppercase; padding:6px 0}
+
+.why{display:grid; gap:16px}
+.why-item{border-left:2px solid var(--gold); padding:1px 0 1px 17px}
+.why-item h5{font-family:var(--sans); font-size:15px; color:var(--paper); margin:0 0 5px; font-weight:600}
+.why-item p{font-size:14px; color:#9FA9BC; margin:0; line-height:1.62}
+.why-item p em{color:var(--gold); font-style:normal}
+
+.case-toggle{width:100%; justify-content:center; margin-top:20px}
+.case-more{display:none; animation:fadeUp .6s cubic-bezier(.2,.9,.2,1)}
+.case-more.on{display:block}
+@keyframes fadeUp{from{opacity:0; transform:translateY(14px)}to{opacity:1; transform:none}}
+@media(max-width:700px){
+  .tr .l{grid-template-columns:1fr; gap:2px}
+  .tr .note{padding-left:0}
+  .paper{padding:20px}
+}
+
 .quote{border-left:2px solid var(--gold); padding:6px 0 6px 22px; font-family:var(--serif); font-style:italic; font-size:19px; color:var(--paper)}
 .quote cite{display:block; font-family:var(--mono); font-style:normal; font-size:10.5px; letter-spacing:.2em; color:var(--muted); margin-top:12px; text-transform:uppercase}
 .faq-item{border-bottom:1px solid var(--line-soft); padding:22px 0; cursor:pointer}
@@ -477,40 +539,364 @@ const SERVICES = [
   }
 ];
 
-/* ── Casos ficticios ──────────────────────────────────────────────────── */
+/* ── Casos ficticios ──────────────────────────────────────────────────────
+   Cada caso incluye documentación anexa (`docs`) y el análisis de por qué
+   funciona (`why`). Tipos de documento admitidos: transcripcion, email,
+   paper, chat.
+   ──────────────────────────────────────────────────────────────────────── */
 const CASES = [
-  {
-    code:'{{prefix}}-2025-0114', op:'OPERACIÓN AGOSTO PRODUCTIVO', div:'becas',
-    problem:'Adolescente con nueve semanas de vacaciones y una agenda consistente en dormir, pantalla y nevera.',
-    goal:'Obtener tres semanas de actividad productiva sin declaración formal de guerra.',
-    strategy:'Se presenta el programa como una beca competitiva con plazas limitadas. El sujeto es informado de que ha sido preseleccionado. Nunca se menciona la palabra "obligación".',
-    result:'21 días productivos. El becario incluyó la experiencia en su perfil.',
-    score:74, risk:2, prob:88, status:'Resuelto'
-  },
-  {
-    code:'{{prefix}}-2025-0207', op:'OPERACIÓN VALLA COMÚN', div:'persuasion',
-    problem:'Cinco vecinos deben aprobar una valla. Dos se oponen. Uno se opone por motivos que no ha explicado.',
-    goal:'Aprobación colectiva sin ruptura de la comunidad.',
-    strategy:'Se presenta el coste individual frente al coste de mantener el problema abierto tres años más. Se habla primero con el vecino influyente, nunca con el bloqueador.',
-    result:'Cuatro votos a favor. Carlos sigue enfadado. La valla está puesta.',
-    score:81, risk:3, prob:76, status:'Resuelto'
-  },
-  {
-    code:'{{prefix}}-2025-0338', op:'OPERACIÓN BODA LEJANA', div:'excusas',
-    problem:'Invitación a boda con 640 km de desplazamiento y dos noches de hotel.',
-    goal:'Declinar sin deteriorar una relación de veinte años.',
-    strategy:'Aviso temprano, motivo verificable, regalo por encima de la media y llamada telefónica en lugar de mensaje. La antelación es la excusa.',
-    result:'Ausencia aceptada. Relación intacta. El cliente sigue recibiendo felicitaciones por haber avisado con tiempo.',
-    score:52, risk:1, prob:94, status:'Resuelto'
-  },
-  {
-    code:'{{prefix}}-2026-0012', op:'OPERACIÓN DOMINGO SIN SUEGROS', div:'negocia',
-    problem:'Comida familiar semanal instaurada por costumbre y sostenida por inercia desde 2019.',
-    goal:'Reducir la frecuencia a quincenal sin que nadie lo interprete como un mensaje.',
-    strategy:'No se solicita una reducción. Se introduce una actividad alterna incompatible y se deja que el calendario haga el trabajo.',
-    result:'En ejecución. Dos domingos recuperados. Ninguna conversación incómoda registrada.',
-    score:67, risk:3, prob:81, status:'Operación en curso'
-  }
+{
+  code:'{{prefix}}-2025-0114', op:'OPERACIÓN AGOSTO PRODUCTIVO', div:'becas',
+  problem:'Adolescente de 16 años con nueve semanas de vacaciones y una agenda consistente en dormir, pantalla, nevera y sofá, no necesariamente en ese orden.',
+  goal:'Obtener tres semanas de actividad productiva sin declaración formal de guerra en el domicilio familiar.',
+  strategy:'No se le pide nada. Se le comunica que ha sido propuesto para un proceso de selección con plazas limitadas, se le entrevista por teléfono y se le hace esperar cuatro días la resolución. La palabra «obligación» no aparece en ningún momento del expediente.',
+  result:'21 días productivos y una prórroga de cuatro días solicitada por el propio becario. Sigue pensando que aquello contaba para el currículum.',
+  score:31, risk:2, prob:88, status:'Resuelto',
+  docs:[
+    {kind:'Correo', title:'Convocatoria — Preselección de candidaturas', meta:'14 de junio · 19:42',
+     type:'email',
+     from:'Programa Becas {{brand}} <admisiones@donpufo.example>', to:'Marco R.', date:'14/06 · 19:42',
+     subject:'Programa de Inmersión Profesional Vacacional 2026 — candidatura propuesta',
+     body:[
+       'Estimado Marco:',
+       'Le escribimos porque su nombre ha sido propuesto para el proceso de selección del Programa de Inmersión Profesional Vacacional 2026. La propuesta no procede de usted ni ha sido solicitada por usted.',
+       'El programa admite un número limitado de participantes por convocatoria. Este año se han recibido once candidaturas para tres plazas, de modo que la valoración será necesariamente selectiva.',
+       'Antes de continuar es preceptiva una breve entrevista telefónica de valoración, de entre diez y quince minutos. No requiere preparación previa; de hecho, la preparación previa suele perjudicar al candidato.',
+       'Le rogamos confirme una franja de disponibilidad para esta semana. Si prefiere no continuar con el proceso, basta con que no responda a este correo: no habrá insistencia ni segunda comunicación.',
+       'Atentamente,<br>Departamento de Admisiones — Becas {{brand}}'
+     ],
+     foot:'Documento paródico de uso estrictamente familiar. Ni el programa, ni el departamento, ni las once candidaturas existen.'},
+
+    {kind:'Transcripción', title:'Llamada de selección — candidato Marco R.', meta:'17 de junio · duración 11:04',
+     type:'transcripcion',
+     lines:[
+       {s:'Entrevistador', t:'Buenas tardes, Marco. ¿Le viene bien ahora, o prefiere que lo dejemos para mañana?'},
+       {s:'Candidato', t:'No, no. Ahora bien.'},
+       {note:'Se abre ofreciendo la salida. Nadie aplaza una entrevista que le halaga.'},
+       {s:'Entrevistador', t:'Perfecto. Antes de empezar quiero dejar clara una cosa: esto no es una obligación. Si al terminar la llamada no le interesa, no pasa absolutamente nada y aquí se acaba.'},
+       {s:'Candidato', t:'Vale.'},
+       {s:'Entrevistador', t:'¿Sabe por qué le han propuesto?'},
+       {s:'Candidato', t:'Pues… no.'},
+       {s:'Entrevistador', t:'Por criterio de la persona que le propuso. No me pregunte quién, porque no se lo voy a decir.'},
+       {note:'La ambigüedad convierte al candidato en objeto de una decisión ajena y favorable. Es el punto exacto en el que deja de defenderse y empieza a querer.'},
+       {s:'Entrevistador', t:'Cuénteme qué se le da bien. No lo que estudia: lo que se le da bien.'},
+       {s:'Candidato', t:'No sé… editar vídeo. Y con ordenadores me apaño bastante.'},
+       {s:'Entrevistador', t:'Anotado. ¿Cuántas horas al día diría usted que puede sostener trabajo de verdad, sin mirar el móvil?'},
+       {s:'Candidato', t:'¿De verdad de verdad? Dos. Tres como mucho.'},
+       {s:'Entrevistador', t:'Tres. Es una cifra honesta. Los que dicen ocho no llegan al jueves.'},
+       {note:'Se acepta su número sin regatear. El horario definitivo serán tres horas: la cifra la ha puesto él, de modo que el compromiso también es suyo.'},
+       {s:'Entrevistador', t:'El programa tiene dos itinerarios. El A es documentación y archivo. El B es producción audiovisual y comunicación. ¿Cuál pediría?'},
+       {s:'Candidato', t:'El B. Obviamente.'},
+       {s:'Entrevistador', t:'Obviamente. Última pregunta, y respóndala despacio: si le admitiéramos, ¿qué haría el primer día?'},
+       {s:'Candidato', t:'(silencio) Pues… supongo que preguntar qué hay que hacer.'},
+       {s:'Entrevistador', t:'Respuesta correcta. Los que improvisan aquí algo brillante suelen no aparecer el lunes.'},
+       {s:'Entrevistador', t:'Le comunicaremos la resolución el viernes. Gracias por su tiempo, Marco.'},
+       {s:'Candidato', t:'Gracias. Oiga… ¿y si no entro?'},
+       {note:'Aquí termina realmente la operación. Cuando el candidato pregunta qué pasa si no entra, ya quiere entrar. Los cuatro días de espera hasta el viernes no aportan información: consolidan el deseo.'}
+     ]},
+
+    {kind:'Documento', title:'Resolución de admisión y plan de inmersión', meta:'20 de junio',
+     type:'paper',
+     head:{title:'Resolución de admisión', sub:'Programa de Inmersión Profesional Vacacional — Itinerario B', ref:'Ref. {{prefix}}-2025-0114-B<br>Convocatoria 2026<br>3 plazas · 11 candidaturas'},
+     blocks:[
+       {p:'Se comunica a <b>Marco R.</b> su <b>admisión</b> en el itinerario B (Producción audiovisual y comunicación) del Programa de Inmersión Profesional Vacacional, con incorporación el lunes 7 de julio.'},
+       {p:'La admisión conlleva la asignación de un mentor, un horario de dedicación y tres entregables evaluables. La renuncia es posible en cualquier momento y no requiere justificación, si bien constará en el expediente del programa, que no existe.'},
+       {h:'Régimen de dedicación'},
+       {table:{cols:['Franja','Actividad','Duración'], rows:[
+         ['Lunes a jueves, 10:00–13:00','Trabajo sobre entregable en curso','3 h'],
+         ['Viernes, 10:00–12:00','Revisión con el mentor designado','2 h'],
+         ['Viernes, 12:00–12:30','Registro de avances en el diario de inmersión','0,5 h']
+       ]}},
+       {h:'Entregables evaluables'},
+       {list:['E1 — Pieza audiovisual de 90 segundos sobre un oficio del entorno familiar.','E2 — Archivo ordenado y etiquetado del material doméstico en soporte digital.','E3 — Presentación final de ocho minutos ante el comité (dos personas y un perro).']},
+       {h:'Evaluación'},
+       {p:'Cumplimiento del régimen horario (40 %), calidad de los entregables (40 %) y actitud ante la revisión semanal (20 %). El programa concluye con informe final y ceremonia de clausura, cuya solemnidad será deliberadamente excesiva.'}
+     ],
+     foot:'Documento paródico de uso estrictamente familiar. Carece de validez académica, laboral, administrativa o de cualquier otro tipo, y no debe presentarse ante ninguna institución, empresa, centro educativo ni tercero. Su única función es convertir una discusión doméstica en un calendario.'},
+
+    {kind:'Informe', title:'Informe final de desempeño', meta:'31 de agosto',
+     type:'paper',
+     head:{title:'Informe final de desempeño', sub:'Marco R. — Itinerario B', ref:'Ref. {{prefix}}-2025-0114-F<br>Cierre de convocatoria'},
+     blocks:[
+       {p:'El becario ha completado <b>21 días</b> de dedicación efectiva sobre los 20 previstos. Los tres entregables han sido presentados; el segundo, con dos días de retraso justificados por el propio becario mediante un correo de once líneas que este departamento considera excesivo pero sincero.'},
+       {p:'Destaca la evolución en la revisión semanal: de la respuesta monosilábica inicial se pasó, en la cuarta semana, a que el becario llegara con propuestas no solicitadas. Este departamento considera ese momento el verdadero resultado del programa.'},
+       {p:'<b>Incidencia reseñable:</b> el 25 de agosto el becario solicitó por iniciativa propia una prórroga de cuatro días para terminar E1. Se le concedió sin oposición y sin comentarios.'},
+       {h:'Calificación'},
+       {p:'Apto con mención. Se recomienda su readmisión en la convocatoria 2027, si para entonces sigue creyendo que esto existe.'}
+     ],
+     foot:'Documento paródico de uso familiar. El comité evaluador estaba compuesto por su madre, su tío y un perro sin voto.'}
+  ],
+  why:[
+    {h:'Selección en lugar de imposición', p:'El mismo verano, con el mismo horario, cambia por completo según quién lo proponga. «Vas a trabajar tres horas» activa resistencia; «has sido propuesto para tres plazas» activa <em>ambición</em>. No se ha modificado el contenido: se ha modificado quién parece querer qué.'},
+    {h:'El deseo de creer', p:'El adolescente no se cree del todo el programa. Le da igual: le conviene que sea verdad. Cuando una ficción mejora la imagen que alguien tiene de sí mismo, esa persona <em>colabora activamente en sostenerla</em> y deja de buscar agujeros. Es el motor de toda la operación.'},
+    {h:'La cifra la puso él', p:'Las tres horas salieron de su boca, no del horario. Un compromiso enunciado por uno mismo y en voz alta se defiende como propio; el mismo número impuesto desde fuera se negocia cada mañana. Se llama <em>coherencia con el compromiso previo</em> y es el principio más barato que existe.'},
+    {h:'Elegir entre A y B, nunca entre sí y no', p:'Ofrecer dos itinerarios preserva la sensación de autonomía dentro de un marco ya decidido. La resistencia adolescente rara vez va contra la tarea: va contra <em>que le digan</em>. Si elige, no hay a quién resistirse.'},
+    {h:'Autoridad delegada', p:'La llamada la hace un mentor, no un padre. La misma frase dicha por un progenitor entra en un historial de veinte años de negociaciones; dicha por un tercero, entra limpia. Externalizar la voz elimina el conflicto de autoridad sin cambiar el mensaje.'},
+    {h:'Los cuatro días de espera', p:'La resolución podría haberse comunicado al colgar. Se retrasa al viernes porque el vacío se rellena solo: durante la espera el candidato se imagina dentro. Cuando llega el sí, ya no es una noticia, es una <em>confirmación</em>.'}
+  ],
+  risknote:'Punto de rotura: si descubre el montaje antes de empezar, la operación cae entera. Si lo descubre después de la segunda semana, deja de importarle, porque para entonces el proyecto ya es suyo.'
+},
+{
+  code:'{{prefix}}-2025-0207', op:'OPERACIÓN VALLA COMÚN', div:'persuasion',
+  problem:'Cinco propietarios deben aprobar el cerramiento perimetral de una zona común. Dos se oponen. Uno de ellos se opone por motivos que no ha explicado en 214 mensajes.',
+  goal:'Aprobación colectiva sin ruptura de la comunidad y sin humillar a nadie por escrito.',
+  strategy:'No se convoca junta. Se llama primero a la vecina con más influencia informal, se descubre que el bloqueo no es económico sino de procedimiento, y se le da al bloqueador una vía de reincorporación honrosa antes de que la propuesta llegue al grupo.',
+  result:'Cuatro votos a favor y uno en contra. Carlos sigue enfadado. La valla está puesta.',
+  score:58, risk:3, prob:76, status:'Resuelto',
+  docs:[
+    {kind:'Mensajes', title:'Grupo «Vecinos Camino del Pilar» — extracto previo', meta:'Marzo a mayo · 214 mensajes',
+     type:'chat',
+     msgs:[
+       {n:'Marisa', t:'¿Se sabe algo de la valla? Llevamos desde marzo con esto.'},
+       {n:'José', t:'Yo ya pasé el presupuesto en abril. 7.000 €. Está en el grupo.'},
+       {n:'Ana', t:'Es que 7.000 euros me parece una barbaridad la verdad'},
+       {n:'Carlos', t:'Yo ya dije lo que pensaba.'},
+       {n:'José', t:'Carlos tú lo que tienes que decir es si sí o si no'},
+       {n:'Carlos', t:'Yo no tengo que decir nada.'},
+       {n:'Ana', t:'a ver no nos pongamos así'},
+       {sys:'— 187 mensajes más —'},
+       {n:'Marisa', t:'¿Alguien ha calculado cuánto es por casa?'},
+       {sys:'nadie respondió a esta pregunta'}
+     ]},
+
+    {kind:'Transcripción', title:'Llamada previa a Marisa L. — propietaria nº 3', meta:'6 de mayo · duración 6:12',
+     type:'transcripcion',
+     lines:[
+       {s:'{{founder}}', t:'Marisa, buenas tardes. No la llamo para pedirle el voto. La llamo porque usted conoce a Carlos mejor que yo.'},
+       {note:'Primera decisión del expediente: a la persona influyente no se le pide apoyo, se le pide criterio. Pedir apoyo la convierte en parte. Pedir criterio la convierte en asesora, y un asesor defiende después su propio consejo.'},
+       {s:'Marisa', t:'Uf. Carlos no está en contra de la valla, eh.'},
+       {s:'{{founder}}', t:'Ya me lo parecía. ¿Contra qué está?'},
+       {s:'Marisa', t:'Contra que José pidiera el presupuesto sin decírselo a nadie. Él llevaba dos años diciendo que había que cerrar aquello.'},
+       {s:'{{founder}}', t:'Entonces esto no cuesta siete mil euros. Cuesta una llamada.'},
+       {s:'Marisa', t:'(ríe) Bueno, y siete mil euros.'},
+       {s:'{{founder}}', t:'Y siete mil euros, sí. Dígame una cosa: si la propuesta llegara al grupo con el visto bueno previo de Carlos, ¿usted cree que Ana seguiría discutiendo la cifra?'},
+       {s:'Marisa', t:'Ana discute la cifra porque le parece mucho de golpe. Si lo ve repartido y a plazos, no dice nada.'},
+       {note:'En seis minutos se ha reclasificado el expediente entero. No hay dos opositores: hay un problema de forma y un problema de presentación de la cifra. Ninguno de los dos es la valla.'},
+       {s:'{{founder}}', t:'Última cosa. ¿Le importaría ser usted quien le pida a Carlos que revise la propuesta antes de enviarla?'},
+       {s:'Marisa', t:'¿Yo?'},
+       {s:'{{founder}}', t:'Usted. Si se lo pide José, Carlos dirá que no por costumbre.'},
+       {s:'Marisa', t:'…Eso es verdad.'}
+     ]},
+
+    {kind:'Documento', title:'Propuesta de acuerdo — cerramiento perimetral', meta:'11 de mayo',
+     type:'paper',
+     head:{title:'Propuesta de acuerdo', sub:'Cerramiento perimetral de zona común — Camino del Pilar', ref:'Ref. {{prefix}}-2025-0207<br>5 propietarios<br>Revisión previa: C. M.'},
+     blocks:[
+       {p:'Se somete a consideración de los propietarios la ejecución del cerramiento perimetral conforme al presupuesto adjunto, con reparto por partes iguales y posibilidad de fraccionamiento.'},
+       {h:'Reparto del coste'},
+       {table:{cols:['Concepto','Importe'], rows:[
+         ['Presupuesto total (materiales y ejecución)','7.000,00 €'],
+         ['Propietarios','5'],
+         ['Cuota por propietario','1.400,00 €'],
+         ['Fraccionado en 12 mensualidades','116,67 €/mes']
+       ], total:['Coste real por vivienda y mes','116,67 €']}},
+       {h:'Coste de no ejecutar'},
+       {p:'La cuestión lleva abierta catorce meses. Mantenerla abierta un ejercicio más supone: revisión del presupuesto al alza (estimación +8 %), continuidad de las incidencias que motivaron la propuesta y, según estimación de este despacho, aproximadamente <b>190 mensajes adicionales</b> en el grupo.'},
+       {h:'Procedimiento'},
+       {p:'La presente propuesta ha sido <b>revisada previamente por D. Carlos M.</b> a petición de la propietaria nº 3, e incorpora dos observaciones suyas relativas al trazado en la esquina norte y al plazo de ejecución.'},
+       {p:'Se propone votación por escrito en el grupo, sin junta presencial, con plazo de cinco días naturales.'}
+     ],
+     foot:'Caso ficticio. Cualquier parecido con una comunidad de propietarios real es, estadísticamente, inevitable.'},
+
+    {kind:'Mensajes', title:'Grupo «Vecinos Camino del Pilar» — votación', meta:'11 al 16 de mayo',
+     type:'chat',
+     msgs:[
+       {n:'Marisa', t:'Va la propuesta con el reparto por casa y por mes. Carlos ya la ha revisado y le ha metido dos cambios.'},
+       {n:'Carlos', t:'Lo del trazado de la esquina norte era importante. Ahora sí.'},
+       {n:'Ana', t:'ah pues 116 al mes es otra cosa'},
+       {n:'Ana', t:'yo a favor'},
+       {n:'José', t:'A favor.'},
+       {n:'Marisa', t:'A favor.'},
+       {n:'Propietario nº5', t:'A favor'},
+       {n:'Carlos', t:'Yo me abstengo, que conste. Pero adelante.'},
+       {sys:'aprobado 4 a favor · 1 abstención · obra ejecutada en julio'}
+     ]}
+  ],
+  why:[
+    {h:'El bloqueo casi nunca es el dinero', p:'Carlos no discutía el importe: discutía haber sido saltado. Cuando alguien se opone sin dar razones económicas, la razón suele ser <em>de procedimiento o de forma</em>. Negociar el precio con quien está enfadado por el trato es negociar la variable equivocada durante catorce meses.'},
+    {h:'La cifra por persona y por mes', p:'7.000 € es una cantidad. 116,67 € al mes es una molestia. El importe no ha cambiado, ha cambiado la <em>unidad de medida</em>. Toda cifra total invita a impugnar el proyecto; toda cifra prorrateada invita a compararla con algo que ya se paga sin protestar.'},
+    {h:'El coste de no decidir, hecho explícito', p:'Mientras la inacción sea gratis, ganará siempre: no hacer nada nunca requiere justificación. Ponerle precio —revisión al alza, incidencias, 190 mensajes más— convierte el statu quo en <em>una opción más</em>, que es justo lo que nunca es por defecto.'},
+    {h:'El orden de las conversaciones', p:'Primero la influyente, después el bloqueador, el grupo el último. Hablar primero con quien se opone garantiza que fije su posición en público antes de haber escuchado nada, y una posición pública ya no se cambia: se defiende.'},
+    {h:'La salida honrosa', p:'Se le pidió a Carlos que <em>revisara</em> la propuesta y se incorporaron dos observaciones suyas. Nadie cede si ceder equivale a admitir que se equivocó. Hay que construirle al otro un camino por el que pueda volver sin perder la cara, y hay que construirlo antes de que lo necesite.'},
+    {h:'Quién hace la petición', p:'La misma frase dicha por José habría sido rechazada por inercia. Dicha por Marisa, entró. En cualquier grupo con historial, el mensaje importa menos que el <em>remitente</em>, y el remitente se puede elegir.'}
+  ],
+  risknote:'Punto de rotura: si la propuesta llega al grupo antes de que Carlos la haya revisado, se convierte en un referéndum sobre José y se pierde. El orden era la estrategia; el documento solo era papel.'
+},
+{
+  code:'{{prefix}}-2025-0338', op:'OPERACIÓN BODA LEJANA', div:'excusas',
+  problem:'Invitación a la boda de una prima con 640 km de desplazamiento, dos noches de hotel y una relación de veinte años que el cliente no quiere dañar.',
+  goal:'Declinar sin que la ausencia se interprete como un mensaje.',
+  strategy:'Llamada telefónica cinco meses antes, mala noticia en la tercera frase, motivo aburrido y verificable, cero alternativas creativas y sustitución de la presencia por una cita futura con fecha.',
+  result:'Ausencia aceptada, regalo enviado y relación intacta. El cliente sigue recibiendo agradecimientos por haber avisado con tiempo.',
+  score:22, risk:1, prob:94, status:'Resuelto',
+  docs:[
+    {kind:'Transcripción', title:'Llamada a la novia — prima del cliente', meta:'2 de abril · duración 4:41 · boda el 6 de septiembre',
+     type:'transcripcion',
+     lines:[
+       {s:'Cliente', t:'Hola, ¿tienes cinco minutos? Te llamo por lo de la boda. Y te llamo ahora en abril porque si te lo digo en agosto me odias, y con razón.'},
+       {note:'La llamada se abre declarando el motivo y la fecha. Anunciar la antelación en la primera frase convierte el aviso en una cortesía antes de que pueda convertirse en un problema.'},
+       {s:'Prima', t:'Ay. Dime.'},
+       {s:'Cliente', t:'No vamos a poder ir.'},
+       {note:'La mala noticia va en la tercera frase. Cada segundo de rodeo previo la gente lo emplea en imaginar algo peor y en detectar preparación. Lo que se retrasa parece guion.'},
+       {s:'Prima', t:'Jo. ¿Por?'},
+       {s:'Cliente', t:'Coincide con la semana que tenemos a mi madre en casa después de la operación de cadera. Es esa semana o ninguna, y la fecha nos la dieron ellos.'},
+       {note:'Motivo aburrido, verificable y ajeno a la voluntad del cliente. Los motivos interesantes invitan a preguntar; los aburridos se aceptan y se olvidan.'},
+       {s:'Prima', t:'Ya… claro.'},
+       {s:'Cliente', t:'Y no te voy a marear con alternativas raras de ir el sábado y volver de noche. No vamos, y lo siento de verdad.'},
+       {note:'No se ofrecen soluciones creativas. Ofrecerlas reabre la negociación y, sobre todo, sugiere que la ausencia era negociable, que es exactamente lo que no interesa establecer.'},
+       {s:'Prima', t:'No, si lo entiendo. Y de verdad, gracias por decírmelo ahora. Tengo que cerrar el catering en junio.'},
+       {s:'Cliente', t:'Por eso te llamo. Y una cosa más: dime un fin de semana de octubre que os venga bien y os invito a cenar a los dos. Quiero que me lo contéis entero, con fotos y todo.'},
+       {s:'Prima', t:'Eso me gusta más que si vinieras, te lo digo en serio.'},
+       {note:'Se sustituye la presencia perdida por una presencia futura con fecha. Sin fecha concreta la frase es un formalismo y ambas partes lo saben.'}
+     ]},
+
+    {kind:'Mensaje', title:'Confirmación por escrito — mismo día', meta:'2 de abril · 20:10',
+     type:'chat',
+     msgs:[
+       {n:'Cliente', me:true, t:'Como te decía: no podemos el 6. Lo siento mucho. Dime cuando quieras lo de la cena de octubre. Y enhorabuena otra vez, de verdad.'},
+       {n:'Prima', t:'Gracias por avisar con tanto tiempo ❤️ nos vemos en octubre'},
+       {sys:'no volvió a mencionarse el asunto'}
+     ]},
+
+    {kind:'Documento', title:'Tarjeta manuscrita adjunta al regalo', meta:'4 de septiembre',
+     type:'paper',
+     head:{title:'Nota adjunta', sub:'Enviada con el regalo, dos días antes de la ceremonia', ref:'Ref. {{prefix}}-2025-0338-R<br>Regalo: 1,4× la media del grupo'},
+     blocks:[
+       {p:'<i>«Sabes de sobra que preferiríamos estar ahí. Como no puede ser, al menos que llegue esto antes que nadie. Disfrutadlo por nosotros y guardadnos una foto mala, de las buenas. Un abrazo enorme a los dos.»</i>'},
+       {h:'Nota del expediente'},
+       {p:'El regalo se envía <b>antes</b> de la ceremonia, no después. Un regalo posterior parece una reparación; un regalo anterior parece una presencia. El importe se sitúa deliberadamente por encima de la media del grupo, sin llegar a ser llamativo: lo bastante para que se note, no tanto para que se comente.'}
+     ],
+     foot:'Caso ficticio. La prima no existe. La operación de cadera tampoco.'}
+  ],
+  why:[
+    {h:'La antelación es la excusa', p:'Cinco meses antes, la ausencia no cuesta nada: no hay catering cerrado, ni plano de mesas, ni hueco visible. El agravio de una ausencia no depende del motivo, depende del <em>trastorno que genera</em>. Avisar pronto no es educación: es eliminar el daño.'},
+    {h:'Llamar en vez de escribir', p:'Un mensaje es cómodo para quien lo manda e incómodo para quien lo recibe. La llamada cuesta esfuerzo y exponerse a la reacción, y ese coste se lee sin traducción como <em>respeto</em>. La misma frase por WhatsApp habría abierto un hilo de tres días.'},
+    {h:'Motivo aburrido y verificable', p:'Un motivo brillante da conversación, y toda conversación sobre la excusa termina examinándola. Un motivo tedioso, ajeno a la voluntad y comprobable cierra el tema en una frase. La regla es sencilla: <em>si el motivo da envidia, es el motivo equivocado</em>.'},
+    {h:'No sobreexplicar', p:'La cantidad de detalle es la señal más fiable de que algo se ha preparado. Nadie justifica con siete argumentos algo que le da igual. Una razón, dicha una vez y no repetida, resulta más creíble que tres razones coherentes entre sí.'},
+    {h:'Cero alternativas creativas', p:'Proponer ir solo un día, o llegar de madrugada, comunica que la asistencia era negociable y traslada al otro la carga de decir que no. Cerrar la puerta con suavidad es más amable que dejarla entornada.'},
+    {h:'Sustituir, no compensar', p:'El regalo por encima de la media y la cena de octubre no compran el perdón: <em>reemplazan la presencia por otra presencia</em>. Una ausencia sin sustitución se recuerda; una ausencia con cena en el calendario se convierte en un plan.'}
+  ],
+  risknote:'Punto de rotura único: publicar una fotografía en un lugar agradable el 6 de septiembre. El expediente entero se sostiene sobre un motivo verificable, y lo verificable también se verifica en sentido contrario.'
+},
+{
+  code:'{{prefix}}-2026-0012', op:'OPERACIÓN DOMINGO SIN SUEGROS', div:'negocia',
+  problem:'Comida familiar semanal instaurada por costumbre en 2019 y sostenida desde entonces por pura inercia. Nadie la disfruta especialmente. Nadie se atreve a mencionarlo.',
+  goal:'Pasar de frecuencia semanal a quincenal sin que la reducción se interprete como una valoración sobre nadie.',
+  strategy:'No se pide reducir nada. Se introduce una actividad alternativa incompatible, con nombre propio y calendario, y se deja que la agenda haga públicamente el trabajo que nadie quiere hacer en voz alta.',
+  result:'En ejecución. Dos domingos recuperados al mes. Ninguna conversación incómoda registrada. La suegra ha preguntado dos veces por la ruta.',
+  score:49, risk:3, prob:81, status:'Operación en curso',
+  docs:[
+    {kind:'Transcripción', title:'Conversación previa con la pareja', meta:'11 de enero · duración 8:30',
+     type:'transcripcion',
+     lines:[
+       {s:'Cliente', t:'No quiero decirles que vamos menos. Quiero que pase.'},
+       {s:'{{founder}}', t:'Correcto. Toda petición de reducir frecuencia se convierte automáticamente en una conversación sobre el cariño. Y esa conversación no se gana.'},
+       {s:'Pareja', t:'Es que si lo planteamos, mi madre va a pensar que es por ella.'},
+       {s:'{{founder}}', t:'Va a pensar que es por ella porque, en parte, lo es. Por eso no vamos a plantearlo. ¿Hay algo que les guste hacer a ustedes dos los domingos por la mañana?'},
+       {s:'Pareja', t:'Antes hacíamos rutas. Hace años que no.'},
+       {s:'{{founder}}', t:'Perfecto. A partir de ahora hacen rutas. Con nombre, con grupo y con calendario publicado.'},
+       {note:'La operación deja de ser una sustracción y pasa a ser una adición. Nadie discute que usted haga algo; se discute que usted deje de hacer algo.'},
+       {s:'Cliente', t:'¿Y no se va a notar?'},
+       {s:'{{founder}}', t:'Se va a notar. Pero se va a notar como una afición, no como una decisión. Y una afición no ofende a nadie: solo ocupa el calendario.'},
+       {s:'Pareja', t:'¿Y si nos preguntan directamente?'},
+       {s:'{{founder}}', t:'Entonces lo cuentan con entusiasmo y les enseñan fotos. Un plan que se defiende con ilusión no parece una excusa. Un plan que se defiende con explicaciones, sí.'},
+       {note:'Regla operativa: alternar. La primera semana se sustituye, la siguiente se asiste, y se asiste con ganas. Una desaparición gradual es indistinguible de una agenda ocupada; una desaparición brusca es un comunicado.'}
+     ]},
+
+    {kind:'Mensajes', title:'Grupo familiar — introducción de la actividad', meta:'19 de enero',
+     type:'chat',
+     msgs:[
+       {n:'Cliente', me:true, t:'Este domingo no llegamos a comer, que hemos empezado a hacer las rutas otra vez y nos pilla lejos. La semana que viene sin falta 💪'},
+       {n:'Cliente', me:true, t:'(foto del embalse)'},
+       {n:'Suegra', t:'Qué bonito!! y qué buen tiempo tenéis'},
+       {n:'Suegro', t:'Yo por ahí anduve en el 87'},
+       {n:'Suegra', t:'La semana que viene os hago el arroz entonces'},
+       {sys:'ninguna pregunta sobre el motivo · ninguna tensión registrada'}
+     ]},
+
+    {kind:'Documento', title:'Calendario de sustitución — primer trimestre', meta:'Plan operativo',
+     type:'paper',
+     head:{title:'Calendario de sustitución', sub:'Reducción gradual de frecuencia sin comunicación explícita', ref:'Ref. {{prefix}}-2026-0012<br>Horizonte: 12 semanas<br>Objetivo: quincenal'},
+     blocks:[
+       {p:'El calendario es el único instrumento de esta operación. No hay conversación, no hay anuncio y no hay motivo declarado. La frecuencia se reduce por ocupación, no por decisión.'},
+       {table:{cols:['Semana','Domingo','Observación'], rows:[
+         ['1','Ruta','Se comunica con foto y entusiasmo'],
+         ['2','Comida familiar','Asistencia plena. Sin prisas. Postre incluido'],
+         ['3','Ruta','Se menciona el grupo de rutas por primera vez'],
+         ['4','Comida familiar','Se invita a los suegros a la ruta de mayo'],
+         ['5–12','Alternancia estable','Frecuencia quincenal consolidada']
+       ]}},
+       {h:'Reglas de ejecución'},
+       {list:[
+         'Nunca justificar la ausencia. Solo anunciarla, y siempre en positivo.',
+         'En los domingos de asistencia, llegar antes y marcharse después de lo habitual.',
+         'Invitar al menos una vez a la actividad sustitutiva. Que digan que no es parte del plan.',
+         'Ante pregunta directa sobre la frecuencia, responder con calendario y no con sentimiento.'
+       ]},
+       {h:'Indicador de éxito'},
+       {p:'La operación se considerará resuelta cuando alguien de la familia proponga por iniciativa propia una comida <b>en fin de semana alterno</b>. En ese momento la frecuencia habrá dejado de ser una concesión y habrá pasado a ser la norma.'}
+     ],
+     foot:'Caso ficticio. Los suegros no existen. El arroz, lamentablemente, tampoco.'}
+  ],
+  why:[
+    {h:'Sustituir en lugar de eliminar', p:'Quitar algo obliga a justificarlo; añadir algo, no. El domingo no se ha perdido: se ha ocupado. Una agenda llena es un hecho neutro, mientras que una renuncia es siempre <em>un mensaje sobre alguien</em>.'},
+    {h:'Nunca pedir menos', p:'En cuanto se formula «vamos a vernos menos», la conversación deja de tratar de calendarios y pasa a tratar de afecto. Ese debate no se gana: se empata en el mejor de los casos y se recuerda durante años en el peor.'},
+    {h:'El calendario como tercero neutral', p:'Nadie discute con una agenda. Al trasladar la decisión a un objeto sin intenciones se elimina el destinatario del reproche. No hay nadie a quien reclamar, y sin destinatario <em>no llega a formarse el agravio</em>.'},
+    {h:'Alternancia, no desaparición', p:'Una ausencia gradual es indistinguible de una vida ocupada; una ausencia brusca es un comunicado. La regla del domingo intermedio —asistir, y asistir bien— es lo que impide que la reducción se lea como distanciamiento.'},
+    {h:'Invitar sabiendo que dirán que no', p:'La invitación a la ruta de mayo es sincera y también es una prueba: convierte la actividad en algo compartible en lugar de excluyente. Al ofrecer la puerta abierta, la ausencia deja de tener <em>filo</em>.'},
+    {h:'Entusiasmo en lugar de explicación', p:'Un plan defendido con ilusión no parece una excusa; un plan defendido con argumentos sí. El tono comunica más que el contenido, y quien se justifica está, sin darse cuenta, admitiendo que hay algo que justificar.'}
+  ],
+  risknote:'Punto de rotura: cancelar también el domingo de asistencia. Dos ausencias seguidas dejan de ser una afición y pasan a ser una postura, y a partir de ahí ya no hay calendario que lo sostenga.'
+},
+{
+  code:'{{prefix}}-2026-0044', op:'OPERACIÓN JUSTIFICANTE', div:'excusas', blocked:true,
+  problem:'El cliente solicita un justificante médico con membrete para acreditar ante su empresa una ausencia de tres días que no fue médica.',
+  goal:'Ninguno. El expediente no llegó a abrirse.',
+  strategy:'Se escuchó al cliente durante once minutos, se le explicó dónde estaba la línea y se le acompañó a la puerta con una alternativa que sí funcionaba.',
+  result:'Expediente no admitido. El cliente habló con su responsable al día siguiente. No hubo consecuencias.',
+  score:0, risk:5, prob:0, status:'{{root}} fallido',
+  docs:[
+    {kind:'Transcripción', title:'Llamada de admisión — expediente no aceptado', meta:'3 de febrero · duración 11:26',
+     type:'transcripcion',
+     lines:[
+       {s:'Cliente', t:'Necesito un justificante. Con membrete, con firma, lo normal.'},
+       {s:'{{founder}}', t:'Entiendo. ¿Se lo van a pedir por escrito o basta con que usted lo diga?'},
+       {s:'Cliente', t:'Me lo han pedido por escrito.'},
+       {s:'{{founder}}', t:'Entonces aquí terminamos. Este despacho trabaja con orden, con argumentos y con el momento adecuado para decir las cosas. No trabaja con documentos.'},
+       {s:'Cliente', t:'Ya, pero es un papel de nada.'},
+       {s:'{{founder}}', t:'Es un papel de nada hasta que alguien lo comprueba. Y a partir de ese momento usted deja de tener un problema laboral y pasa a tener uno bastante peor. <b>Esto ya no es un {{problem}}. Es un delito.</b>'},
+       {note:'El personaje se mantiene, pero la línea no se negocia. Toda la gracia de este despacho depende de que este límite exista de verdad.'},
+       {s:'Cliente', t:'¿Y qué hago entonces?'},
+       {s:'{{founder}}', t:'Lo que funciona de verdad, que además es gratis: llame usted mañana, temprano, antes de que se lo vuelvan a pedir. Diga que faltó por un asunto personal, que fue un error no avisar bien y que no volverá a pasar. Sin adornos y sin historia.'},
+       {s:'Cliente', t:'¿Así, sin más?'},
+       {s:'{{founder}}', t:'Así, sin más. En mi experiencia, a nadie le han despedido por tres días. Han despedido a gente por el papel que trajo para justificar tres días.'}
+     ]},
+    {kind:'Dictamen', title:'Resolución de no admisión', meta:'3 de febrero',
+     type:'paper',
+     head:{title:'Expediente no admitido', sub:'Resolución de la dirección del despacho', ref:'Ref. {{prefix}}-2026-0044<br>Estado: cerrado<br>Honorarios: 0,00 €'},
+     blocks:[
+       {p:'{{founder}} ha revisado la solicitud y ha resuelto <b>no admitir</b> el expediente. La petición implica la elaboración de documentación falsa destinada a un tercero, materia expresamente excluida del ámbito de este despacho.'},
+       {h:'Materias que no se admiten en ningún caso'},
+       {list:[
+         'Documentación oficial falsificada o simulada.',
+         'Certificados, títulos o justificantes destinados a instituciones, empresas o centros educativos.',
+         'Justificantes, partes o informes médicos.',
+         'Suplantación de identidad y firma en nombre de terceros.',
+         'Comunicaciones haciéndose pasar por organismos o empresas reales.',
+         'Declaraciones falsas ante autoridades, y fraude de cualquier naturaleza.'
+       ]},
+       {h:'Estrategia alternativa recomendada'},
+       {p:'Comunicación directa, en primera persona, anticipada y sin narrativa. Coste: una llamada de dos minutos. Probabilidad estimada de éxito: notablemente superior a la de la opción solicitada.'}
+     ],
+     foot:'Caso ficticio. El límite, no.'}
+  ],
+  why:[
+    {h:'La ficción necesita un borde', p:'Una parodia sobre estrategias sociales solo resulta divertida mientras se sepa dónde termina. En cuanto empieza a producir documentos utilizables deja de ser humor y pasa a ser un problema real con nombre propio. <em>El límite no es un adorno del personaje: es lo que lo hace sostenible.</em>'},
+    {h:'El papel convierte un lío en un expediente', p:'Tres días de ausencia se resuelven casi siempre con una conversación. Un documento falso, no: crea una prueba material, la conserva y traslada el asunto a un terreno donde ya no decide usted. Se cambia un problema pequeño y reversible por otro <em>permanente</em>.'},
+    {h:'Adelantarse sigue siendo la mejor jugada', p:'Contarlo antes de que lo pregunten conserva el control del relato y, sobre todo, del tono. La verdad dicha a tiempo casi nunca es cara. Lo caro es la versión que hay que sostener después, y las siguientes que hay que inventar para sostener aquella.'}
+  ],
+  risknote:'Este expediente se conserva en el archivo público precisamente porque no salió adelante. Es la única operación del despacho cuyo éxito consistió en no ejecutarla.'
+}
 ];
 
 const TESTIMONIALS = [
@@ -882,6 +1268,40 @@ function objectionsFor(a){
   return out.slice(0,5);
 }
 
+/* ── Por qué funciona: mecanismos psicológicos aplicables ─────────────── */
+const WHY_LIB = {
+  orden:      {h:'El orden de las conversaciones', p:'Las decisiones de grupo no se toman en la reunión: se toman antes, en privado y por separado. Quien fija su postura en público delante de testigos ya no puede cambiarla sin parecer que cede, así que la <em>defiende</em>. Hablar primero con quien apoya y dejar la reunión para confirmar convierte el debate en un trámite.'},
+  ventaja:    {h:'Ventaja informativa', p:'Que la otra parte no sepa nada le permite a usted elegir el momento, el marco y el tono. Si la información llega por otra vía, el asunto deja de tratar del asunto y pasa a tratar de por qué no se lo contó usted, que es una conversación mucho peor y que ya no controla.'},
+  motivo:     {h:'El motivo por encima de la sorpresa', p:'Cuando ya lo saben todo, lo único que queda por negociar es el <em>por qué</em>. Un motivo sencillo, ajeno a su voluntad y repetido una sola vez cierra el tema; un motivo elaborado invita a examinarlo, y todo lo que se examina acaba encontrando grietas.'},
+  unidad:     {h:'La unidad de medida', p:'La misma cantidad cambia de naturaleza según cómo se presente: un importe total invita a impugnar el proyecto entero, mientras que el mismo importe por persona y por mes se compara mentalmente con gastos que ya se aceptan sin discutir. No manipula la cifra: manipula el <em>marco</em> de comparación.'},
+  reconocer:  {h:'Reconocer antes de pedir', p:'Enunciar en voz alta la posición contraria antes de exponer la propia desactiva la mitad del guion del otro: ya no necesita defenderse de algo que usted acaba de admitir. Cuesta once segundos y es lo que distingue una conversación difícil de una discusión.'},
+  eleccion:   {h:'Elegir en lugar de obedecer', p:'La resistencia rara vez apunta a la tarea; apunta a que se la impongan. Ofrecer dos opciones dentro de un marco ya decidido preserva la sensación de autonomía y elimina el destinatario de la rebeldía. Si elige, no hay nadie contra quien rebelarse.'},
+  preferencia:{h:'Preferencia, no valoración', p:'En el terreno familiar cualquier petición corre el riesgo de leerse como un juicio sobre alguien. Plantearla como una preferencia propia —«nos apetece», nunca «es que vosotros»— mantiene la conversación en el ámbito de los planes y fuera del ámbito del afecto, que es donde no se gana nunca.'},
+  renuncia:   {h:'Renunciar a tener razón', p:'Cuando el escenario de fracaso dura años, el objetivo deja de ser convencer y pasa a ser <em>no romper nada irreversible</em>. Ganar una discusión y perder la relación es el resultado más frecuente de este despacho y el único que no se puede deshacer.'},
+  antelacion: {h:'La antelación como argumento', p:'Avisar pronto elimina el daño real: sin trastorno no hay agravio que sostener. El mismo mensaje comunicado tarde se lee como desconsideración, y lo que ofende no suele ser la decisión sino el <em>momento</em> en que se comunica.'},
+  unalinea:   {h:'Una sola línea de acción', p:'Con el plazo en horas no hay margen para consensos ni para planes alternativos. Una solución mediocre ejecutada hoy supera sistemáticamente a una solución impecable ejecutada tarde, porque la segunda ya no resuelve el mismo problema.'},
+  precedente: {h:'Nombrar el precedente primero', p:'Si hubo un intento anterior que salió mal, mencionarlo usted y al principio le quita la munición al otro. Un precedente sacado por la parte contraria es un reproche; el mismo precedente sacado por usted es <em>credibilidad</em>.'},
+  salida:     {h:'La salida honrosa', p:'Nadie acepta una propuesta si aceptarla equivale a admitir que estaba equivocado. Hay que construir de antemano un camino por el que el otro pueda incorporarse sin perder la cara: pedirle que revise algo, incorporar una observación suya, dejarle un detalle que sea claramente obra suya.'},
+  inaccion:   {h:'El coste de no decidir', p:'Mientras no hacer nada sea gratis, ganará siempre, porque la inacción nunca necesita justificarse. Ponerle precio explícito —tiempo, dinero, incomodidad repetida— la convierte en <em>una opción más</em> sobre la mesa, y ahí ya compite en igualdad con la suya.'},
+  cierre:     {h:'Una frase y una fecha', p:'Las conversaciones que terminan sin siguiente paso concreto no han terminado: vuelven, y vuelven peor. Cerrar con una acción y un día convierte un acuerdo verbal en un compromiso comprobable sin que nadie tenga que firmar nada.'}
+};
+function whyFor(a){
+  const k = [];
+  if (a.cuantos >= 2) k.push('orden');
+  if (a.saben === 'nada') k.push('ventaja');
+  if (a.saben === 'todo') k.push('motivo');
+  if (a.dinero === 'reparto' || a.dinero === 'mucho') k.push('unidad');
+  if (a.relacion === 'tensa' || a.relacion === 'rota') k.push('reconocer');
+  if (a.quien === 'adolescente') k.push('eleccion');
+  if (a.quien === 'politica' || a.quien === 'familia' || a.quien === 'pareja') k.push('preferencia');
+  if (a.fracaso === 'conflicto') k.push('renuncia');
+  if (a.tiempo === 'mes' || a.tiempo === 'semanas') k.push('antelacion');
+  if (a.tiempo === 'horas') k.push('unalinea');
+  if (a.historial === 'si_mal') k.push('precedente');
+  for (const f of ['salida','inaccion','cierre']) if (k.length < 4) k.push(f);
+  return [...new Set(k)].slice(0,4).map(x => WHY_LIB[x]);
+}
+
 function planBFor(a){
   const b = ['Aplazar sin cerrar: proponer una fecha concreta de revisión. Un aplazamiento con fecha no es una derrota, es una prórroga.'];
   if (a.cuantos >= 4) b.push('Reducir el alcance: conseguir el acuerdo de la mayoría y dejar al bloqueador fuera del acta, no fuera de la relación.');
@@ -934,6 +1354,7 @@ function localEngine(a){
     expected_objections: objs.map(o=>o.o),
     responses: objs.map(o=>o.r),
     objection_pairs: objs,
+    why_it_works: whyFor(a),
     plan_b: planBFor(a),
     success_probability: prob,
     closing: rnd(CLOSERS),
@@ -974,7 +1395,8 @@ function blockedFile(a){
 const RESPONSE_SCHEMA = {
   operation_name:'string', summary:'string', risk_level:'1-5', pufo_score:'0-100',
   strategy:['string'], arguments:['string'], expected_objections:['string'],
-  responses:['string'], plan_b:['string'], success_probability:'0-100'
+  responses:['string'], plan_b:['string'], success_probability:'0-100',
+  why_it_works:[{h:'nombre del mecanismo', p:'por qué funciona, en clave de psicología social'}]
 };
 
 const AI = {
@@ -986,6 +1408,9 @@ const AI = {
     'con ironía seca y sin chistes evidentes. El humor nace de tratar asuntos triviales con lenguaje de estrategia, compliance y ' +
     'gestión de riesgos. Nunca ayudas con documentación falsa, suplantación de identidad, justificantes médicos, fraude ni ' +
     'declaraciones ante autoridades: en esos casos respondes en personaje que el asunto ha dejado de ser un {{problem}}. ' +
+    'En "why_it_works" explicas los mecanismos psicológicos reales que sostienen la estrategia (escasez y selección, ' +
+    'deseo de creer, compromiso y coherencia, reactancia, prueba social, encuadre de la cifra, coste de la inacción, ' +
+    'salida honrosa, orden de las conversaciones). Ahí no hay ironía: esa parte se escribe en serio. ' +
     'Devuelves EXCLUSIVAMENTE un JSON válido con el esquema indicado.'),
   async generate(payload){
     const res = await fetch(this.endpoint, {
@@ -1208,36 +1633,115 @@ V.servicios = () => `
   </div></section>`;
 
 /* ── CASOS ────────────────────────────────────────────────────────────── */
+const Doc = {
+  transcripcion: d => `<div class="tr">${d.lines.map(l => l.note
+      ? `<div class="note">${l.note}</div>`
+      : `<div class="l"><b>${l.s}</b><span>${l.t}</span></div>`).join('')}</div>`,
+
+  email: d => `
+    <div class="mail-head">
+      <div><i>De</i><span>${d.from}</span></div>
+      <div><i>Para</i><span>${d.to}</span></div>
+      <div><i>Asunto</i><span>${d.subject}</span></div>
+      <div><i>Fecha</i><span>${d.date}</span></div>
+    </div>
+    <div class="mail-body">${d.body.map(p=>`<p>${p}</p>`).join('')}</div>
+    ${d.foot ? `<div class="note-foot">${d.foot}</div>` : ''}`,
+
+  chat: d => `<div class="chat">${d.msgs.map(m => m.sys
+      ? `<div class="sys">${m.sys}</div>`
+      : `<div class="msg${m.me?' me':''}"><b>${m.n}</b>${m.t}</div>`).join('')}</div>`,
+
+  paper: d => `
+    <div class="paper">
+      <div class="ph">
+        <div><h5>${d.head.title}</h5><div class="psub">${d.head.sub}</div></div>
+        <div class="pmono">${d.head.ref}</div>
+      </div>
+      ${d.blocks.map(b =>
+          b.h     ? `<h6>${b.h}</h6>`
+        : b.p     ? `<p>${b.p}</p>`
+        : b.list  ? `<ul>${b.list.map(i=>`<li>${i}</li>`).join('')}</ul>`
+        : b.table ? `<table>
+              <thead><tr>${b.table.cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead>
+              <tbody>
+                ${b.table.rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}
+                ${b.table.total ? `<tr class="tot">${b.table.total.map(c=>`<td>${c}</td>`).join('')}</tr>` : ''}
+              </tbody></table>`
+        : '').join('')}
+      ${d.foot ? `<div class="pfoot">${d.foot}</div>` : ''}
+    </div>`
+};
+
+const renderDoc = d => `
+  <div class="artifact">
+    <div class="artifact-head">
+      <span class="artifact-kind">${d.kind}</span>
+      <span class="artifact-title">${d.title}</span>
+      <span class="artifact-meta">${d.meta || ''}</span>
+    </div>
+    <div class="artifact-body">${(Doc[d.type] || (()=>''))(d)}</div>
+  </div>`;
+
+const renderWhy = c => `
+  <div class="field">
+    <h4>Por qué funciona</h4>
+    <p class="muted" style="font-size:14px;margin-bottom:20px">
+      Los mecanismos de abajo son reales y están descritos en la literatura de psicología social.
+      Lo único ficticio de este expediente es el despacho que los factura.
+    </p>
+    <div class="why">${c.why.map(w=>`<div class="why-item"><h5>${w.h}</h5><p>${w.p}</p></div>`).join('')}</div>
+    ${c.risknote ? `<div class="quote" style="margin-top:24px;font-size:17px">${c.risknote}</div>` : ''}
+  </div>`;
+
 V.casos = () => `
   <section style="padding-top:150px"><div class="wrap">
     <div class="kicker">Archivo público</div>
     <h1 class="title">Expedientes cerrados</h1>
-    <p class="lead">Todos los casos son ficticios. Los nombres han sido cambiados; los vecinos, no tanto.</p>
-    <div class="grid" style="margin-top:44px; gap:26px">
-      ${CASES.map(c=>`
-        <div class="dossier reveal">
-          <div class="dossier-head">
-            <span class="dossier-code">${c.code}</span>
+    <p class="lead">Cada expediente incluye la documentación que se generó durante la operación —llamadas, correos,
+      propuestas— y el análisis de por qué funcionó. Todos los casos son ficticios. Los vecinos, no tanto.</p>
+    <div class="grid" style="margin-top:44px; gap:30px">
+      ${CASES.map((c,i)=>`
+        <div class="dossier reveal" ${c.blocked?'style="border-color:rgba(192,69,58,.45)"':''}>
+          <div class="dossier-head" ${c.blocked?'style="background:linear-gradient(90deg, rgba(192,69,58,.14), transparent)"':''}>
+            <span class="dossier-code" ${c.blocked?'style="color:var(--danger)"':''}>${c.code}</span>
             <h3 class="dossier-op">${c.op}</h3>
-            <span class="stamp ${c.status==='Resuelto'?'st-ok':'st-warn'}">${c.status}</span>
+            <span class="stamp ${c.blocked?'st-danger':c.status==='Resuelto'?'st-ok':'st-warn'}">${c.blocked?'No admitido':c.status}</span>
           </div>
           <div class="dossier-body">
             <div class="grid g2" style="gap:0 34px">
               <div class="field"><h4>Problema</h4><p>${c.problem}</p></div>
               <div class="field"><h4>Objetivo</h4><p>${c.goal}</p></div>
-              <div class="field"><h4>Estrategia aplicada</h4><p>${c.strategy}</p></div>
+              <div class="field"><h4>${c.blocked?'Actuación':'Estrategia aplicada'}</h4><p>${c.strategy}</p></div>
               <div class="field"><h4>Resultado</h4><p>${c.result}</p></div>
             </div>
           </div>
+          ${c.blocked ? '' : `
           <div class="metrics">
             <div class="metric"><div class="v">${c.score}</div><div class="k">{{score}}</div></div>
             <div class="metric"><div class="v">${c.prob}%</div><div class="k">Probabilidad</div></div>
             <div class="metric"><div class="v">${['I','II','III','IV','V'][c.risk-1]}</div><div class="k">Clasificación</div></div>
             <div class="metric"><div class="v" style="font-size:22px">${T(RISK[c.risk-1].label)}</div><div class="k">Riesgo</div></div>
+          </div>`}
+          <div class="dossier-body" style="padding-top:0">
+            <button class="btn btn-ghost btn-sm case-toggle" data-case="${i}"
+              data-label="Ver documentación y análisis · ${c.docs.length} documento${c.docs.length>1?'s':''}">
+              Ver documentación y análisis · ${c.docs.length} documento${c.docs.length>1?'s':''}
+            </button>
+            <div class="case-more" id="case${i}">
+              <div class="field" style="border-bottom:none">
+                <h4>Documentación anexa</h4>
+                ${c.docs.map(renderDoc).join('')}
+              </div>
+              ${renderWhy(c)}
+            </div>
           </div>
         </div>`).join('')}
     </div>
-    <div style="text-align:center;margin-top:44px"><a class="btn btn-primary" href="#/lab">Abrir el suyo</a></div>
+    <div style="text-align:center;margin-top:48px">
+      <p class="lead" style="margin:0 auto 22px">Su caso no aparece aquí porque todavía no nos lo ha contado.</p>
+      <a class="btn btn-primary" href="#/lab">Abrir su expediente</a>
+    </div>
   </div></section>`;
 
 /* ── PERSONAJE ────────────────────────────────────────────────────────── */
@@ -1535,6 +2039,13 @@ V.expediente = () => {
         <div class="field"><h4>Argumentario</h4><ul>${f.arguments.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>
         <div class="field"><h4>Objeciones previsibles y contramedidas</h4>
           ${f.objection_pairs.map(p=>`<div class="qa"><b>${esc(p.o)}</b><span>${esc(p.r)}</span></div>`).join('')}</div>
+        ${(f.why_it_works && f.why_it_works.length) ? `
+        <div class="field"><h4>Por qué debería funcionar</h4>
+          <p class="muted" style="font-size:14px;margin-bottom:18px">
+            Mecanismos de psicología social aplicables a este expediente concreto. Son reales;
+            lo único ficticio es el despacho que se los factura.</p>
+          <div class="why">${f.why_it_works.map(w=>`<div class="why-item"><h5>${w.h}</h5><p>${w.p}</p></div>`).join('')}</div>
+        </div>` : ''}
         <div class="field"><h4>Plan B</h4><ol>${f.plan_b.map(x=>`<li>${esc(x)}</li>`).join('')}</ol></div>
         <div class="field"><h4>Nota final de {{founder}}</h4>
           <p style="font-family:var(--serif);font-style:italic;font-size:20px;color:var(--gold)">${esc(f.closing)}</p></div>
@@ -1586,6 +2097,13 @@ function afterRender(page){
 
   if(page==='lab') renderLab();
 
+  if(page==='casos') document.querySelectorAll('.case-toggle').forEach(b => b.onclick = () => {
+    const box = document.getElementById('case' + b.dataset.case);
+    const open = box.classList.toggle('on');
+    b.textContent = open ? 'Ocultar documentación' : b.dataset.label;
+    if(open && window.PufoScene) PufoScene.pulse(.8);
+  });
+
   if(page==='faq') document.querySelectorAll('.faq-item').forEach(it => it.onclick = () => {
     const a = it.querySelector('.faq-a'); const open = it.classList.toggle('open');
     a.style.maxHeight = open ? a.scrollHeight+'px' : 0;
@@ -1602,7 +2120,9 @@ function afterRender(page){
       const f = lastFile || Archive.all()[0];
       const txt = [f.file_code, f.operation_name, '', 'OBJETIVO: '+f.goal, '', 'SITUACIÓN: '+f.summary, '',
         'ESTRATEGIA:', ...f.strategy.map((s,i)=>` ${i+1}. ${s}`), '', 'ARGUMENTARIO:', ...f.arguments.map(s=>' · '+s), '',
-        'OBJECIONES:', ...f.objection_pairs.map(p=>` ${p.o}\n   → ${p.r}`), '', 'PLAN B:', ...f.plan_b.map(s=>' · '+s), '',
+        'OBJECIONES:', ...f.objection_pairs.map(p=>` ${p.o}\n   → ${p.r}`), '',
+        'POR QUÉ DEBERÍA FUNCIONAR:', ...(f.why_it_works||[]).map(w=>` · ${w.h}: ${w.p.replace(/<[^>]+>/g,'')}`), '',
+        'PLAN B:', ...f.plan_b.map(s=>' · '+s), '',
         T('{{score}}: ')+f.pufo_score, 'PROBABILIDAD: '+f.success_probability+'%'].join('\n');
       navigator.clipboard.writeText(txt).then(()=>say('Expediente copiado.')).catch(()=>say('No ha sido posible copiar.'));
     };
@@ -1795,7 +2315,7 @@ route();
 
     tCam.set(mood.cam[0] + m.x*0.85, mood.cam[1] - m.y*0.55, mood.cam[2] + scrollN*2.4);
     camera.position.lerp(tCam, 0.045);
-    camera.lookAt(world.position.x*0.30, world.position.y*0.25, 0);
+    camera.lookAt(world.position.x*0.10, world.position.y*0.10, 0);
 
     renderer.render(scene, camera);
   }
