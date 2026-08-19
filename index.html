@@ -93,13 +93,14 @@ header.nav{
 .nav-in{max-width:var(--maxw); margin:0 auto; padding:14px 26px; display:flex; align-items:center; gap:26px}
 .brand{display:flex; align-items:center; gap:12px; cursor:pointer}
 .seal{
-  width:40px; height:40px; border-radius:50%; display:grid; place-items:center; flex:0 0 auto;
+  width:42px; height:42px; border-radius:50%; flex:0 0 auto; overflow:hidden; padding:2px;
   border:1px solid var(--gold); box-shadow:inset 0 0 0 3px rgba(201,162,75,.16), 0 0 22px rgba(201,162,75,.16);
-  font-family:var(--serif); font-weight:900; font-size:15px; color:var(--gold); letter-spacing:.02em;
-  background:radial-gradient(circle at 30% 25%, rgba(201,162,75,.22), transparent 65%);
-  transition:transform .5s cubic-bezier(.2,.9,.2,1);
+  background:radial-gradient(circle at 32% 22%, rgba(201,162,75,.28), rgba(10,14,23,.9) 70%);
+  transition:transform .6s cubic-bezier(.2,.9,.2,1);
 }
-.brand:hover .seal{transform:rotate(360deg)}
+.brand:hover .seal{transform:rotate(-8deg) scale(1.05)}
+.pufo-mark{width:100%; height:100%; display:block}
+.seal.big{width:120px; height:120px; padding:5px}
 .brand-txt{display:flex; flex-direction:column; line-height:1}
 .brand-name{font-family:var(--serif); font-size:20px; font-weight:700; color:var(--paper)}
 .brand-sub{font-family:var(--mono); font-size:9px; letter-spacing:.24em; color:var(--muted); text-transform:uppercase; margin-top:4px}
@@ -314,6 +315,53 @@ section.tight{padding:64px 0}
 .why-item p{font-size:14px; color:#9FA9BC; margin:0; line-height:1.62}
 .why-item p em{color:var(--gold); font-style:normal}
 
+/* ============================================================
+   CATÁLOGO DE 100 CASOS
+   ============================================================ */
+.filters{display:flex; flex-wrap:wrap; gap:8px; margin:26px 0 6px}
+.filters .fchip{
+  font-family:var(--mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase;
+  border:1px solid var(--line-soft); background:rgba(255,255,255,.03); color:#A9B3C6;
+  padding:8px 13px; border-radius:99px; cursor:pointer; transition:.2s; white-space:nowrap;
+}
+.filters .fchip:hover{border-color:var(--gold); color:var(--gold)}
+.filters .fchip.on{background:var(--gold); color:#0A0E17; border-color:var(--gold); font-weight:600}
+.count{font-family:var(--mono); font-size:11px; color:var(--muted); letter-spacing:.1em; margin:14px 0 22px}
+
+.catalog{display:grid; grid-template-columns:repeat(3,1fr); gap:20px}
+.ccard{
+  background:linear-gradient(165deg, rgba(22,31,49,.8), rgba(10,14,23,.82));
+  border:1px solid var(--line-soft); border-radius:14px; overflow:hidden; display:flex; flex-direction:column;
+  transition:.32s cubic-bezier(.2,.9,.2,1); position:relative;
+}
+.ccard:hover{transform:translateY(-5px); border-color:var(--line); box-shadow:0 20px 44px rgba(0,0,0,.4)}
+.ccard.absurdo{border-color:rgba(192,69,58,.4)}
+.ccard.absurdo:hover{border-color:var(--danger)}
+
+.art{position:relative; aspect-ratio:16/10; display:grid; place-items:center; overflow:hidden;
+  background:radial-gradient(120% 130% at 30% 20%, var(--a,#243), var(--b,#0b1018) 78%); isolation:isolate}
+.art::after{content:''; position:absolute; inset:0; z-index:1;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='60' height='60' filter='url(%23n)' opacity='.28'/%3E%3C/svg%3E"); mix-blend-mode:overlay; opacity:.5}
+.art .emoji{font-size:58px; line-height:1; filter:drop-shadow(0 6px 14px rgba(0,0,0,.5)); z-index:2; transition:transform .35s}
+.art .emoji small{font-size:34px}
+.ccard:hover .art .emoji{transform:scale(1.12) rotate(-4deg)}
+.art .tape{position:absolute; z-index:3; bottom:9px; left:9px; font-family:var(--mono); font-size:8.5px; letter-spacing:.14em;
+  color:#0A0E17; background:var(--gold); padding:3px 8px; border-radius:3px; transform:rotate(-3deg); text-transform:uppercase}
+.art .catlabel{position:absolute; z-index:3; top:9px; right:9px; font-family:var(--mono); font-size:8.5px; letter-spacing:.12em;
+  color:var(--paper); background:rgba(0,0,0,.5); padding:3px 8px; border-radius:99px; text-transform:uppercase; backdrop-filter:blur(3px)}
+.art .warn{position:absolute; z-index:3; top:9px; left:9px; font-family:var(--mono); font-size:8.5px; letter-spacing:.1em;
+  color:#fff; background:var(--danger); padding:3px 8px; border-radius:3px; transform:rotate(-3deg); text-transform:uppercase; font-weight:600}
+
+.ccard-body{padding:18px 18px 20px; display:flex; flex-direction:column; flex:1}
+.ccard-op{font-family:var(--serif); font-size:18px; color:var(--paper); line-height:1.16; margin:0 0 9px}
+.ccard-body h6{font-family:var(--mono); font-size:9px; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); margin:12px 0 5px; font-weight:500}
+.ccard-p{font-size:13.5px; color:#98A2B6; margin:0; line-height:1.55}
+.ccard-sol{font-size:13.5px; color:#C9D2E1; margin:0; line-height:1.55}
+.ccard-why{font-size:12.5px; color:#8892A5; margin:8px 0 0; line-height:1.5; font-style:italic}
+.ccard .absurd-note{margin-top:12px; font-size:12px; color:#E0897F; background:rgba(192,69,58,.1);
+  border:1px solid rgba(192,69,58,.3); border-radius:8px; padding:9px 11px; line-height:1.5}
+.ccard .absurd-note b{color:var(--danger)}
+
 .case-toggle{width:100%; justify-content:center; margin-top:20px}
 .case-more{display:none; animation:fadeUp .6s cubic-bezier(.2,.9,.2,1)}
 .case-more.on{display:block}
@@ -353,22 +401,51 @@ footer{border-top:1px solid var(--line-soft); padding:52px 0 40px; margin-top:40
 }
 .toast.on{transform:translate(-50%,0)}
 
-@media(max-width:940px){
+@media(max-width:1080px){
   .g3,.g4{grid-template-columns:repeat(2,1fr)}
+  .catalog{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:960px){
+  nav.links{
+    position:fixed; top:68px; left:12px; right:12px; flex-direction:column; align-items:stretch; gap:2px;
+    background:rgba(10,14,23,.98); border:1px solid var(--line-soft); border-radius:14px; padding:10px;
+    display:none; max-height:80vh; overflow:auto; box-shadow:0 24px 60px rgba(0,0,0,.5);
+  }
+  nav.links.open{display:flex}
+  nav.links a{padding:12px 13px; font-size:15px}
+  .burger{display:block}
   .metrics{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:760px){
-  nav.links{
-    position:fixed; top:70px; left:14px; right:14px; flex-direction:column; align-items:stretch; gap:2px;
-    background:rgba(10,14,23,.98); border:1px solid var(--line-soft); border-radius:14px; padding:10px;
-    display:none;
-  }
-  nav.links.open{display:flex}
-  .burger{display:block}
+  :root{--maxw:100%}
+  .wrap{padding:0 18px}
+  .nav-in{padding:12px 18px; gap:12px}
+  .brand-name{font-size:18px}
   .g2,.g3,.g4{grid-template-columns:1fr}
-  section{padding:72px 0}
-  .lab-shell{padding:24px}
-  .dossier-body,.dossier-head{padding:20px}
+  .catalog{grid-template-columns:1fr}
+  section{padding:66px 0}
+  section[style*="padding-top:150px"]{padding-top:112px!important}
+  .hero{min-height:auto; padding:104px 0 56px}
+  .hero h1{font-size:clamp(40px,12vw,66px)}
+  .hero .lead, .lead{font-size:16px}
+  .title{font-size:clamp(26px,7vw,40px)}
+  .lab-shell{padding:22px 18px}
+  .dossier-body,.dossier-head{padding:18px}
+  .dossier-op{font-size:22px}
+  .metrics{grid-template-columns:repeat(2,1fr)}
+  .metric .v{font-size:30px}
+  .hero-actions{gap:10px}
+  .hero-actions .btn{flex:1 1 auto; justify-content:center}
+  .paper{overflow-x:auto}
+  .paper table{min-width:420px}
+  .filters{gap:6px}
+  .foot-grid{gap:26px}
+}
+@media(max-width:420px){
+  .art .emoji{font-size:48px}
+  .metric .v{font-size:26px}
+  .btn{padding:13px 18px; font-size:11px}
+  .kicker{font-size:10px}
 }
 @media(prefers-reduced-motion:reduce){
   *{animation-duration:.01ms!important; transition-duration:.01ms!important}
@@ -430,6 +507,37 @@ const BRAND = {
   city      : 'Departamento de Operaciones Delicadas'
 };
 
+/* ── Logo original: caballero con chistera y monóculo ───────────────────
+   Diseño propio inspirado en el arquetipo del millonario clásico de sombrero
+   de copa y monóculo. No reproduce ningún personaje protegido.            */
+function pufoLogo(){return `
+<svg class="pufo-mark" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <defs>
+    <linearGradient id="pfg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F4DCA2"/><stop offset="1" stop-color="#C29338"/>
+    </linearGradient>
+  </defs>
+  <circle cx="29" cy="61" r="4.2" fill="#E7D3A9"/>
+  <circle cx="71" cy="61" r="4.2" fill="#E7D3A9"/>
+  <circle cx="50" cy="61" r="21.5" fill="#EAD8AE"/>
+  <path d="M50 80.5 Q40 80 34 74 Q42 78 50 78 Q58 78 66 74 Q60 80 50 80.5 Z" fill="#E1CB9C"/>
+  <path d="M22 40.5 Q50 33 78 40.5 Q50 47 22 40.5 Z" fill="#0A0C10"/>
+  <path d="M35 41 L36.2 17.5 Q36.4 14 40 14 L60 14 Q63.6 14 63.8 17.5 L65 41 Z" fill="#0A0C10"/>
+  <rect x="35.4" y="33.4" width="29.2" height="5.4" rx="1" fill="url(#pfg)"/>
+  <path d="M40 52.5 Q43 51 46 52.5" fill="none" stroke="#7A5C33" stroke-width="1.4" stroke-linecap="round"/>
+  <circle cx="43" cy="57.2" r="2" fill="#242830"/>
+  <circle cx="58" cy="57.2" r="2" fill="#242830"/>
+  <circle cx="58" cy="57.2" r="6.6" fill="none" stroke="url(#pfg)" stroke-width="1.8"/>
+  <path d="M58.4 63.8 Q63 71.5 55 75" fill="none" stroke="url(#pfg)" stroke-width="1.3" stroke-linecap="round"/>
+  <path d="M50 66.4 Q42.5 62.8 36.5 67.4 Q42.5 71.8 50 67.4 Z" fill="#F7F2E6"/>
+  <path d="M50 66.4 Q57.5 62.8 63.5 67.4 Q57.5 71.8 50 67.4 Z" fill="#F7F2E6"/>
+  <path d="M46.5 72.4 Q50 74.2 53.5 72.4" fill="none" stroke="#B98C57" stroke-width="1.1" stroke-linecap="round"/>
+</svg>`;}
+function paintLogos(){
+  document.querySelectorAll('.seal').forEach(e=>{ if(e.dataset.lg) return; e.dataset.lg='1'; e.innerHTML = pufoLogo(); });
+  document.querySelectorAll('.avatar').forEach(e=>{ if(e.dataset.lg) return; e.dataset.lg='1'; e.innerHTML = pufoLogo(); });
+}
+
 /* Derivados automáticos ------------------------------------------------- */
 const initialsOf = s => s.split(/\s+/).filter(Boolean).map(w => w[0]).join('').slice(0,3).toUpperCase();
 BRAND.monogram   = BRAND.monogram   || initialsOf(BRAND.name);
@@ -467,7 +575,8 @@ const T = s => String(s).replace(/\{\{(\w+)\}\}/g, (m,k) => (k in TOKENS ? TOKEN
 document.title = T('{{brand}} — {{tagline}}');
 document.getElementById('brandName').textContent = BRAND.name;
 document.getElementById('brandSub').textContent  = BRAND.navSub;
-document.getElementById('seal').textContent      = BRAND.monogram;
+document.getElementById('seal').innerHTML        = pufoLogo();
+document.getElementById('seal').dataset.lg        = '1';
 </script>
 <script>
 /* ════════════════════════════════════════════════════════════════════════
@@ -897,6 +1006,142 @@ const CASES = [
   ],
   risknote:'Este expediente se conserva en el archivo público precisamente porque no salió adelante. Es la única operación del despacho cuyo éxito consistió en no ejecutarla.'
 }
+];
+
+/* ── Temas visuales por categoría (para la ilustración del marrón) ─────── */
+const CAT = {
+  vecinos:  {label:'Vecinos',      a:'#2c3a22', b:'#0c120a'},
+  suegros:  {label:'Suegros',      a:'#3a2331', b:'#120910'},
+  familia:  {label:'Familia',      a:'#22383a', b:'#0a1212'},
+  eventos:  {label:'Eventos',      a:'#2a2442', b:'#0b0a18'},
+  dinero:   {label:'Dinero',       a:'#3a341f', b:'#12100a'},
+  trabajo:  {label:'Trabajo',      a:'#233040', b:'#0a0f16'},
+  hijos:    {label:'Hijos',        a:'#3a2d22', b:'#12100a'},
+  amigos:   {label:'Amigos',       a:'#223a33', b:'#0a1210'},
+  pareja:   {label:'Pareja',       a:'#3a2330', b:'#120910'},
+  mascotas: {label:'Mascotas',     a:'#2f3a22', b:'#10120a'},
+  tecno:    {label:'Tecnología',   a:'#233a3f', b:'#0a1113'},
+  absurdo:  {label:'No hacer',     a:'#3a2020', b:'#140909'},
+  _:        {label:'Expediente',   a:'#2a3140', b:'#0a0e16'}
+};
+
+/* ════════════════════════════════════════════════════════════════════════
+   CATÁLOGO — 100 marrones con solución imaginativa e ilustración.
+   Los marcados `absurd:true` son ejemplos DELIBERADOS de lo que NO se debe
+   hacer, y así se señalan en pantalla.
+   ══════════════════════════════════════════════════════════════════════ */
+const CASES100 = [
+  {t:'Operación Ascensor Cromático', cat:'vecinos', emoji:'🛗', problem:'La comunidad lleva dos años decidiendo el color del nuevo ascensor.', sol:'Se presentan solo dos opciones ya preseleccionadas y se convoca votación con fecha de caducidad. El que no vota, acepta la mayoría.', why:'Reducir las opciones elimina la parálisis por análisis.'},
+  {t:'Operación Wifi del Portal', cat:'vecinos', emoji:'📶', problem:'Alguien se cuelga del wifi comunitario y nadie sabe quién.', sol:'Se cambia la contraseña y se reparte la nueva solo a los que están al día con la cuota. Sin acusaciones, sin junta.', why:'La fricción selectiva excluye sin señalar a nadie.'},
+  {t:'Operación Bici en el Rellano', cat:'vecinos', emoji:'🚲', problem:'El 3ºB aparca la bici en el rellano y no cabe el carrito del bebé.', sol:'Se instala un colgador comunitario en el garaje y se presenta como «mejora», nunca como prohibición.', why:'Una alternativa mejor derrota siempre a una prohibición.'},
+  {t:'Operación Claqué Nocturno', cat:'vecinos', emoji:'🩰', problem:'El vecino de arriba parece ensayar claqué a las 23:30.', sol:'Se sube con un plato de croquetas y se menciona el ruido de pasada, al final, casi como una anécdota.', why:'Nadie discute con quien acaba de traerle croquetas.'},
+  {t:'Operación Cartón Rotativo', cat:'vecinos', emoji:'📦', problem:'Nadie baja nunca el cartón al contenedor del portal.', sol:'Turno rotativo con un imán en cada puerta que marca «hoy te toca». La visibilidad hace el resto.', why:'La asignación pública activa la responsabilidad.'},
+  {t:'Operación Horario Canino', cat:'vecinos', emoji:'🐕', problem:'Un vecino suelta al perro en el jardín común a cualquier hora.', sol:'Se propone un «horario canino» en el que a ciertas horas sí se puede. El resto queda acotado sin conflicto.', why:'Conceder algo pequeño permite fijar el marco.'},
+  {t:'Operación Línea Generosa', cat:'vecinos', emoji:'🅿️', problem:'El coche del 2ºA invade siempre media plaza ajena.', sol:'Se repinta la línea un centímetro a su favor y se le pide, a cambio, respetar el borde. Se siente ganador.', why:'Una concesión mínima compra el cumplimiento.'},
+  {t:'Operación Gotera Visible', cat:'vecinos', emoji:'🏚️', problem:'Hay que arreglar el tejado y dos vecinos se niegan a pagar.', sol:'Presupuesto por vivienda y mes frente al coste de las goteras futuras, con foto de la mancha incluida.', why:'El coste de no actuar, hecho visible, decide.'},
+  {t:'Operación Felpudo Elegante', cat:'vecinos', emoji:'🪴', problem:'Guerra fría de felpudos y macetas en el rellano.', sol:'Se propone una norma estética común «de edificio elegante». Todos ceden a cambio de estatus.', why:'La gente cede por prestigio lo que no cede por orden.'},
+  {t:'Operación Estantería de Paquetes', cat:'vecinos', emoji:'📮', problem:'Nadie sabe quién recoge los paquetes de todos.', sol:'Una estantería etiquetada en el portal y un cartel amable. El sistema sustituye a la persona.', why:'Un sistema neutro evita tener que señalar culpables.'},
+
+  {t:'Operación Domingo Recuperado', cat:'suegros', emoji:'🍽️', problem:'Comida con los suegros cada domingo desde tiempos inmemoriales.', sol:'Se introduce una afición dominical con nombre y calendario. La ausencia se lee como plan, no como mensaje.', why:'Sustituir no ofende; renunciar sí.'},
+  {t:'Operación Jefa del Postre', cat:'suegros', emoji:'🥄', problem:'La suegra reorganiza tu cocina en cada visita.', sol:'Se le asigna una tarea concreta y acotada: «tú eres la jefa del postre». El territorio delimitado contiene la expansión.', why:'Un rol definido canaliza la energía sobrante.'},
+  {t:'Operación Nochebuena Alterna', cat:'suegros', emoji:'🎄', problem:'Las dos familias reclaman la misma Nochebuena.', sol:'Calendario rotativo firmado por adelantado para tres años. Se discute una vez y no cada diciembre.', why:'Decidir el sistema evita renegociar cada caso.'},
+  {t:'Operación Cuñado Experto', cat:'suegros', emoji:'🧑‍🏫', problem:'El cuñado te explica tu propio trabajo en cada cena.', sol:'Se le pide consejo primero sobre algo trivial. Saciada la necesidad de brillar, se calma solo.', why:'Quien ya ha lucido no necesita volver a lucir.'},
+  {t:'Operación Vajilla Heredada', cat:'suegros', emoji:'🍵', problem:'Reparto emocional de objetos sin valor y con mucho apego.', sol:'Sorteo por turnos de elección con acta. El azar le quita la culpa a las personas.', why:'El procedimiento absorbe el conflicto.'},
+  {t:'Operación Visita Programada', cat:'suegros', emoji:'🚪', problem:'Los suegros aparecen sin avisar «que pasábamos por aquí».', sol:'Se instaura una cena fija semanal con ellos. Teniendo su día, dejan de improvisar.', why:'Dar una vía oficial cierra todas las no oficiales.'},
+  {t:'Operación Álbum de los Nietos', cat:'suegros', emoji:'📸', problem:'Presión constante por más fotos del bebé.', sol:'Un álbum compartido que se actualiza cada viernes. La expectativa se canaliza a un único cauce.', why:'Un canal previsible reduce la demanda difusa.'},
+
+  {t:'Operación Cesta de Móviles', cat:'familia', emoji:'📱', problem:'Nadie levanta la vista del móvil durante la comida.', sol:'Una cesta central donde todos dejan el teléfono. El primero que lo coge paga el café.', why:'La regla simétrica evita el sermón.'},
+  {t:'Operación Regalo de la Abuela', cat:'familia', emoji:'🎁', problem:'Coordinar a catorce primos para un regalo conjunto.', sol:'Un único responsable con bote digital y fecha límite. Se acabó el hilo eterno.', why:'Un solo dueño de la tarea desatasca al grupo.'},
+  {t:'Operación Tema Redirigido', cat:'familia', emoji:'🗳️', problem:'El tío saca política en cada comida familiar.', sol:'Se pacta de antemano con dos aliados un cambio de tema ensayado. El desvío coordinado funciona.', why:'Redirigir en grupo es más fácil que callar a uno.'},
+  {t:'Operación Sorpresa Coordinada', cat:'familia', emoji:'🎂', problem:'Organizar una fiesta sorpresa sin que se entere nadie ni se pelee la familia.', sol:'Coartada creíble, un único canal secreto y tareas repartidas por escrito.', why:'La información compartimentada sostiene el secreto.'},
+  {t:'Operación Pizarra de la Nevera', cat:'familia', emoji:'🛒', problem:'Nadie apunta lo que falta y se compra tres veces lo mismo.', sol:'Una pizarra en la nevera y la regla «si te lo acabas, lo apuntas».', why:'Registrar en el momento vence a la memoria.'},
+  {t:'Operación Mando Rotativo', cat:'familia', emoji:'📺', problem:'Guerra por el mando a distancia cada noche.', sol:'Calendario de elección por días. El domingo elige quien haya cocinado.', why:'Vincular el privilegio a la aportación equilibra.'},
+  {t:'Operación Hermano Moroso', cat:'familia', emoji:'💸', problem:'Tu hermano nunca devuelve el dinero de las cenas.', sol:'Se pasa a que cada uno pague lo suyo con una app. Sin deuda no hay reproche.', why:'Eliminar la deuda elimina el conflicto de raíz.'},
+  {t:'Operación Wedding Planner Gratis', cat:'familia', emoji:'💐', problem:'Te piden organizar la boda de la prima «porque se te da bien».', sol:'Se acepta un rol pequeño y acotado por escrito, y se deriva el resto. El sí total es la trampa.', why:'Delimitar el alcance evita el secuestro.'},
+  {t:'Operación Turnos de Cuidado', cat:'familia', emoji:'🧓', problem:'Repartir el cuidado de un familiar mayor entre hermanos.', sol:'Calendario de turnos visible y presupuesto común. El reparto explícito frena el rencor.', why:'Lo repartido por escrito no se acumula como agravio.'},
+  {t:'Operación Amigo Invisible', cat:'familia', emoji:'🎀', problem:'La familia gasta de más en regalos que nadie quiere.', sol:'Amigo invisible con tope y lista de deseos. Menos gasto, más acierto.', why:'Una regla común libera a todos a la vez.'},
+
+  {t:'Operación Boda Lejana', cat:'eventos', emoji:'✈️', problem:'Boda a setecientos kilómetros en pleno agosto.', sol:'Aviso con cinco meses de antelación, motivo aburrido y verificable, y regalo por encima de la media.', why:'La antelación elimina el daño real de la ausencia.'},
+  {t:'Operación Aperitivo y Fuga', cat:'eventos', emoji:'🍷', problem:'No quieres ir a la cena de Navidad del trabajo.', sol:'Aparecer solo al aperitivo, saludar a las personas clave y marcharse antes del caos.', why:'La presencia breve cuenta igual como presencia.'},
+  {t:'Operación Antiguo Compañero', cat:'eventos', emoji:'🎓', problem:'Te invita a su boda alguien del instituto al que no ves hace quince años.', sol:'Felicitación cálida, regalo simbólico y un «imposible por fechas» sin dramatismo.', why:'El vínculo débil se salda con un gesto, no con asistencia.'},
+  {t:'Operación Despedida de Tres Días', cat:'eventos', emoji:'🎉', problem:'Despedida de soltero de tres días que no te apetece ni puedes pagar.', sol:'Unirte solo a una parte y proponer tú un plan alternativo más barato para otro día.', why:'Ofrecer una alternativa evita el no rotundo.'},
+  {t:'Operación Misa Opcional', cat:'eventos', emoji:'⛪', problem:'Comunión con misa de dos horas y comida de cinco.', sol:'Ir a la comida, no a la misa, con una excusa logística creíble. Se nota menos de lo que crees.', why:'La asistencia parcial rara vez se audita.'},
+  {t:'Operación Reencuentro con Guion', cat:'eventos', emoji:'🥂', problem:'Cena de antiguos alumnos que promete ser incómoda.', sol:'Llevar un aliado, fijar hora de salida y preparar un par de temas de conversación.', why:'El guion previo reduce la ansiedad social.'},
+  {t:'Operación Local de Bolas', cat:'eventos', emoji:'🎈', problem:'Cumpleaños infantil con veinte niños gritando.', sol:'Dejar al niño, ofrecerte a recoger a otros dos y desaparecer dos horas útiles.', why:'Convertir la obligación en logística la hace llevadera.'},
+  {t:'Operación Junta con Reloj', cat:'eventos', emoji:'🕰️', problem:'Junta de vecinos a las 20:00 que se alarga hasta medianoche.', sol:'Llegar con orden del día por escrito y proponer un límite horario nada más empezar.', why:'Fijar el marco temporal disciplina la reunión.'},
+  {t:'Operación Escape Room', cat:'eventos', emoji:'🧩', problem:'Cena con otra pareja con la que no conectáis.', sol:'Proponer un plan con actividad (escape room, bolos) en vez de mesa. La tarea llena los silencios.', why:'Una actividad compartida sustituye la conversación forzada.'},
+
+  {t:'Operación Marisco a Escote', cat:'dinero', emoji:'🦞', problem:'Sois ocho y uno propone pagar a escote habiendo pedido marisco.', sol:'App que divide por lo consumido. Se anuncia al sentarse, no al pedir la cuenta.', why:'Fijar la regla antes evita la disputa después.'},
+  {t:'Operación Bote Transparente', cat:'dinero', emoji:'🫙', problem:'Recaudar para un regalo de grupo y siempre faltan tres.', sol:'Bote digital con lista visible de quién ha puesto. La transparencia presiona sin señalar.', why:'La visibilidad activa la reciprocidad.'},
+  {t:'Operación Cuenta Común', cat:'dinero', emoji:'🏠', problem:'Los gastos del piso compartido los adelanta siempre el mismo.', sol:'Cuenta común con domiciliación y reparto automático cada mes.', why:'Automatizar elimina la fricción humana.'},
+  {t:'Operación Préstamo Elegante', cat:'dinero', emoji:'🤝', problem:'Un amigo te pide dinero y temes por la amistad.', sol:'Prestar solo lo que estarías dispuesto a regalar, y dejarlo por escrito sin solemnidad.', why:'Separar amistad y deuda protege ambas cosas.'},
+  {t:'Operación Suscripciones Fantasma', cat:'dinero', emoji:'🧾', problem:'La familia paga seis plataformas y ve una.', sol:'Auditoría de un domingo y cancelación conjunta. Se comparte una sola cuenta.', why:'Revisar juntos evita el goteo invisible.'},
+  {t:'Operación Presupuesto Primero', cat:'dinero', emoji:'🧳', problem:'Organizar un viaje de ocho con presupuestos muy dispares.', sol:'Fijar el rango de gasto antes de elegir destino. El marco filtra las opciones solo.', why:'Acordar el presupuesto primero evita choques después.'},
+  {t:'Operación Piso Heredado', cat:'dinero', emoji:'🔑', problem:'Repartir un piso heredado entre tres hermanos.', sol:'Tasación externa, opciones claras (vender, alquilar o comprar la parte) y un plazo.', why:'Un tercero neutral despersonaliza la cifra.'},
+  {t:'Operación Sobre de Boda', cat:'dinero', emoji:'✉️', problem:'No sabes cuánto poner en el sobre de la boda.', sol:'Referencia según la cercanía y el coste del cubierto, decidido en frío y sin culpa.', why:'Un criterio objetivo evita la ansiedad social.'},
+  {t:'Operación Lista del Bebé', cat:'dinero', emoji:'🍼', problem:'La familia quiere regalar cosas de bebé de forma descoordinada.', sol:'Lista abierta con reservas visibles. Cada uno marca lo que compra.', why:'Coordinar la demanda evita los duplicados.'},
+
+  {t:'Operación Reunión-Email', cat:'trabajo', emoji:'📅', problem:'Reuniones de una hora que terminan sin ninguna decisión.', sol:'Exigir orden del día y objetivo por escrito. Sin agenda, no hay reunión.', why:'Obligar a definir el objetivo filtra lo innecesario.'},
+  {t:'Operación Rastro por Escrito', cat:'trabajo', emoji:'🏅', problem:'Un compañero se cuelga las medallas de tu trabajo.', sol:'Dejar rastro por escrito de tus aportaciones en los canales compartidos.', why:'La documentación es la contramedida silenciosa.'},
+  {t:'Operación Favorcito Acotado', cat:'trabajo', emoji:'⏰', problem:'Te piden «un favorcito» que en realidad es media jornada extra.', sol:'Aceptar acotando alcance y plazo por escrito, y preguntar qué tarea despriorizar a cambio.', why:'Delimitar convierte el favor abierto en tarea finita.'},
+  {t:'Operación Tareas con Nombre', cat:'trabajo', emoji:'👥', problem:'En el proyecto grupal solo trabajan dos personas.', sol:'Repartir tareas nominales con fechas visibles. La asignación pública responsabiliza.', why:'Lo asignado con nombre y apellido no se diluye.'},
+  {t:'Operación Cronología Adjunta', cat:'trabajo', emoji:'📧', problem:'Recibes un correo con «tal y como comentamos…» que no comentasteis.', sol:'Responder cordial y factual, adjuntando la cronología real de lo ocurrido.', why:'El tono calmado más los hechos desmontan la maniobra.'},
+  {t:'Operación Agosto Rotativo', cat:'trabajo', emoji:'🏖️', problem:'Todo el equipo quiere las mismas dos semanas de agosto.', sol:'Turno rotativo anual documentado. Quien cedió este año elige primero el próximo.', why:'La rotación registrada se percibe como justa.'},
+  {t:'Operación Turno de Palabra', cat:'trabajo', emoji:'🎙️', problem:'Reuniones online donde nadie habla y todo se eterniza.', sol:'Rondas cortas con turno fijo y cierre con tareas y responsables asignados.', why:'Estructurar el turno reparte la palabra.'},
+  {t:'Operación Ascenso con Fecha', cat:'trabajo', emoji:'📈', problem:'Te prometen un ascenso «pronto» desde hace un año.', sol:'Pedir por escrito criterios concretos y una fecha de revisión.', why:'Convertir la promesa en hitos la hace exigible.'},
+  {t:'Operación Lunes por la Mañana', cat:'trabajo', emoji:'🌙', problem:'El jefe escribe temas de trabajo el fin de semana.', sol:'Responder el lunes con naturalidad. Establecer el ritmo sin discutirlo.', why:'La conducta constante fija el límite mejor que la queja.'},
+
+  {t:'Operación Beca de Verano', cat:'hijos', emoji:'🛋️', problem:'Adolescente con el verano entero por delante y agenda de sofá.', sol:'«Beca» familiar con proceso de selección y plazas limitadas. Se le admite, no se le obliga.', why:'La selección activa ambición donde la orden activa resistencia.'},
+  {t:'Operación Puerta Cerrada', cat:'hijos', emoji:'🧦', problem:'El cuarto del adolescente es un yacimiento arqueológico.', sol:'No ordenarlo tú. Pactar «zona común impecable; tu cuarto es tuyo» con la puerta cerrada.', why:'Separar territorios reduce la batalla diaria.'},
+  {t:'Operación Fichas de Pantalla', cat:'hijos', emoji:'🎮', problem:'Guerra diaria por las horas de videojuego.', sol:'Vincular la pantalla a tareas cumplidas mediante un sistema de fichas, no de gritos.', why:'La norma automática despersonaliza el conflicto.'},
+  {t:'Operación Hora de Estudio', cat:'hijos', emoji:'📚', problem:'Los deberes aparecen el domingo a las 22:00.', sol:'«Hora de estudio» fija cada día, sin negociar el contenido, solo el marco temporal.', why:'Fijar el cuándo evita pelear el qué.'},
+  {t:'Operación Paga con Reglas', cat:'hijos', emoji:'🪙', problem:'Discusión constante por el dinero de bolsillo.', sol:'Paga fija ligada a responsabilidades claras y revisable cada trimestre.', why:'Las reglas estables reducen la negociación diaria.'},
+  {t:'Operación Contrato del Móvil', cat:'hijos', emoji:'📵', problem:'«Todos mis amigos tienen móvil.»', sol:'Contrato familiar por escrito con normas y fecha de revisión. El marco sustituye a la súplica.', why:'Un acuerdo formal contiene la presión del grupo.'},
+  {t:'Operación Fiesta con Aforo', cat:'hijos', emoji:'🏡', problem:'El hijo quiere hacer fiesta en casa y tú no estarás.', sol:'Sí, con condiciones escritas, aforo y hora. El marco negociado evita el descontrol.', why:'Conceder con límites es mejor que prohibir y que pase igual.'},
+  {t:'Operación Tres Bocados', cat:'hijos', emoji:'🍞', problem:'Solo come pasta y pan.', sol:'Regla de «prueba tres bocados», sin drama y sin premio. La exposición repetida funciona.', why:'La insistencia serena vence a la novedad temida.'},
+  {t:'Operación Despertador Propio', cat:'hijos', emoji:'⏰', problem:'No hay forma de levantarlo para el instituto.', sol:'Trasladarle la consecuencia: despertador suyo, y llegar tarde es asunto suyo.', why:'Devolver la responsabilidad cambia el incentivo.'},
+  {t:'Operación Trimestre Cerrado', cat:'hijos', emoji:'🥋', problem:'Apuntó a kárate y quiere dejarlo en octubre.', sol:'Pactar terminar el trimestre ya pagado y luego decidir. Enseñar a cerrar, no a abandonar.', why:'Cerrar los compromisos crea coherencia.'},
+
+  {t:'Operación Impuntual Crónico', cat:'amigos', emoji:'🐌', problem:'Un amigo llega siempre cuarenta minutos tarde.', sol:'Citarlo en un sitio donde puedas esperar a gusto y darle la hora «con truco».', why:'Adaptar el marco pesa más que corregir a la persona.'},
+  {t:'Operación Plan Concreto', cat:'amigos', emoji:'🗓️', problem:'«Tenemos que quedar» lleva dos años sin fecha.', sol:'Proponer tú día, hora y sitio concretos. La vaguedad se vence con precisión.', why:'Una propuesta concreta desatasca la indecisión.'},
+  {t:'Operación Dos Opciones', cat:'amigos', emoji:'🍕', problem:'Seis amigos y nadie elige restaurante.', sol:'Ofrecer dos opciones cerradas y votación exprés. Menos opciones, decisión rápida.', why:'Acotar elimina la parálisis del grupo.'},
+  {t:'Operación Foco Repartido', cat:'amigos', emoji:'🗣️', problem:'Las quedadas son el monólogo de siempre.', sol:'Preguntas abiertas dirigidas a otros y quedadas en grupo, no a solas.', why:'El formato grupal reparte el protagonismo.'},
+  {t:'Operación Recordatorio Ligero', cat:'amigos', emoji:'💵', problem:'Le prestaste 200 € y el tema no vuelve a salir.', sol:'Recordatorio ligero con una excusa concreta: «me viene bien ahora para X».', why:'Dar un motivo concreto reduce la incomodidad.'},
+  {t:'Operación Mesa Conocida', cat:'amigos', emoji:'🕺', problem:'Te invitan a una boda sin acompañante y no conoces a nadie.', sol:'Pedir de antemano sentarte con gente conocida. La logística previa evita el naufragio.', why:'Preparar el terreno reduce el riesgo social.'},
+  {t:'Operación Plan Cerrado', cat:'amigos', emoji:'🌧️', problem:'Un amigo siempre tira los planes por tierra.', sol:'Cerrar el plan antes de consultárselo y presentárselo hecho.', why:'Decidir antes de la objeción evita el bloqueo.'},
+  {t:'Operación Chat Silenciado', cat:'amigos', emoji:'😹', problem:'El grupo de amigos manda trescientos memes al día.', sol:'Silenciar y revisar una vez al día. Participar solo en lo importante.', why:'La atención selectiva conserva el vínculo sin el ruido.'},
+  {t:'Operación Experiencia Regalo', cat:'amigos', emoji:'🎁', problem:'Cumpleaños de un amigo mañana y sin ninguna idea.', sol:'Una experiencia compartida en vez de un objeto. Una cena vale más que un jarrón.', why:'Las experiencias se recuerdan mejor que las cosas.'},
+
+  {t:'Operación Trabajo Invisible', cat:'pareja', emoji:'🧹', problem:'La casa la lleva siempre la misma persona.', sol:'Lista visible de tareas repartidas por afinidad, no por costumbre. Lo invisible, a la vista.', why:'Hacer visible el trabajo invisible es lo que lo reparte.'},
+  {t:'Operación Serie Sagrada', cat:'pareja', emoji:'📺', problem:'Uno ve capítulos de la serie común sin el otro.', sol:'Pacto de «series solo juntos» y otra distinta para ver por separado.', why:'Separar ámbitos evita el pequeño agravio.'},
+  {t:'Operación Día de Visita', cat:'pareja', emoji:'📞', problem:'Tu pareja invita a su madre sin consultarte.', sol:'Acordar un día fijo de visita en vez de discutir cada una por separado.', why:'Un cauce estable evita la fricción caso a caso.'},
+  {t:'Operación Lista de Deseos', cat:'pareja', emoji:'💝', problem:'Nunca sabéis qué regalaros y siempre falláis.', sol:'Lista de deseos compartida con tope. Se acaba el estrés y sube el acierto.', why:'Informar la preferencia elimina la adivinación.'},
+  {t:'Operación Pelea en Frío', cat:'pareja', emoji:'🔁', problem:'La misma discusión cada mes por lo mismo.', sol:'Hablarlo en frío, con un pacto escrito y revisión. Sacar el tema del momento caliente.', why:'Acordar en calma evita repetir en caliente.'},
+  {t:'Operación Playa o Montaña', cat:'pareja', emoji:'🏔️', problem:'Uno quiere playa y el otro montaña.', sol:'Alternar por años o combinar en un mismo viaje. Decidir el sistema, no cada verano.', why:'Pactar la regla evita renegociar el caso.'},
+  {t:'Operación Cargador Fuera', cat:'pareja', emoji:'🌛', problem:'Pantallas hasta las dos y cero conversación en la cama.', sol:'El cargador, fuera del dormitorio. El diseño del entorno hace el trabajo.', why:'Cambiar el contexto es más fácil que cambiar el hábito.'},
+  {t:'Operación Salida Pactada', cat:'pareja', emoji:'🍷', problem:'Cena con los amigos de tu pareja que no soportas.', sol:'Ir con hora de salida pactada y un aliado dentro. La retirada digna cuenta.', why:'Acordar la salida de antemano quita presión.'},
+
+  {t:'Operación Paseo Compartido', cat:'mascotas', emoji:'🐶', problem:'El perro del vecino ladra ocho horas al día.', sol:'Hablar con empatía y ofrecer una solución (paseo compartido) antes que una denuncia.', why:'Colaborar resuelve más rápido que confrontar.'},
+  {t:'Operación Turnos de Paseo', cat:'mascotas', emoji:'🦮', problem:'La familia tiene perro y nadie lo saca.', sol:'Calendario de paseos visible con turnos. La app registra quién ha cumplido.', why:'El registro reparte la carga de forma justa.'},
+  {t:'Operación Gato Diplomático', cat:'mascotas', emoji:'🐈', problem:'El gato del 4º entra por tu ventana y duerme en tu sofá.', sol:'Acuerdo amistoso de horarios y una mosquitera. Humor antes que guerra vecinal.', why:'El tono ligero evita que escale el conflicto.'},
+
+  {t:'Operación Gestor de Claves', cat:'tecno', emoji:'🔐', problem:'Nadie en casa recuerda las contraseñas compartidas.', sol:'Un gestor de contraseñas común, no un papel pegado en la nevera.', why:'Un sistema seguro sustituye la memoria frágil.'},
+  {t:'Operación Álbum Único', cat:'tecno', emoji:'🖼️', problem:'Novecientas fotos del viaje repartidas en cinco móviles.', sol:'Álbum compartido único con subida el mismo día. Se acabó el «mándamelas».', why:'Un canal común centraliza el caos.'},
+  {t:'Operación Portavoz de la Semana', cat:'tecno', emoji:'🧵', problem:'El grupo de padres del cole manda doscientos mensajes al día.', sol:'Nombrar un «portavoz de la semana» que resume. El resto, en silencio.', why:'Filtrar por un responsable reduce el ruido.'},
+  {t:'Operación Bulo en Privado', cat:'tecno', emoji:'⚠️', problem:'Un familiar reenvía bulos a diario al grupo.', sol:'Responder solo en privado, con la fuente real y sin ridiculizarle.', why:'Corregir en privado evita la defensa pública.'},
+
+  {t:'Operación Mudanza Falsa', cat:'absurdo', emoji:'🚚', absurd:true, problem:'No quieres ir a una cena.', sol:'Anunciar que te mudas a Nueva Zelanda esa misma semana y montar toda la coartada.', why:'Ejemplo de creatividad mal invertida.', note:'Montar una vida paralela para evitar una cena es infinitamente más caro que ir a la cena. Ejemplo de lo que NO se debe hacer.'},
+  {t:'Operación Gemelo Inventado', cat:'absurdo', emoji:'👯', absurd:true, problem:'Te ven en dos sitios donde dijiste que no podías.', sol:'Inventarte un hermano gemelo que «vive en la ciudad» para justificarlo todo.', why:'Ejemplo de mentira insostenible.', note:'Sostener un gemelo ficticio exige una coherencia que ningún humano tiene. NO hacer.'},
+  {t:'Operación Wifi Eterno', cat:'absurdo', emoji:'📡', absurd:true, problem:'No quieres videollamadas familiares.', sol:'Fingir que tu wifi lleva «meses» estropeado, indefinidamente.', why:'Ejemplo de excusa caducable.', note:'Nadie tiene el wifi roto seis meses. La excusa caduca y te delata. NO hacer.'},
+  {t:'Operación Dolencia Rotatoria', cat:'absurdo', emoji:'🤒', absurd:true, problem:'Buscas excusas para no ir a eventos.', sol:'Rotar enfermedades imaginarias, una distinta cada semana.', why:'Ejemplo de crédito quemado.', note:'Fingir enfermedades destruye tu credibilidad para cuando de verdad la necesites. NO hacer.'},
+  {t:'Operación Identidad Prestada', cat:'absurdo', emoji:'🪪', absurd:true, problem:'Quieres saltarte una lista de espera.', sol:'Usar el nombre de otra persona para colarte.', why:'Esto ya no es un marrón, es un delito.', note:'Es suplantación de identidad. Don Pufo cierra la carpeta y te acompaña a la puerta. NO hacer, jamás.'},
+  {t:'Operación Testigo Falso', cat:'absurdo', emoji:'🧑‍⚖️', absurd:true, problem:'Quieres ganar una discusión familiar.', sol:'Inventarte un testigo que «lo vio todo» y te da la razón.', why:'Ejemplo de tontería convertida en mentira.', note:'Fabricar testigos convierte una discusión de nada en una mentira insostenible. NO hacer.'},
+  {t:'Operación Relojes Adelantados', cat:'absurdo', emoji:'🕰️', absurd:true, problem:'Un amigo llega siempre tarde.', sol:'Convencer a todo el grupo de vivir con los relojes treinta minutos adelantados.', why:'Ejemplo de solución desproporcionada.', note:'Reorganizar el tiempo del universo por un impuntual es desmesurado. NO hacer.'},
+  {t:'Operación Vecino Fantasma', cat:'absurdo', emoji:'🎭', absurd:true, problem:'No quieres ir a la junta de vecinos.', sol:'Fingir ante la comunidad que en realidad no vives ahí.', why:'Ejemplo de excusa contraproducente.', note:'Negar tu propio domicilio genera más problemas de los que evita. NO hacer.'},
+  {t:'Operación Alergia Universal', cat:'absurdo', emoji:'🥗', absurd:true, problem:'No quieres comer lo que ha cocinado alguien.', sol:'Declararte alérgico a prácticamente todo, por si acaso.', why:'Ejemplo de coartada frágil.', note:'Una alergia inventada se desmorona en la primera cena. NO hacer (y es peligroso banalizar las alergias reales).'},
+  {t:'Operación Sustituto Idéntico', cat:'absurdo', emoji:'🤖', absurd:true, problem:'No quieres ir a trabajar el viernes.', sol:'Enviar a un «familiar idéntico» que ocupe tu puesto sin que nadie lo note.', why:'Ejemplo de fantasía operativa.', note:'No existe el sustituto idéntico. Existe el parte de vacaciones. NO hacer.'},
+  {t:'Operación Notas del Perro', cat:'absurdo', emoji:'🐕‍🦺', absurd:true, problem:'Quieres que el vecino baje la música.', sol:'Dejarle notas anónimas firmadas por su propio perro.', why:'Ejemplo de ingenio sin eficacia.', note:'Divertidísimo, sí. Eficaz, cero. Mejor una conversación normal. NO como método.'},
+  {t:'Operación Boda Saboteada', cat:'absurdo', emoji:'💔', absurd:true, problem:'No te gusta con quién se casa alguien de tu familia.', sol:'Intentar sabotear la boda por su bien.', why:'Esto no es un marrón: es meterte donde no te llaman.', note:'Interferir en las decisiones de otros adultos no es ayudar. NO hacer, bajo ningún concepto.'}
 ];
 
 const TESTIMONIALS = [
@@ -1501,7 +1746,7 @@ const footer = () => `
   <footer><div class="wrap">
     <div class="foot-grid">
       <div style="flex:1 1 300px">
-        <div class="brand" style="margin-bottom:16px"><div class="seal">{{mono}}</div>
+        <div class="brand" style="margin-bottom:16px"><div class="seal"></div>
           <div class="brand-txt"><span class="brand-name">{{brand}}</span><span class="brand-sub">{{city}}</span></div></div>
         <p class="disclaimer">
           <b>{{brand}} es una empresa ficticia.</b> Toda esta web es una parodia: los servicios, los clientes, los testimonios,
@@ -1738,11 +1983,50 @@ V.casos = () => `
           </div>
         </div>`).join('')}
     </div>
-    <div style="text-align:center;margin-top:48px">
-      <p class="lead" style="margin:0 auto 22px">Su caso no aparece aquí porque todavía no nos lo ha contado.</p>
+    <div class="rule" style="margin:64px 0 8px"></div>
+    <div class="kicker" style="margin-top:44px">El archivo completo</div>
+    <h2 class="title">${CASES100.length} marrones catalogados</h2>
+    <p class="lead">Cada expediente incluye una prueba fotográfica del marrón y la solución recomendada.
+      Los marcados en rojo son <b>ejemplos de lo que NO se debe hacer</b>: los conservamos para reírnos
+      y para recordar dónde está la línea.</p>
+
+    <div class="filters" id="catFilters"></div>
+    <div class="count" id="catCount"></div>
+    <div class="catalog" id="catGrid"></div>
+
+    <div style="text-align:center;margin-top:56px">
+      <p class="lead" style="margin:0 auto 22px">¿El suyo no está en la lista? Todavía no nos lo ha contado.</p>
       <a class="btn btn-primary" href="#/lab">Abrir su expediente</a>
     </div>
   </div></section>`;
+
+/* Ilustración del marrón (prueba fotográfica del expediente) */
+function catalogArt(c, i){
+  const th = CAT[c.cat] || CAT._;
+  const code = `${BRAND.filePrefix}-${BRAND.year}-${String(101+i).padStart(4,'0')}`;
+  return `
+    <div class="art" style="--a:${th.a}; --b:${th.b}">
+      ${c.absurd ? '<span class="warn">✕ No hacer</span>' : `<span class="catlabel">${th.label}</span>`}
+      <div class="emoji">${c.emoji || '🗂️'}</div>
+      <span class="tape">Prueba · ${code}</span>
+    </div>`;
+}
+function catalogCard(c, i){
+  return `
+    <article class="ccard ${c.absurd?'absurdo':''}">
+      ${catalogArt(c, i)}
+      <div class="ccard-body">
+        <h3 class="ccard-op">${esc(T(c.t))}</h3>
+        <h6>El marrón</h6>
+        <p class="ccard-p">${esc(T(c.problem))}</p>
+        <h6>${c.absurd ? 'La ocurrencia' : 'Solución '+BRAND.name}</h6>
+        <p class="ccard-sol">${esc(T(c.sol))}</p>
+        ${c.absurd
+          ? `<div class="absurd-note"><b>⚠ Ejemplo de lo que NO se debe hacer.</b> ${esc(T(c.note||''))}</div>`
+          : `<p class="ccard-why">Por qué funciona: ${esc(T(c.why))}</p>`}
+      </div>
+    </article>`;
+}
 
 /* ── PERSONAJE ────────────────────────────────────────────────────────── */
 V.personaje = () => `
@@ -1916,6 +2200,7 @@ function renderLab(){
       ${answered ? `<button class="btn btn-ghost btn-sm" id="labBack">Atrás</button>` : ''}
       <span class="lab-step">Pregunta ${answered+1} / ${total}</span>
     </div>`);
+  paintLogos();
 
   const commit = val => {
     Lab.answers[q.id] = val;
@@ -1964,6 +2249,7 @@ async function runGeneration(shell){
         <div class="speech-note" id="thinkTxt">${THINK[0]}…</div>
       </div></div>
     <div class="thinking" style="margin-top:auto;padding-top:24px"><i></i><i></i><i></i>&nbsp;PROCESANDO</div>`);
+  paintLogos();
   const tick = setInterval(()=>{
     i = (i+1) % THINK.length;
     const el = document.getElementById('thinkTxt');
@@ -2084,6 +2370,7 @@ function route(){
 }
 
 function afterRender(page){
+  paintLogos();
   /* animación de aparición */
   const io = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }}), {threshold:.12});
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
@@ -2097,12 +2384,36 @@ function afterRender(page){
 
   if(page==='lab') renderLab();
 
-  if(page==='casos') document.querySelectorAll('.case-toggle').forEach(b => b.onclick = () => {
-    const box = document.getElementById('case' + b.dataset.case);
-    const open = box.classList.toggle('on');
-    b.textContent = open ? 'Ocultar documentación' : b.dataset.label;
-    if(open && window.PufoScene) PufoScene.pulse(.8);
-  });
+  if(page==='casos'){
+    document.querySelectorAll('.case-toggle').forEach(b => b.onclick = () => {
+      const box = document.getElementById('case' + b.dataset.case);
+      const open = box.classList.toggle('on');
+      b.textContent = open ? 'Ocultar documentación' : b.dataset.label;
+      if(open && window.PufoScene) PufoScene.pulse(.8);
+    });
+
+    /* Catálogo de 100 casos con filtros por categoría */
+    const grid = document.getElementById('catGrid');
+    const fbox = document.getElementById('catFilters');
+    const cnt  = document.getElementById('catCount');
+    if(grid && fbox){
+      const cats = [...new Set(CASES100.map(c=>c.cat))];
+      const order = Object.keys(CAT).filter(k=>k!=='_' && cats.includes(k));
+      const chips = [['todos','Todos']].concat(order.map(k=>[k, T(CAT[k].label)]));
+      fbox.innerHTML = chips.map(([k,l],i)=>`<button class="fchip${i===0?' on':''}" data-f="${k}">${l}</button>`).join('');
+      const paint = f => {
+        const list = CASES100.map((c,i)=>({c,i})).filter(x => f==='todos' || x.c.cat===f);
+        grid.innerHTML = list.map(x=>catalogCard(x.c, x.i)).join('');
+        cnt.textContent = `${list.length} expediente${list.length!==1?'s':''}` + (f!=='todos'?` · ${T(CAT[f].label)}`:'');
+      };
+      fbox.querySelectorAll('.fchip').forEach(b => b.onclick = () => {
+        fbox.querySelectorAll('.fchip').forEach(x=>x.classList.remove('on'));
+        b.classList.add('on'); paint(b.dataset.f);
+        if(window.PufoScene) PufoScene.pulse(.5);
+      });
+      paint('todos');
+    }
+  }
 
   if(page==='faq') document.querySelectorAll('.faq-item').forEach(it => it.onclick = () => {
     const a = it.querySelector('.faq-a'); const open = it.classList.toggle('open');

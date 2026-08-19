@@ -48,6 +48,10 @@ También puedes fijar cualquier campo a mano (`monogram`, `lab`, `score`, `tier`
    - `why[]` — los mecanismos de psicología social que explican por qué funcionó, más un `risknote` con el punto de rotura de la operación.
 
    Los expedientes generados en PufoLab incluyen su propia sección **«Por qué debería funcionar»**, construida en `whyFor()` a partir de `WHY_LIB` según las respuestas del usuario.
+
+   Además de los casos destacados, la página **Casos** incluye un **catálogo de 100 marrones** (`CASES100`) con ilustración, solución y filtros por categoría. Doce de ellos están marcados como `absurd:true`: se muestran en rojo como **ejemplos de lo que NO se debe hacer**. Los temas visuales de cada categoría viven en `CAT`.
+
+   El **logo** es un SVG original (`pufoLogo()`) de un caballero con chistera y monóculo, aplicado en la barra, el pie y los avatares mediante `paintLogos()`. La web es **responsive** (breakpoints a 1080 / 960 / 760 / 420 px; el menú colapsa en móvil).
 3. **Motor** — preguntas adaptativas, generación del expediente, PufoScore, límites éticos.
 4. **Hook para LLM** — `AI` + `buildPayload()` + `RESPONSE_SCHEMA`.
 5. **Vistas y enrutado** — SPA con hash routing.
