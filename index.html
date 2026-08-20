@@ -1213,7 +1213,63 @@ const CASES100 = [
   {t:'Operación Apuntes Prestados', cat:'joven', emoji:'📓', problem:'Siempre prestas los apuntes y no vuelven, o vuelven tarde y peor.', sol:'Compartirlos en una carpeta digital de solo lectura en vez de en papel. Todos acceden, nadie se queda con lo tuyo.', why:'Un sistema común elimina el préstamo: no hay que reclamar lo que nunca sale de tu poder.'},
   {t:'Operación Trabajo en Grupo', cat:'joven', emoji:'👥', problem:'En el trabajo de clase curráis dos y figuráis cinco.', sol:'Repartir tareas con nombre y fecha en un documento compartido que ve el grupo (y, si hace falta, el profe). La asignación visible responsabiliza.', why:'Lo asignado con nombre y a la vista no se diluye; el «ya lo hago yo» anónimo, sí.'},
   {t:'Operación Paga Extra', cat:'joven', emoji:'💶', problem:'Quieres más paga y en casa siempre es que no.', sol:'Proponer tú tareas concretas a cambio, por escrito y con revisión mensual, en vez de pedir un aumento a secas.', why:'Vincular la paga a responsabilidades claras convierte una petición en un acuerdo que los padres pueden aceptar sin sentir que ceden.'},
-  {t:'Operación Grupo de Clase Silenciado', cat:'joven', emoji:'📵', problem:'El grupo de clase manda 400 mensajes y te pierdes lo importante.', sol:'Silenciar el grupo y revisarlo una vez por la tarde; pedir que lo de exámenes y entregas se ponga en un grupo aparte «solo avisos».', why:'Separar el ruido de los avisos importantes conserva la información sin la ansiedad de mirar cada minuto.'}
+  {t:'Operación Grupo de Clase Silenciado', cat:'joven', emoji:'📵', problem:'El grupo de clase manda 400 mensajes y te pierdes lo importante.', sol:'Silenciar el grupo y revisarlo una vez por la tarde; pedir que lo de exámenes y entregas se ponga en un grupo aparte «solo avisos».', why:'Separar el ruido de los avisos importantes conserva la información sin la ansiedad de mirar cada minuto.'},
+
+  /* ── Dirigidos por perfil (estado civil / ocupación) ──────────────────── */
+  /* Solteros */
+  {t:'Operación Plantón', cat:'pareja', emoji:'🥂', aud:{civil:['soltero','divorciado'], age:[18,55]},
+   problem:'Te dejan plantado en una cita a mitad de la noche.', sol:'Regla de los veinte minutos y un plan B ya decidido antes de salir: si no aparece, la noche sigue igual de bien sin esa persona.', why:'Tener plan B convierte el plantón en una anécdota en vez de en un drama; la dignidad se defiende marchándose a tiempo.'},
+  {t:'Operación Piso Compartido', cat:'dinero', emoji:'🧹', aud:{civil:['soltero','pareja'], occ:['estudiante','ajena','autonomo','desempleado'], age:[18,40]},
+   problem:'Tu compañero de piso ni limpia ni paga a tiempo.', sol:'Cuadrante de tareas visible y un bizum programado el día 1 de cada mes. Sistema, no broncas.', why:'El sistema despersonaliza: no reclamas tú, reclama el calendario.'},
+  {t:'Operación Match Fantasma', cat:'pareja', emoji:'📱', aud:{civil:['soltero','divorciado'], age:[18,55]},
+   problem:'Hablabais por una app y de repente desaparece (ghosting).', sol:'No perseguir. Un único mensaje de cierre, sin reproche, y pasar página.', why:'No insistir preserva tu tiempo y tu autoestima: quien desaparece ya te ha dado la respuesta.'},
+  /* Casados / en pareja estable */
+  {t:'Operación Gasto Hormiga', cat:'dinero', emoji:'🐜', aud:{civil:['casado','pareja'], age:[25,70]},
+   problem:'Con cuenta común, los gastos pequeños de cada uno descuadran el presupuesto y generan roces.', sol:'Un «dinero libre» individual al mes que nadie tiene que justificar, y lo común domiciliado y automatizado.', why:'Separar lo común de lo personal elimina la fiscalización mutua, que es lo que de verdad desgasta.'},
+  {t:'Operación Vacaciones con Suegros', cat:'suegros', emoji:'🏖️', aud:{civil:['casado','pareja'], age:[28,65]},
+   problem:'Os proponen vacaciones conjuntas con los suegros. Dos semanas. Todos juntos.', sol:'Aceptar un tramo corto y con alojamiento propio: coincidís de día, dormís por separado. Dosis, no convivencia.', why:'Acotar la exposición conserva la relación; la convivencia total es lo que la pone a prueba.'},
+  {t:'Operación Navidad Repartida', cat:'suegros', emoji:'🎄', aud:{civil:['casado','pareja'], age:[25,70]},
+   problem:'Las dos familias reclaman la misma comida de Navidad, cada año la misma tensión.', sol:'Calendario rotativo firmado por adelantado para tres años: un año con unos, el siguiente con otros. Se decide una vez.', why:'Decidir el sistema de una vez evita la negociación emocional de cada diciembre.'},
+  /* Divorciados */
+  {t:'Operación Cumpleaños Compartido', cat:'familia', emoji:'🎂', aud:{civil:['divorciado'], age:[28,65]},
+   problem:'El cumpleaños del niño con dos padres separados y dos familias que no se hablan.', sol:'Un único evento con reglas claras o dos celebraciones sin competir en regalos ni en horarios.', why:'No competir protege al niño, que es el único cliente real de esta operación.'},
+  {t:'Operación Custodia y Horarios', cat:'familia', emoji:'📆', aud:{civil:['divorciado']},
+   problem:'Líos constantes de recogidas y horarios con tu ex.', sol:'Calendario compartido por escrito con las entregas fijadas, para no renegociar cada semana.', why:'El calendario es un tercero neutral: no discutes con una persona, consultas una agenda.'},
+  {t:'Operación Ex-Suegra en el Grupo', cat:'familia', emoji:'🚪', aud:{civil:['divorciado']},
+   problem:'Sigues en el grupo de WhatsApp de la familia de tu ex y ya no pinta nada.', sol:'Salida silenciosa y cordial, sin comunicado ni explicación. Un mensaje amable en privado a quien de verdad te importe.', why:'Irse sin anuncio evita el drama; el comunicado solo invita a la discusión.'},
+  {t:'Operación Volver a las Apps', cat:'pareja', emoji:'💘', aud:{civil:['divorciado','soltero','viudo'], age:[40,75]},
+   problem:'Volver a las citas después de años fuera del mercado.', sol:'Perfil honesto, expectativas realistas y una primera cita corta (un café, no una cena de tres horas).', why:'La cita corta baja la presión y el coste de que no funcione: es más fácil repetir que soportar.'},
+  /* Autónomos */
+  {t:'Operación Cliente Moroso', cat:'dinero', emoji:'🧾', aud:{occ:['autonomo','empresario']},
+   problem:'Un cliente no paga la factura y da largas.', sol:'Recordatorio cordial con fecha; si no paga, recargo pactado y paras el trabajo hasta cobrar.', why:'Parar el trabajo es la única palanca real: los argumentos no cobran, la ausencia de entregas sí.'},
+  {t:'Operación «Algo Rápido»', cat:'trabajo', emoji:'⏱️', aud:{occ:['autonomo']},
+   problem:'Te piden «una cosita rápida» gratis, y nunca es ni una cosita ni rápida.', sol:'Presupuesto por escrito hasta para lo pequeño. Lo que no tiene precio, no tiene fin.', why:'Poner precio filtra a quien no valora tu tiempo, que es justo el que más te lo consume.'},
+  {t:'Operación Proyecto que Crece', cat:'trabajo', emoji:'📈', aud:{occ:['autonomo','empresario']},
+   problem:'El encargo se va hinchando sobre el presupuesto inicial sin que nadie lo diga.', sol:'Cerrar el alcance por escrito y facturar cada extra aparte, en el momento, no al final.', why:'Delimitar el alcance protege el margen; lo que no se acota, se regala.'},
+  {t:'Operación Vacaciones sin Red', cat:'trabajo', emoji:'🏝️', aud:{occ:['autonomo'], age:[20,70]},
+   problem:'Si paras, no ingresas, y nadie te cubre.', sol:'Avisar a los clientes con antelación, dejar respuestas automáticas y un colchón de ingresos preparado.', why:'Planificar la ausencia evita perder clientes: se van los que se sienten abandonados, no los avisados.'},
+  /* Empresarios */
+  {t:'Operación Empleado Estrella', cat:'trabajo', emoji:'⭐', aud:{occ:['empresario']},
+   problem:'Tu mejor persona insinúa que se va.', sol:'Conversación de retención con datos y con el motivo real por delante, no con súplicas ni con un contraataque de última hora.', why:'Se retiene entendiendo el porqué; el pánico solo sube el precio y aplaza la marcha.'},
+  {t:'Operación Socio Desigual', cat:'trabajo', emoji:'🤝', aud:{occ:['empresario']},
+   problem:'Un socio no aporta lo mismo y nadie lo dice en voz alta.', sol:'Revisar roles y aportaciones por escrito y ajustar el reparto, en frío, antes de que reviente.', why:'Lo no dicho se acumula como agravio hasta que estalla; ponerlo por escrito lo desactiva.'},
+  {t:'Operación Contratar al Cuñado', cat:'trabajo', emoji:'👔', aud:{occ:['empresario'], civil:['casado','pareja','divorciado']},
+   problem:'Presión familiar para colocar a un pariente en la empresa.', sol:'El mismo proceso y los mismos criterios que para cualquiera. Si encaja, bienvenido; si no, no. Y se explica una vez.', why:'Las reglas iguales para todos evitan el conflicto familiar de dentro de un año, que es mucho peor que el de hoy.'},
+  /* Cuenta ajena */
+  {t:'Operación Copia del Marrón', cat:'trabajo', emoji:'📧', aud:{occ:['ajena']},
+   problem:'Te meten en copia de un correo para endosarte, de rebote, un marrón que no es tuyo.', sol:'Responder acotando por escrito exactamente cuál es tu parte y devolviendo lo demás a quien corresponde, con datos.', why:'Dejar rastro delimita responsabilidades: lo que no aclaras por escrito, acabas asumiéndolo tú.'},
+  {t:'Operación Horas Invisibles', cat:'trabajo', emoji:'🕕', aud:{occ:['ajena']},
+   problem:'Te quedas siempre más tarde y nadie lo reconoce; ya se da por hecho.', sol:'Registrar y hacer visible el trabajo extra, y pactar un límite que se pueda sostener.', why:'Lo visible se reconoce; lo invisible se convierte en la nueva normalidad que se te exige.'},
+  /* Jubilados */
+  {t:'Operación Presidente Forzoso', cat:'vecinos', emoji:'🏛️', aud:{occ:['jubilado'], age:[58,95]},
+   problem:'La comunidad quiere hacerte presidente «porque tienes tiempo».', sol:'Aceptar con límites (un año, tareas acotadas por escrito) o proponer un turno rotativo. Tener tiempo no es tener obligación.', why:'Acotar el cargo evita el secuestro indefinido; sin límites, el favor de un año se vuelve vitalicio.'},
+  {t:'Operación Nietos Todo el Verano', cat:'familia', emoji:'🧸', aud:{occ:['jubilado'], age:[55,90]},
+   problem:'Te «asignan» a los nietos el verano entero, de lunes a domingo.', sol:'Ofrecer días fijos y actividades concretas, no barra libre. Un marco previsible en lugar de una disponibilidad total.', why:'Un marco claro protege a todos, también a los nietos, y evita que el cariño se convierta en obligación diaria.'},
+  /* Estudiantes (universidad) */
+  {t:'Operación Piso de Estudiantes', cat:'dinero', emoji:'🏠', aud:{occ:['estudiante'], age:[18,30]},
+   problem:'Cuatro en el piso y las facturas nunca cuadran; siempre adelanta el mismo.', sol:'Cuenta común con reparto automático y una app que registra quién ha puesto qué.', why:'Automatizar el reparto elimina al eterno «ya te lo paso» y al que siempre adelanta.'},
+  {t:'Operación Erasmus y Alquiler', cat:'dinero', emoji:'✈️', aud:{occ:['estudiante'], age:[18,30]},
+   problem:'Te vas de Erasmus medio año y el alquiler sigue corriendo.', sol:'Subarriendo con permiso del casero por escrito, o acuerdo firmado con los compañeros para cubrir tu parte.', why:'El permiso por escrito evita convertir un ahorro en un marrón legal con el propietario.'}
 ];
 
 const TESTIMONIALS = [
@@ -1923,6 +1979,12 @@ V.home = () => `
     <h2 class="title">Si existe un {{problem}}, existe un procedimiento.</h2>
     <p class="lead" style="margin:0 auto 30px">Abra su expediente. Tarda tres minutos y no requiere registro, ni datos, ni valentía.</p>
     <a class="btn btn-primary" href="#/lab">Entrar en {{lab}}</a>
+    <div style="margin-top:40px; padding-top:26px; border-top:1px solid var(--line-soft)">
+      <p class="muted" style="font-size:13px; margin:0 auto 12px; max-width:52ch">
+        Su perfil se guarda solo en este navegador. Si quiere que {{founder}} le olvide y le vuelva a preguntar todo desde cero la próxima vez:
+      </p>
+      <button class="btn btn-ghost btn-sm" onclick="forgetMe()">Olvídame</button>
+    </div>
   </div></section>`;
 
 /* ── SERVICIOS ────────────────────────────────────────────────────────── */
@@ -2671,20 +2733,20 @@ function afterRender(page){
     const cnt  = document.getElementById('catCount');
     if(grid && fbox){
       const profile = getProfile();
-      const audience = audienceCats(profile);
       const cats = [...new Set(CASES100.map(c=>c.cat))];
       const order = Object.keys(CAT).filter(k=>k!=='_' && cats.includes(k));
       let chips = [['todos','Todos']].concat(order.map(k=>[k, T(CAT[k].label)]));
-      if(audience) chips = [['__me__','Para ti']].concat(chips);
-      const startF = audience ? '__me__' : 'todos';
+      if(profile) chips = [['__me__','Para ti']].concat(chips);
+      const startF = profile ? '__me__' : 'todos';
       fbox.innerHTML = chips.map(([k,l])=>`<button class="fchip${k===startF?' on':''}" data-f="${k}">${l}</button>`).join('');
 
       /* Nota de personalización + acceso a editar el perfil */
       if(profile){
-        const g = ({hombre:'Hombre', mujer:'Mujer', otro:'Otro', ns:'—'})[profile.gender] || '—';
+        const g = ({hombre:'Hombre', mujer:'Mujer', otro:'Otro', ns:'Sin especificar'})[profile.gender] || '—';
+        const extra = [CIVIL_LABEL[profile.civil], OCC_LABEL[profile.occ]].filter(Boolean).join(' · ');
         const note = document.createElement('div');
         note.className = 'foryou-note';
-        note.innerHTML = `<span><b>Filtrado para tu perfil</b> · ${g}, ${profile.age} años. Te mostramos los ${TOKENS.problems} que a tu edad suelen tocar.</span>
+        note.innerHTML = `<span><b>Filtrado para tu perfil</b> · ${g}, ${profile.age} años${extra?' · '+extra:''}. Te mostramos los ${TOKENS.problems} que a tu situación suelen tocar.</span>
           <button class="profile-badge" id="editProf">✎ Cambiar perfil</button>`;
         fbox.parentNode.insertBefore(note, fbox);
         note.querySelector('#editProf').onclick = () => showProfile();
@@ -2692,7 +2754,7 @@ function afterRender(page){
 
       const paint = f => {
         const list = CASES100.map((c,i)=>({c,i})).filter(x =>
-          f==='todos' ? true : f==='__me__' ? (audience && audience.has(x.c.cat)) : x.c.cat===f);
+          f==='todos' ? true : f==='__me__' ? relevantForProfile(x.c, profile) : x.c.cat===f);
         grid.innerHTML = list.map(x=>catalogCard(x.c, x.i)).join('');
         const label = f==='__me__' ? 'para tu perfil' : (f!=='todos' ? '· '+T(CAT[f].label) : '');
         cnt.textContent = `${list.length} expediente${list.length!==1?'s':''} ${label}`.trim();
@@ -2796,6 +2858,23 @@ function audienceCats(profile){
   return S;
 }
 
+/* ¿Este caso le interesa a este perfil?
+   - Casos con `aud` (dirigidos): deben cumplir edad, estado civil, ocupación y género.
+   - Casos sin `aud`: relevancia por categoría/edad (audienceCats).            */
+function relevantForProfile(c, profile){
+  if(!profile) return true;
+  if(c.aud){
+    const a = c.aud, age = +profile.age;
+    if(a.age && (age < a.age[0] || age > a.age[1])) return false;
+    if(a.civil && !a.civil.includes(profile.civil)) return false;
+    if(a.occ   && !a.occ.includes(profile.occ))     return false;
+    if(a.gender&& !a.gender.includes(profile.gender)) return false;
+    return true;
+  }
+  const cats = audienceCats(profile);
+  return !cats || cats.has(c.cat);
+}
+
 /* ── Overlay de acceso ─────────────────────────────────────────────────── */
 function showLogin(){
   const el = document.createElement('div');
@@ -2839,53 +2918,110 @@ function showLogin(){
   });
 }
 
-/* ── Overlay de mini-perfil (primera visita) ───────────────────────────── */
+/* ── Opciones inteligentes según la edad ───────────────────────────────── */
+function civilOptions(age){
+  const o = [['soltero','Soltero/a'], ['pareja','En pareja']];
+  if(age >= 18) o.push(['casado','Casado/a']);
+  if(age >= 23) o.push(['divorciado','Divorciado/a']);
+  if(age >= 30) o.push(['viudo','Viudo/a']);
+  return o;
+}
+function occOptions(age){
+  if(age < 16) return [['estudiante','Estudiante']];
+  if(age < 18) return [['estudiante','Estudiante'], ['parcial','Trabajo a tiempo parcial']];
+  const o = [['estudiante','Estudiante'], ['ajena','Cuenta ajena'], ['autonomo','Autónomo/a'],
+             ['empresario','Empresario/a'], ['desempleado','En búsqueda de empleo']];
+  if(age >= 60) o.push(['jubilado','Jubilado/a']);
+  return o;
+}
+const CIVIL_LABEL = {soltero:'Soltero/a', pareja:'En pareja', casado:'Casado/a', divorciado:'Divorciado/a', viudo:'Viudo/a'};
+const OCC_LABEL   = {estudiante:'Estudiante', parcial:'Trabajo parcial', ajena:'Cuenta ajena', autonomo:'Autónomo/a', empresario:'Empresario/a', desempleado:'En búsqueda', jubilado:'Jubilado/a'};
+
+/* ── Alta de perfil guiada, paso a paso (primera visita) ───────────────── */
 function showProfile(){
-  const draft = { gender:null, age:'' };
+  const draft = { gender:null, age:'', civil:null, occ:null };
+  const steps = [
+    {key:'gender', q:'¿Con qué se identifica?',  type:'chips', opts:()=>[['hombre','Hombre'],['mujer','Mujer'],['otro','Otro'],['ns','Prefiero no decir']]},
+    {key:'age',    q:'¿Cuántos años tiene?',      type:'age'},
+    {key:'civil',  q:'¿Cuál es su situación?',    type:'chips', opts:()=>civilOptions(+draft.age)},
+    {key:'occ',    q:'¿A qué se dedica?',         type:'chips', opts:()=>occOptions(+draft.age)}
+  ];
+  let i = 0;
   const el = document.createElement('div');
   el.className='gate'; el.id='gateProfile';
-  el.innerHTML = T(`
-    <div class="gate-card">
-      <div class="gate-k">Alta de expediente personal</div>
-      <h2>Antes de empezar</h2>
-      <p class="sub">Cuatro datos para que {{founder}} le muestre los {{problems}} que de verdad le afectan. No a todo el mundo le preocupan los mismos.</p>
-      <div class="gate-field">
-        <label>¿Con qué se identifica?</label>
-        <div class="gate-chips" id="pGender">
-          <button type="button" class="gate-chip" data-g="hombre">Hombre</button>
-          <button type="button" class="gate-chip" data-g="mujer">Mujer</button>
-          <button type="button" class="gate-chip" data-g="otro">Otro</button>
-          <button type="button" class="gate-chip" data-g="ns">Prefiero no decir</button>
-        </div>
-      </div>
-      <div class="gate-field">
-        <label>¿Cuántos años tiene?</label>
-        <input class="gate-input" id="pAge" type="number" min="10" max="110" inputmode="numeric" placeholder="Ej.: 16">
-      </div>
-      <button class="btn btn-primary gate-btn" id="pSave" type="button">Abrir mi expediente</button>
-      <div class="gate-err" id="pErr"></div>
-      <p class="gate-note">Se guarda solo en este navegador, sin cuentas ni servidores. Podrá cambiarlo cuando quiera.</p>
-    </div>`);
   document.body.appendChild(el);
-  const err=el.querySelector('#pErr');
-  el.querySelector('#pGender').addEventListener('click', e=>{
-    const b=e.target.closest('.gate-chip'); if(!b) return;
-    el.querySelectorAll('#pGender .gate-chip').forEach(x=>x.classList.remove('sel'));
-    b.classList.add('sel'); draft.gender=b.dataset.g;
-  });
-  el.querySelector('#pSave').addEventListener('click', ()=>{
-    draft.age = el.querySelector('#pAge').value.trim();
-    if(!draft.gender){ err.textContent='Elija una opción, por favor.'; return; }
-    if(!draft.age || +draft.age<10 || +draft.age>110){ err.textContent='Indique una edad válida.'; return; }
-    setProfile({gender:draft.gender, age:+draft.age, ts:Date.now()});
+
+  function finish(){
+    setProfile({gender:draft.gender, age:+draft.age, civil:draft.civil, occ:draft.occ, ts:Date.now()});
     el.remove();
-    if(window.PufoScene) PufoScene.pulse(1.5);
-    if((location.hash||'').startsWith('#/casos')) route();   // refresca el catálogo ya filtrado
-  });
+    if(window.PufoScene) PufoScene.pulse(1.6);
+    if((location.hash||'').startsWith('#/casos')) route();
+  }
+  function go(dir){ i += dir; if(i>=steps.length){ finish(); return; } if(i<0) i=0; render(); }
+
+  function render(){
+    const step = steps[i];
+    /* Auto-salto: si un paso de opciones solo tiene una posibilidad, se elige sola */
+    if(step.type==='chips'){
+      const o = step.opts();
+      if(o.length===1){ draft[step.key]=o[0][0]; go(1); return; }
+    }
+    const total = steps.length;
+    let inner;
+    if(step.type==='age'){
+      inner = `<div class="gate-field"><label>${step.q}</label>
+        <input class="gate-input" id="pAge" type="number" min="10" max="110" inputmode="numeric" placeholder="Ej.: 16" value="${draft.age||''}"></div>`;
+    } else {
+      const o = step.opts();
+      inner = `<div class="gate-field"><label>${step.q}</label>
+        <div class="gate-chips" id="pChips">${o.map(([v,l])=>`<button type="button" class="gate-chip${draft[step.key]===v?' sel':''}" data-v="${v}">${l}</button>`).join('')}</div></div>`;
+    }
+    el.innerHTML = T(`
+      <div class="gate-card">
+        <div class="gate-k">Alta de expediente · paso ${i+1} de ${total}</div>
+        <h2>${i===0?'Antes de empezar':'Un dato más'}</h2>
+        <p class="sub">${i===0?'Con esto, {{founder}} le mostrará los {{problems}} que de verdad le afectan. A cada edad y situación le tocan unos distintos.':'Afinamos su expediente. Elija la opción que mejor le describa.'}</p>
+        ${inner}
+        <div class="gate-err" id="pErr"></div>
+        <div style="display:flex; gap:10px; margin-top:14px">
+          ${i>0?'<button class="btn btn-ghost btn-sm" id="pBack" type="button">Atrás</button>':''}
+          ${step.type==='age'?'<button class="btn btn-primary gate-btn" id="pNext" type="button" style="flex:1">Continuar</button>':''}
+        </div>
+        <p class="gate-note">Se guarda solo en este navegador, sin cuentas ni servidores. Puede borrarlo cuando quiera con «Olvídame».</p>
+      </div>`);
+    const err = el.querySelector('#pErr');
+    const back = el.querySelector('#pBack'); if(back) back.onclick = ()=>go(-1);
+
+    if(step.type==='age'){
+      const inp = el.querySelector('#pAge'); setTimeout(()=>inp.focus(), 50);
+      const next = ()=>{ const v=inp.value.trim();
+        if(!v || +v<10 || +v>110){ err.textContent='Indique una edad válida.'; return; }
+        draft.age = +v; draft.civil=null; draft.occ=null; go(1); };
+      el.querySelector('#pNext').onclick = next;
+      inp.addEventListener('keydown', e=>{ if(e.key==='Enter') next(); });
+    } else {
+      el.querySelector('#pChips').addEventListener('click', e=>{
+        const b=e.target.closest('.gate-chip'); if(!b) return;
+        draft[step.key]=b.dataset.v;
+        el.querySelectorAll('#pChips .gate-chip').forEach(x=>x.classList.remove('sel'));
+        b.classList.add('sel');
+        setTimeout(()=>go(1), 160);
+      });
+    }
+  }
+  render();
 }
 
-/* Editar el perfil desde el badge del nav */
-function editProfile(){ const g=document.getElementById('gateProfile'); if(!g) showProfile(); }
+/* Editar el perfil (desde la nota «Cambiar perfil») */
+function editProfile(){ if(!document.getElementById('gateProfile')) showProfile(); }
+
+/* Olvídame: borra perfil y sesión y reinicia el flujo desde cero */
+function forgetMe(){
+  try{ localStorage.removeItem(PROFILE_KEY); sessionStorage.removeItem(AUTH_KEY); }catch(e){}
+  _profileMem=null; _authMem=false;
+  location.reload();
+}
+window.forgetMe = forgetMe;
 
 /* Arranque de la puerta */
 (function gateInit(){
