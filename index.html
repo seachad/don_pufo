@@ -164,6 +164,9 @@ section.tight{padding:64px 0}
    HERO
    ============================================================ */
 .hero{min-height:100svh; display:flex; align-items:center; padding:120px 0 70px; position:relative}
+.home-top{position:absolute; top:96px; left:0; right:0; display:flex; align-items:center; justify-content:flex-end; gap:14px}
+.home-top-txt{font-family:var(--mono); font-size:10.5px; letter-spacing:.06em; color:var(--muted)}
+@media(max-width:760px){ .home-top{position:static; margin-bottom:22px; justify-content:space-between} .home-top-txt{max-width:60%} }
 .hero h1{font-size:clamp(46px,8.4vw,104px); letter-spacing:-.035em}
 .hero h1 em{font-style:italic; color:var(--gold); display:block}
 .hero .lead{margin:26px 0 36px; font-size:20px; max-width:50ch}
@@ -1903,6 +1906,10 @@ const footer = () => `
 const V = {};
 V.home = () => `
   <section class="hero"><div class="wrap">
+    <div class="home-top">
+      <span class="home-top-txt">Su perfil se guarda solo en este navegador.</span>
+      <button class="btn btn-ghost btn-sm" onclick="forgetMe()">Olvídame</button>
+    </div>
     <div class="kicker">Expediente abierto · {{prefix}}-{{year}}</div>
     <h1>Problemas absurdos.<em>Soluciones impecables.</em></h1>
     <p class="lead">
@@ -1979,12 +1986,6 @@ V.home = () => `
     <h2 class="title">Si existe un {{problem}}, existe un procedimiento.</h2>
     <p class="lead" style="margin:0 auto 30px">Abra su expediente. Tarda tres minutos y no requiere registro, ni datos, ni valentía.</p>
     <a class="btn btn-primary" href="#/lab">Entrar en {{lab}}</a>
-    <div style="margin-top:40px; padding-top:26px; border-top:1px solid var(--line-soft)">
-      <p class="muted" style="font-size:13px; margin:0 auto 12px; max-width:52ch">
-        Su perfil se guarda solo en este navegador. Si quiere que {{founder}} le olvide y le vuelva a preguntar todo desde cero la próxima vez:
-      </p>
-      <button class="btn btn-ghost btn-sm" onclick="forgetMe()">Olvídame</button>
-    </div>
   </div></section>`;
 
 /* ── SERVICIOS ────────────────────────────────────────────────────────── */
