@@ -457,6 +457,43 @@ footer{border-top:1px solid var(--line-soft); padding:52px 0 40px; margin-top:40
   .btn{padding:13px 18px; font-size:11px}
   .kicker{font-size:10px}
 }
+/* ============================================================
+   ACCESO Y PERFIL (overlays)
+   ============================================================ */
+.gate{
+  position:fixed; inset:0; z-index:300; display:flex; align-items:center; justify-content:center; padding:24px;
+  background:radial-gradient(120% 90% at 50% 0%, rgba(20,28,44,.6), rgba(6,8,13,.92) 70%), rgba(6,8,13,.75);
+  backdrop-filter:blur(10px); animation:gateIn .4s ease;
+}
+@keyframes gateIn{from{opacity:0}to{opacity:1}}
+.gate-card{
+  width:100%; max-width:440px; background:linear-gradient(160deg, rgba(22,31,49,.96), rgba(10,14,23,.97));
+  border:1px solid var(--line); border-radius:18px; padding:38px 34px; box-shadow:0 40px 100px rgba(0,0,0,.6);
+  animation:fadeUp .5s cubic-bezier(.2,.9,.2,1);
+}
+.gate-seal{width:64px; height:64px; border-radius:50%; overflow:hidden; padding:3px; margin:0 auto 18px;
+  border:1px solid var(--gold); box-shadow:inset 0 0 0 4px rgba(201,162,75,.16), 0 0 26px rgba(201,162,75,.18);
+  background:radial-gradient(circle at 32% 22%, rgba(201,162,75,.28), rgba(10,14,23,.9) 70%)}
+.gate-k{font-family:var(--mono); font-size:10.5px; letter-spacing:.26em; text-transform:uppercase; color:var(--gold); text-align:center; margin-bottom:10px}
+.gate-card h2{font-size:27px; text-align:center; margin-bottom:8px}
+.gate-card .sub{font-size:14px; color:#9FA9BC; text-align:center; margin-bottom:26px; line-height:1.55}
+.gate-field{margin-bottom:14px}
+.gate-field label{font-family:var(--mono); font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); display:block; margin-bottom:7px}
+.gate-input{width:100%; background:rgba(0,0,0,.35); border:1px solid var(--line-soft); border-radius:11px; padding:14px 15px; color:var(--paper); font-family:var(--sans); font-size:16px}
+.gate-input:focus{outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(201,162,75,.12)}
+.gate-btn{width:100%; margin-top:8px; justify-content:center}
+.gate-err{color:var(--danger); font-size:13px; text-align:center; margin-top:14px; min-height:18px; font-family:var(--mono); letter-spacing:.04em}
+.gate-note{font-size:11px; color:#6C7689; text-align:center; margin-top:18px; line-height:1.5}
+.gate-chips{display:flex; flex-wrap:wrap; gap:9px}
+.gate-chip{border:1px solid var(--line-soft); background:rgba(255,255,255,.03); color:var(--text); padding:11px 16px; border-radius:10px; cursor:pointer; font-size:14px; transition:.2s; font-family:var(--sans)}
+.gate-chip:hover{border-color:var(--gold); color:var(--gold)}
+.gate-chip.sel{border-color:var(--gold); background:rgba(201,162,75,.15); color:var(--gold-hi)}
+.profile-badge{display:inline-flex; align-items:center; gap:8px; font-family:var(--mono); font-size:10.5px; letter-spacing:.1em; color:var(--gold);
+  border:1px solid var(--line); background:rgba(201,162,75,.06); padding:7px 13px; border-radius:99px; cursor:pointer; transition:.2s}
+.profile-badge:hover{border-color:var(--gold)}
+.foryou-note{border:1px solid var(--line); background:rgba(201,162,75,.05); border-radius:12px; padding:14px 18px; margin:18px 0 4px; font-size:13.5px; color:#B6BFCF; display:flex; gap:12px; align-items:center; flex-wrap:wrap}
+.foryou-note b{color:var(--gold)}
+
 @media(prefers-reduced-motion:reduce){
   *{animation-duration:.01ms!important; transition-duration:.01ms!important}
   html{scroll-behavior:auto}
@@ -1042,6 +1079,7 @@ const CAT = {
   pareja:   {label:'Pareja',       a:'#3a2330', b:'#120910'},
   mascotas: {label:'Mascotas',     a:'#2f3a22', b:'#10120a'},
   tecno:    {label:'Tecnología',   a:'#233a3f', b:'#0a1113'},
+  joven:    {label:'Joven',        a:'#243a2e', b:'#0a1210'},
   absurdo:  {label:'No hacer',     a:'#3a2020', b:'#140909'},
   _:        {label:'Expediente',   a:'#2a3140', b:'#0a0e16'}
 };
@@ -1162,7 +1200,18 @@ const CASES100 = [
   {t:'Operación Alergia Universal', cat:'absurdo', emoji:'🥗', absurd:true, problem:'No quieres comer lo que ha cocinado alguien.', sol:'Declararte alérgico a prácticamente todo, por si acaso.', why:'Ejemplo de coartada frágil.', note:'Una alergia inventada se desmorona en la primera cena. NO hacer (y es peligroso banalizar las alergias reales).'},
   {t:'Operación Sustituto Idéntico', cat:'absurdo', emoji:'🤖', absurd:true, problem:'No quieres ir a trabajar el viernes.', sol:'Enviar a un «familiar idéntico» que ocupe tu puesto sin que nadie lo note.', why:'Ejemplo de fantasía operativa.', note:'No existe el sustituto idéntico. Existe el parte de vacaciones. NO hacer.'},
   {t:'Operación Notas del Perro', cat:'absurdo', emoji:'🐕‍🦺', absurd:true, problem:'Quieres que el vecino baje la música.', sol:'Dejarle notas anónimas firmadas por su propio perro.', why:'Ejemplo de ingenio sin eficacia.', note:'Divertidísimo, sí. Eficaz, cero. Mejor una conversación normal. NO como método.'},
-  {t:'Operación Boda Saboteada', cat:'absurdo', emoji:'💔', absurd:true, problem:'No te gusta con quién se casa alguien de tu familia.', sol:'Intentar sabotear la boda por su bien.', why:'Esto no es un marrón: es meterte donde no te llaman.', note:'Interferir en las decisiones de otros adultos no es ayudar. NO hacer, bajo ningún concepto.'}
+  {t:'Operación Boda Saboteada', cat:'absurdo', emoji:'💔', absurd:true, problem:'No te gusta con quién se casa alguien de tu familia.', sol:'Intentar sabotear la boda por su bien.', why:'Esto no es un marrón: es meterte donde no te llaman.', note:'Interferir en las decisiones de otros adultos no es ayudar. NO hacer, bajo ningún concepto.'},
+
+  /* ── Expedientes juveniles (perfil joven) ─────────────────────────────── */
+  {t:'Operación Examen de Mañana', cat:'joven', emoji:'📖', problem:'Examen mañana y no has empezado a estudiar.', sol:'Plan de tres bloques de 40 minutos con descansos, el móvil en otra habitación y empezar por lo que más entra en el examen, no por lo primero del temario.', why:'Reducir la fricción (móvil fuera) y priorizar por peso del examen rinde más que estudiarlo todo mal.'},
+  {t:'Operación Parte de Faltas', cat:'joven', emoji:'🏫', problem:'Has acumulado faltas de asistencia y el aviso va a llegar a casa.', sol:'Adelantarte y contarlo tú, en primera persona y con un plan de recuperación concreto, antes de que llegue el correo del instituto.', why:'Adelantarse controla el relato: lo que cuentas tú es contexto; lo que descubren, es una pillada.'},
+  {t:'Operación Primera Cita', cat:'joven', emoji:'💌', problem:'Quieres pedirle salir a alguien y no sabes cómo sin quedar fatal.', sol:'Una propuesta concreta y de baja presión: un plan corto, con día y hora, y una salida fácil para la otra persona («si te va, guay; si no, sin problema»).', why:'La concreción reduce el riesgo: es más fácil decir sí a un plan pequeño que a una declaración abierta.'},
+  {t:'Operación Hora de Vuelta', cat:'joven', emoji:'🌙', problem:'Quieres volver más tarde de lo que te dejan tus padres.', sol:'Negociar una hora intermedia por escrito en el chat y cumplirla a rajatabla la primera vez, aunque te fastidie.', why:'Cumplir el primer acuerdo es lo que compra el segundo: la confianza se gana con una vuelta puntual, no con argumentos.'},
+  {t:'Operación Fiesta Segura', cat:'joven', emoji:'🎧', problem:'Vas a una fiesta y sabes que va a haber presión para beber y trasnochar.', sol:'Llevar decidido de antemano hasta dónde llegas, una frase de salida preparada («mañana madrugo, hoy voy suave») y un plan seguro para volver a casa. Acuerda con tus padres un mensaje-código para que te recojan sin interrogatorio.', why:'Decidir en frío, antes de la fiesta, evita tener que decidir bajo presión y a deshoras. La seguridad para volver no se improvisa.'},
+  {t:'Operación Apuntes Prestados', cat:'joven', emoji:'📓', problem:'Siempre prestas los apuntes y no vuelven, o vuelven tarde y peor.', sol:'Compartirlos en una carpeta digital de solo lectura en vez de en papel. Todos acceden, nadie se queda con lo tuyo.', why:'Un sistema común elimina el préstamo: no hay que reclamar lo que nunca sale de tu poder.'},
+  {t:'Operación Trabajo en Grupo', cat:'joven', emoji:'👥', problem:'En el trabajo de clase curráis dos y figuráis cinco.', sol:'Repartir tareas con nombre y fecha en un documento compartido que ve el grupo (y, si hace falta, el profe). La asignación visible responsabiliza.', why:'Lo asignado con nombre y a la vista no se diluye; el «ya lo hago yo» anónimo, sí.'},
+  {t:'Operación Paga Extra', cat:'joven', emoji:'💶', problem:'Quieres más paga y en casa siempre es que no.', sol:'Proponer tú tareas concretas a cambio, por escrito y con revisión mensual, en vez de pedir un aumento a secas.', why:'Vincular la paga a responsabilidades claras convierte una petición en un acuerdo que los padres pueden aceptar sin sentir que ceden.'},
+  {t:'Operación Grupo de Clase Silenciado', cat:'joven', emoji:'📵', problem:'El grupo de clase manda 400 mensajes y te pierdes lo importante.', sol:'Silenciar el grupo y revisarlo una vez por la tarde; pedir que lo de exámenes y entregas se ponga en un grupo aparte «solo avisos».', why:'Separar el ruido de los avisos importantes conserva la información sin la ansiedad de mirar cada minuto.'}
 ];
 
 const TESTIMONIALS = [
@@ -2075,7 +2124,7 @@ function caseMetrics(c){
 const OTHERS = {
   vecinos:'Vecinos', suegros:'Familia', familia:'Familia', eventos:'—',
   dinero:'Grupo', trabajo:'Equipo', hijos:'—', amigos:'Cuadrilla',
-  pareja:'—', mascotas:'Vecino', tecno:'Grupo', absurdo:'—', _:'—'
+  pareja:'—', mascotas:'Vecino', tecno:'Grupo', joven:'—', absurdo:'—', _:'—'
 };
 
 /* La llamada de diagnóstico con Don Pufo (todos los casos) */
@@ -2203,6 +2252,7 @@ const ROTURA = {
   pareja:'Punto de rotura: sacar el tema en caliente o delante de gente. Este pacto solo aguanta en frío y en privado.',
   mascotas:'Punto de rotura: empezar por la denuncia en lugar de por la conversación. Una vez hay papel de por medio, ya no hay vecindad.',
   tecno:'Punto de rotura: mantener el canal viejo abierto «por si acaso». El sistema nuevo solo ordena si el anterior se cierra.',
+  joven:'Punto de rotura: prometer más de lo que vas a cumplir. A tu edad la credibilidad se construye con la primera vuelta puntual y el primer examen aprobado, no con discursos.',
   absurdo:'Este expediente se conserva por lo contrario: para recordar que la ocurrencia brillante es casi siempre el camino más caro.',
   _:'Punto de rotura: convertir una solución sencilla en una conversación larga.'
 };
@@ -2221,6 +2271,7 @@ const MECH = {
   pareja:[{h:'Acuerdo en frío',p:'Lo pactado lejos del enfado se cumple; lo hablado en caliente se repite. Sacar el tema del momento tenso es la mitad del trabajo.'},{h:'Diseñar el entorno',p:'Cambiar el contexto (dónde está el cargador, qué se ve junto) es más fácil y más eficaz que intentar cambiar el hábito por fuerza de voluntad.'}],
   mascotas:[{h:'Colaborar antes que confrontar',p:'Ofrecer ayuda o una solución conjunta resuelve más rápido que una queja, y conserva la vecindad para la próxima.'},{h:'Tono ligero',p:'El humor rebaja la tensión de un tema menor antes de que escale a conflicto de comunidad.'}],
   tecno:[{h:'Un solo canal',p:'Centralizar en un sistema común sustituye la memoria frágil y el «mándamelo» infinito por un sitio único y previsible.'},{h:'Filtrar por un responsable',p:'Nombrar a alguien que resume reduce el ruido del grupo sin silenciar a nadie.'}],
+  joven:[{h:'Adelantarse controla el relato',p:'Contar tú las cosas antes de que las descubran convierte una pillada en un contexto. Quien informa primero, encuadra.'},{h:'Cumplir el primer acuerdo',p:'La confianza de los padres (o de quien sea) se gana con el primer compromiso cumplido a rajatabla; a partir de ahí, el margen se amplía solo.'}],
   absurdo:[{h:'La ficción necesita un borde',p:'La parodia solo es divertida mientras se sepa dónde termina. En cuanto produce algo utilizable, deja de ser humor.'},{h:'Adelantarse sigue ganando',p:'La verdad sencilla dicha a tiempo es casi siempre más barata que la coartada más ingeniosa.'}],
   _:[{h:'Una frase y una fecha',p:'Cerrar con una acción concreta y un día convierte un acuerdo verbal en un compromiso que no vuelve.'}]
 };
@@ -2617,14 +2668,32 @@ function afterRender(page){
     const fbox = document.getElementById('catFilters');
     const cnt  = document.getElementById('catCount');
     if(grid && fbox){
+      const profile = getProfile();
+      const audience = audienceCats(profile);
       const cats = [...new Set(CASES100.map(c=>c.cat))];
       const order = Object.keys(CAT).filter(k=>k!=='_' && cats.includes(k));
-      const chips = [['todos','Todos']].concat(order.map(k=>[k, T(CAT[k].label)]));
-      fbox.innerHTML = chips.map(([k,l],i)=>`<button class="fchip${i===0?' on':''}" data-f="${k}">${l}</button>`).join('');
+      let chips = [['todos','Todos']].concat(order.map(k=>[k, T(CAT[k].label)]));
+      if(audience) chips = [['__me__','Para ti']].concat(chips);
+      const startF = audience ? '__me__' : 'todos';
+      fbox.innerHTML = chips.map(([k,l])=>`<button class="fchip${k===startF?' on':''}" data-f="${k}">${l}</button>`).join('');
+
+      /* Nota de personalización + acceso a editar el perfil */
+      if(profile){
+        const g = ({hombre:'Hombre', mujer:'Mujer', otro:'Otro', ns:'—'})[profile.gender] || '—';
+        const note = document.createElement('div');
+        note.className = 'foryou-note';
+        note.innerHTML = `<span><b>Filtrado para tu perfil</b> · ${g}, ${profile.age} años. Te mostramos los ${TOKENS.problems} que a tu edad suelen tocar.</span>
+          <button class="profile-badge" id="editProf">✎ Cambiar perfil</button>`;
+        fbox.parentNode.insertBefore(note, fbox);
+        note.querySelector('#editProf').onclick = () => showProfile();
+      }
+
       const paint = f => {
-        const list = CASES100.map((c,i)=>({c,i})).filter(x => f==='todos' || x.c.cat===f);
+        const list = CASES100.map((c,i)=>({c,i})).filter(x =>
+          f==='todos' ? true : f==='__me__' ? (audience && audience.has(x.c.cat)) : x.c.cat===f);
         grid.innerHTML = list.map(x=>catalogCard(x.c, x.i)).join('');
-        cnt.textContent = `${list.length} expediente${list.length!==1?'s':''}` + (f!=='todos'?` · ${T(CAT[f].label)}`:'');
+        const label = f==='__me__' ? 'para tu perfil' : (f!=='todos' ? '· '+T(CAT[f].label) : '');
+        cnt.textContent = `${list.length} expediente${list.length!==1?'s':''} ${label}`.trim();
       };
       fbox.querySelectorAll('.fchip').forEach(b => b.onclick = () => {
         fbox.querySelectorAll('.fchip').forEach(x=>x.classList.remove('on'));
@@ -2642,7 +2711,7 @@ function afterRender(page){
         btn.textContent = open ? 'Cerrar expediente ▴' : 'Abrir expediente ▸';
         if(open){ if(window.PufoScene) PufoScene.pulse(.6); if(card.scrollIntoView) card.scrollIntoView({block:'nearest'}); }
       });
-      paint('todos');
+      paint(startF);
     }
   }
 
@@ -2692,6 +2761,135 @@ function animateNum(id, to, suffix){
 
 window.addEventListener('hashchange', route);
 route();
+
+/* ════════════════════════════════════════════════════════════════════════
+   ⑦  ACCESO + PERFIL
+   ────────────────────────────────────────────────────────────────────────
+   Puerta de acceso simbólica (las credenciales viven en el cliente; NO es
+   seguridad real, es un control provisional). Tras entrar, en la primera
+   visita se pide un mini-perfil que se guarda en el navegador y sirve para
+   filtrar el tipo de pufos que le interesan a cada persona.
+   ══════════════════════════════════════════════════════════════════════ */
+const AUTH = { user:'admin', pass:'29812981' };
+const AUTH_KEY = BRAND.filePrefix.toLowerCase()+'_auth';
+const PROFILE_KEY = BRAND.filePrefix.toLowerCase()+'_profile';
+let _authMem=false, _profileMem=null;
+
+function isAuthed(){ try{ return sessionStorage.getItem(AUTH_KEY)==='1'; }catch(e){ return _authMem; } }
+function setAuthed(){ _authMem=true; try{ sessionStorage.setItem(AUTH_KEY,'1'); }catch(e){} }
+function getProfile(){ try{ return JSON.parse(localStorage.getItem(PROFILE_KEY)||'null') || _profileMem; }catch(e){ return _profileMem; } }
+function setProfile(p){ _profileMem=p; try{ localStorage.setItem(PROFILE_KEY, JSON.stringify(p)); }catch(e){} }
+
+/* Relevancia de cada división según la edad del perfil */
+function audienceCats(profile){
+  if(!profile || !profile.age) return null;               // sin edad → no se filtra
+  const age = +profile.age;
+  const S = new Set(['familia','eventos','amigos','tecno','mascotas','absurdo']);   // para todas las edades
+  if(age < 20){ ['joven','pareja'].forEach(c=>S.add(c)); }
+  if(age >= 16){ S.add('pareja'); }
+  if(age >= 18){ S.add('dinero'); }
+  if(age >= 20){ ['trabajo','dinero'].forEach(c=>S.add(c)); }
+  if(age >= 25){ ['vecinos','suegros','dinero','trabajo','pareja'].forEach(c=>S.add(c)); }
+  if(age >= 30){ ['hijos'].forEach(c=>S.add(c)); }
+  return S;
+}
+
+/* ── Overlay de acceso ─────────────────────────────────────────────────── */
+function showLogin(){
+  const el = document.createElement('div');
+  el.className = 'gate'; el.id = 'gateLogin';
+  el.innerHTML = T(`
+    <div class="gate-card">
+      <div class="gate-seal">${pufoLogo()}</div>
+      <div class="gate-k">Acceso reservado · {{brand}}</div>
+      <h2>Identifíquese</h2>
+      <p class="sub">Este despacho no atiende a desconocidos. Acredítese antes de abrir ningún expediente.</p>
+      <form id="gateForm" autocomplete="off">
+        <div class="gate-field">
+          <label>Usuario</label>
+          <input class="gate-input" id="gUser" type="text" autocomplete="off" placeholder="usuario">
+        </div>
+        <div class="gate-field">
+          <label>Contraseña</label>
+          <input class="gate-input" id="gPass" type="password" autocomplete="off" placeholder="••••••••">
+        </div>
+        <button class="btn btn-primary gate-btn" type="submit">Entrar</button>
+        <div class="gate-err" id="gErr"></div>
+      </form>
+      <p class="gate-note">Control de acceso provisional. Las credenciales se validan en el propio navegador: no es un sistema de seguridad real.</p>
+    </div>`);
+  document.body.appendChild(el);
+  const u=el.querySelector('#gUser'), p=el.querySelector('#gPass'), err=el.querySelector('#gErr');
+  setTimeout(()=>u.focus(), 60);
+  el.querySelector('#gateForm').addEventListener('submit', e=>{
+    e.preventDefault();
+    if(u.value.trim()===AUTH.user && p.value===AUTH.pass){
+      setAuthed(); el.remove();
+      if(window.PufoScene) PufoScene.pulse(2);
+      if(!getProfile()) showProfile();
+    } else {
+      err.textContent = 'Usuario o contraseña incorrectos.';
+      p.value=''; p.focus();
+      const card = el.querySelector('.gate-card');
+      if(card.animate) card.animate(
+        [{transform:'translateX(-8px)'},{transform:'translateX(8px)'},{transform:'translateX(0)'}], {duration:260});
+    }
+  });
+}
+
+/* ── Overlay de mini-perfil (primera visita) ───────────────────────────── */
+function showProfile(){
+  const draft = { gender:null, age:'' };
+  const el = document.createElement('div');
+  el.className='gate'; el.id='gateProfile';
+  el.innerHTML = T(`
+    <div class="gate-card">
+      <div class="gate-k">Alta de expediente personal</div>
+      <h2>Antes de empezar</h2>
+      <p class="sub">Cuatro datos para que {{founder}} le muestre los {{problems}} que de verdad le afectan. No a todo el mundo le preocupan los mismos.</p>
+      <div class="gate-field">
+        <label>¿Con qué se identifica?</label>
+        <div class="gate-chips" id="pGender">
+          <button type="button" class="gate-chip" data-g="hombre">Hombre</button>
+          <button type="button" class="gate-chip" data-g="mujer">Mujer</button>
+          <button type="button" class="gate-chip" data-g="otro">Otro</button>
+          <button type="button" class="gate-chip" data-g="ns">Prefiero no decir</button>
+        </div>
+      </div>
+      <div class="gate-field">
+        <label>¿Cuántos años tiene?</label>
+        <input class="gate-input" id="pAge" type="number" min="10" max="110" inputmode="numeric" placeholder="Ej.: 16">
+      </div>
+      <button class="btn btn-primary gate-btn" id="pSave" type="button">Abrir mi expediente</button>
+      <div class="gate-err" id="pErr"></div>
+      <p class="gate-note">Se guarda solo en este navegador, sin cuentas ni servidores. Podrá cambiarlo cuando quiera.</p>
+    </div>`);
+  document.body.appendChild(el);
+  const err=el.querySelector('#pErr');
+  el.querySelector('#pGender').addEventListener('click', e=>{
+    const b=e.target.closest('.gate-chip'); if(!b) return;
+    el.querySelectorAll('#pGender .gate-chip').forEach(x=>x.classList.remove('sel'));
+    b.classList.add('sel'); draft.gender=b.dataset.g;
+  });
+  el.querySelector('#pSave').addEventListener('click', ()=>{
+    draft.age = el.querySelector('#pAge').value.trim();
+    if(!draft.gender){ err.textContent='Elija una opción, por favor.'; return; }
+    if(!draft.age || +draft.age<10 || +draft.age>110){ err.textContent='Indique una edad válida.'; return; }
+    setProfile({gender:draft.gender, age:+draft.age, ts:Date.now()});
+    el.remove();
+    if(window.PufoScene) PufoScene.pulse(1.5);
+    if((location.hash||'').startsWith('#/casos')) route();   // refresca el catálogo ya filtrado
+  });
+}
+
+/* Editar el perfil desde el badge del nav */
+function editProfile(){ const g=document.getElementById('gateProfile'); if(!g) showProfile(); }
+
+/* Arranque de la puerta */
+(function gateInit(){
+  if(!isAuthed()) showLogin();
+  else if(!getProfile()) showProfile();
+})();
 </script>
 <script>
 /* ════════════════════════════════════════════════════════════════════════
